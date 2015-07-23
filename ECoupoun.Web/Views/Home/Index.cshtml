@@ -1,0 +1,42 @@
+﻿@model List<ECoupoun.Entities.Products>
+@{
+    ViewBag.Title = "Home Page";
+}
+@ViewBag.ResponseText
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Call API" />
+}
+
+<div class="main">
+    <div class="container">
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-12 col-sm-7">
+                <!-- BEGIN PRODUCT LIST -->
+                <div class="row product-list">
+
+                    @foreach (var item in Model)
+                    {
+                         <!-- PRODUCT ITEM START -->
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="@item.Image" class="img-responsive" alt="Berry Lace Dress">
+
+                                </div>
+                                <h3><a href="shop-item.html">@item.Name.Substring(0, 10)</a></h3>
+                                <div class="pi-price">@item.SalePrice</div>
+                                <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                            </div>
+                        </div>
+                         <!-- PRODUCT ITEM END -->
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
