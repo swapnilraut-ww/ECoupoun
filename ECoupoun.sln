@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestBuyRESTFulService", "Be
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECoupoun.Common", "ECoupoun.Common\ECoupoun.Common.csproj", "{3C34B331-F268-45B9-B25F-7C43F0335D73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalmartRESTFulService", "WalmartRESTFulService\WalmartRESTFulService.csproj", "{F64884C0-3D2D-472C-925D-9BAE2A2FF447}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{3C34B331-F268-45B9-B25F-7C43F0335D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C34B331-F268-45B9-B25F-7C43F0335D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C34B331-F268-45B9-B25F-7C43F0335D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F64884C0-3D2D-472C-925D-9BAE2A2FF447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F64884C0-3D2D-472C-925D-9BAE2A2FF447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F64884C0-3D2D-472C-925D-9BAE2A2FF447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F64884C0-3D2D-472C-925D-9BAE2A2FF447}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,6 +49,25 @@ namespace ECoupoun.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult WalmartInsertData(FormCollection form)
+        {
+            var url = ECoupounConstants.WalmartRESTServiceURL + ECoupounConstants.InsertData;
+            ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
+            client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
+
+            MemoryStream stream = new MemoryStream();
+            byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
+            stream = new MemoryStream(data);
+
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(string));
+            serializer = new DataContractJsonSerializer(typeof(string));
+            var responseText = (string)serializer.ReadObject(stream);
+
+            ViewBag.ResponseText = responseText;
+            return RedirectToAction("Index");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -16,7 +16,9 @@ namespace ECoupoun.Entities
         public double totalTime { get; set; }
         public bool partial { get; set; }
         public List<Products> Products { get; set; }
+        public List<WalmartItems> Items { get; set; }
     }
+
     public class Products
     {
         public long Sku { get; set; }
@@ -24,6 +26,16 @@ namespace ECoupoun.Entities
         public string Image { get; set; }
         public string ModelNumber { get; set; }
         public double RegularPrice { get; set; }
+        public double SalePrice { get; set; }
+    }
+
+    public class WalmartItems
+    {
+        public int ItemId { get; set; }
+        public string Name { get; set; }
+        public string ThumbnailImage { get; set; }
+        public string ModelNumber { get; set; }
+        public double msrp { get; set; }
         public double SalePrice { get; set; }
     }
 

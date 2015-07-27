@@ -17,6 +17,7 @@ namespace ECoupoun.ConsoleApp
         public double TotalTime { get; set; }
         public bool Partial { get; set; }
         public List<Products> Products { get; set; }
+        public List<Items> Items { get; set; }
     }
 
     public class Products
@@ -25,6 +26,15 @@ namespace ECoupoun.ConsoleApp
         public string Image { get; set; }
         public string ModelNumber { get; set; }
         public double RegularPrice { get; set; }
+        public double SalePrice { get; set; }
+    }
+
+    public class Items
+    {
+        public string Name { get; set; }
+        public string ThumbnailImage { get; set; }
+        public string ModelNumber { get; set; }
+        public double msrp { get; set; }
         public double SalePrice { get; set; }
     }
 }

@@ -8,6 +8,11 @@
     <input type="submit" value="Call API" />
 }
 
+@using (Html.BeginForm("WalmartInsertData", "Home", FormMethod.Post))
+{
+    <input type="submit" value="Get Walmart Data" />
+}
+
 <div class="main">
     <div class="container">
         <!-- BEGIN SIDEBAR & CONTENT -->
