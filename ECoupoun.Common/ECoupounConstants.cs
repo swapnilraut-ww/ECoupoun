@@ -13,6 +13,7 @@ namespace ECoupoun.Common
         /// </summary>
         public static string BestBuyRESTServiceURL = ConfigurationManager.AppSettings["RESTServiceURL"];
         public static string WalmartRESTServiceURL = ConfigurationManager.AppSettings["WalmartRESTServiceURL"];
+        public static string EBayRESTServiceURL = ConfigurationManager.AppSettings["EBayRESTServiceURL"];
 
         /// <summary>
         /// Content Type Text

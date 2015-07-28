@@ -17,6 +17,7 @@ namespace ECoupoun.Entities
         public bool partial { get; set; }
         public List<Products> Products { get; set; }
         public List<WalmartItems> Items { get; set; }
+        public List<EbaySearchResult> SearchResult { get; set; }
     }
 
     public class Products
@@ -39,4 +40,26 @@ namespace ECoupoun.Entities
         public double SalePrice { get; set; }
     }
 
+    public class EbaySearchResult
+    {
+        public EbayItemArray ItemArray { get; set; }
+    }
+
+    public class EbayItemArray
+    {
+        public List<EbayItem> Item { get; set; }
+    }
+
+    public class EbayItem
+    {
+        public string Title { get; set; }
+        public string GalleryURL { get; set; }
+        public long ItemID { get; set; }
+        public ConvertedCurrentPrice ConvertedCurrentPrice { get; set; }
+    }
+
+    public class ConvertedCurrentPrice
+    {
+        public double Value { get; set; }
+    }
 }

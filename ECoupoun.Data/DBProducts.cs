@@ -26,7 +26,7 @@ namespace ECoupoun.Data
                     while (objReader.Read())
                     {
                         Products product = new Products();
-                        product.Sku = Convert.ToInt32(objReader["Sku"].ToString());
+                        product.Sku = Convert.ToInt64(objReader["Sku"].ToString());
                         product.Name = objReader["Name"].ToString();
                         product.Image = objReader["Image"].ToString();
                         product.ModelNumber = objReader["ModelNumber"].ToString();
