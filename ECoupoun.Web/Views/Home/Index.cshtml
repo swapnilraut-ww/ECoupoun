@@ -3,9 +3,9 @@
     ViewBag.Title = "Home Page";
 }
 @ViewBag.ResponseText
-@using (Html.BeginForm())
+@using (Html.BeginForm("BestBuyInsertData", "Home", FormMethod.Post))
 {
-    <input type="submit" value="Call API" />
+    <input type="submit" value="Get BestBuy Data" />
 }
 
 @using (Html.BeginForm("WalmartInsertData", "Home", FormMethod.Post))

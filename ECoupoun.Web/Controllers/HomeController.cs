@@ -15,37 +15,36 @@ namespace ECoupoun.Web.Controllers
     {
         public ActionResult Index()
         {
-            var url = ECoupounConstants.BestBuyRESTServiceURL + ECoupounConstants.GetAllProducts;
-            ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
-            client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
+            List<Products> productList = new List<Products>();
+            try
+            {
+                var url = ECoupounConstants.BestBuyRESTServiceURL + ECoupounConstants.GetAllProducts;
+                ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
+                client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
 
-            MemoryStream stream = new MemoryStream();
-            byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
-            stream = new MemoryStream(data);
+                MemoryStream stream = new MemoryStream();
+                byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
+                stream = new MemoryStream(data);
 
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Products>));
-            serializer = new DataContractJsonSerializer(typeof(List<Products>));
-            var productList = (List<Products>)serializer.ReadObject(stream);
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Products>));
+                serializer = new DataContractJsonSerializer(typeof(List<Products>));
+                productList = (List<Products>)serializer.ReadObject(stream);
 
-            return View(productList);
+                ViewBag.ResponseText = TempData["ResponseText"];
+                return View(productList);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ResponseText = ex.Message;
+                return View(productList);
+            }
         }
 
         [HttpPost]
-        public ActionResult Index(FormCollection form)
+        public ActionResult BestBuyInsertData(FormCollection form)
         {
             var url = ECoupounConstants.BestBuyRESTServiceURL + ECoupounConstants.InsertData;
-            ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
-            client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
-
-            MemoryStream stream = new MemoryStream();
-            byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
-            stream = new MemoryStream(data);
-
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(string));
-            serializer = new DataContractJsonSerializer(typeof(string));
-            var responseText = (string)serializer.ReadObject(stream);
-
-            ViewBag.ResponseText = responseText;
+            TempData["ResponseText"] = RestServiceCall(url);
             return RedirectToAction("Index");
         }
 
@@ -53,18 +52,7 @@ namespace ECoupoun.Web.Controllers
         public ActionResult WalmartInsertData(FormCollection form)
         {
             var url = ECoupounConstants.WalmartRESTServiceURL + ECoupounConstants.InsertData;
-            ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
-            client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
-
-            MemoryStream stream = new MemoryStream();
-            byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
-            stream = new MemoryStream(data);
-
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(string));
-            serializer = new DataContractJsonSerializer(typeof(string));
-            var responseText = (string)serializer.ReadObject(stream);
-
-            ViewBag.ResponseText = responseText;
+            TempData["ResponseText"] = RestServiceCall(url);
             return RedirectToAction("Index");
         }
 
@@ -72,33 +60,32 @@ namespace ECoupoun.Web.Controllers
         public ActionResult EBayInsertData(FormCollection form)
         {
             var url = ECoupounConstants.EBayRESTServiceURL + ECoupounConstants.InsertData;
-            ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
-            client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
+            TempData["ResponseText"] = RestServiceCall(url);
 
-            MemoryStream stream = new MemoryStream();
-            byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
-            stream = new MemoryStream(data);
-
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(string));
-            serializer = new DataContractJsonSerializer(typeof(string));
-            var responseText = (string)serializer.ReadObject(stream);
-
-            ViewBag.ResponseText = responseText;
             return RedirectToAction("Index");
         }
 
-        public ActionResult About()
+        private string RestServiceCall(string url)
         {
-            ViewBag.Message = "Your application description page.";
+            try
+            {
+                string responseText = string.Empty;
+                ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
+                client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
 
-            return View();
-        }
+                MemoryStream stream = new MemoryStream();
+                byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
+                stream = new MemoryStream(data);
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(string));
+                serializer = new DataContractJsonSerializer(typeof(string));
+                responseText = (string)serializer.ReadObject(stream);
+                return responseText;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }
