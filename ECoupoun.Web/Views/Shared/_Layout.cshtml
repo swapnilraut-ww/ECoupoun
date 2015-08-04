@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="no-js">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,32 +9,139 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+    <div id="page-wrapper" class="page-loading">
+        <!-- Page Container -->
+        <div id="page-container" class="header-fixed-top sidebar-visible-lg-full">
+            <header>
+                <div class="container">
+                    <!-- Site Logo -->
+                    <a href="index.html" class="site-logo">
+                        <i class="fa fa-cube"></i> App<strong>UI</strong>
+                    </a>
+                    <!-- END Site Logo -->
+                    <!-- Site Navigation -->
+                    <nav>
+                        <!-- Menu Toggle -->
+                        <!-- Toggles menu on small screens -->
+                        <a href="javascript:void(0)" class="btn btn-default site-menu-toggle visible-xs visible-sm">Menu</a>
+                        <!-- END Menu Toggle -->
+                        <!-- Main Menu -->
+                        <ul class="site-nav">
+                            <li>
+                                <a href="index.html" class="active">Welcome</a>
+                            </li>
+                            <li>
+                                <a href="features.html">Features</a>
+                            </li>
+                            <li>
+                                <a href="pricing.html">Pricing</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+                            </li>
+                            <li>
+                                <a href="ui.html">UI</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="site-nav-sub"><i class="fa fa-angle-down site-nav-arrow"></i>Pages</a>
+                                <ul>
+                                    <li>
+                                        <a href="blog.html">Blog</a>
+                                    </li>
+                                    <li>
+                                        <a href="blog_post.html">Blog Post</a>
+                                    </li>
+                                    <li>
+                                        <a href="portfolio.html">Portfolio</a>
+                                    </li>
+                                    <li>
+                                        <a href="project.html">Project</a>
+                                    </li>
+                                    <li>
+                                        <a href="team.html">Team</a>
+                                    </li>
+                                    <li>
+                                        <a href="faq.html">FAQ</a>
+                                    </li>
+                                    <li>
+                                        <a href="jobs.html">Jobs</a>
+                                    </li>
+                                    <li>
+                                        <a href="search_results.html">Search Results</a>
+                                    </li>
+                                    <li>
+                                        <a href="page_scroller.html">Page Scroller</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="http://pixelcave.com/demo/appui" class="featured">Get Started <i class="fa fa-arrow-right"></i></a>
+                            </li>
+                        </ul>
+                        <!-- END Main Menu -->
+                    </nav>
+                    <!-- END Site Navigation -->
+                </div>
+            </header>
+
+            <!-- Main Container -->
+            <div id="main-container">
+                @RenderBody()
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+            <!-- Footer -->
+            <footer class="site-footer site-section site-section-light">
+                <div class="container">
+                    <!-- Footer Links -->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4 class="footer-heading">Company</h4>
+                            <ul class="footer-nav ul-breath list-unstyled">
+                                <li><a href="javascript:void(0)">About Us</a></li>
+                                <li><a href="javascript:void(0)">Our Team</a></li>
+                                <li><a href="javascript:void(0)">Memberships</a></li>
+                                <li><a href="javascript:void(0)">Terms &amp; Conditions</a></li>
+                                <li><a href="javascript:void(0)">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4 class="footer-heading">Need support?</h4>
+                            <ul class="footer-nav footer-nav-links list-inline">
+                                <li><a href="javascript:void(0)"><i class="fa fa-fw fa-book"></i> Knowledge Base</a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-fw fa-support"></i> FAQ</a></li>
+                            </ul>
+                            <h4 class="footer-heading">We are social!</h4>
+                            <ul class="footer-nav footer-nav-links list-inline">
+                                <li><a href="javascript:void(0)" class="social-facebook" data-toggle="tooltip" title="Like our Facebook page"><i class="fa fa-fw fa-facebook"></i></a></li>
+                                <li><a href="javascript:void(0)" class="social-twitter" data-toggle="tooltip" title="Follow us on Twitter"><i class="fa fa-fw fa-twitter"></i></a></li>
+                                <li><a href="javascript:void(0)" class="social-google-plus" data-toggle="tooltip" title="Like our Google+ page"><i class="fa fa-fw fa-google-plus"></i></a></li>
+                                <li><a href="javascript:void(0)" class="social-dribbble" data-toggle="tooltip" title="Follow us on Dribbble"><i class="fa fa-fw fa-dribbble"></i></a></li>
+                                <li><a href="javascript:void(0)" class="social-youtube" data-toggle="tooltip" title="Subscribe to our Youtube channel"><i class="fa fa-fw fa-youtube-play"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4 class="footer-heading">Newsletter</h4>
+                            <form action="index.html" method="post" class="form-inline" onsubmit="return false;">
+                                <div class="form-group">
+                                    <label class="sr-only" for="register-email">Your Email</label>
+                                    <div class="input-group">
+                                        <input type="email" id="register-email" name="register-email" class="form-control" placeholder="Your Email..">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                            <h4 class="footer-heading"><a href="http://goo.gl/RcsdAh">AppUI - Frontend</a></h4>
+                            <em><span id="year-copy"></span></em> &copy; Crafted with <i class="fa fa-heart text-danger"></i> by <a href="http://goo.gl/WCS84b">pixelcave</a>
+                        </div>
+                    </div>
+                    <!-- END Footer Links -->
+                </div>
+            </footer>
+            <!-- END Footer -->
+            <!-- END Main Container -->
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        <!-- END Page Container -->
     </div>
 
     @Scripts.Render("~/bundles/jquery")
