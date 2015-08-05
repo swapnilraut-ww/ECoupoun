@@ -232,6 +232,7 @@ header nav {
     padding-top: 11px;
     padding-bottom: 40px;
     background-color: #454e59;
+    margin-left: 220px;
 }
 
 .footer-heading {
@@ -430,7 +431,7 @@ header.navbar.navbar-fixed-bottom {
 }
 
 #page-container.header-fixed-top #sidebar {
-    position: fixed;
+    /*position: fixed;*/
     top: 50px;
     bottom: 0;
 }
@@ -3989,6 +3990,8 @@ p, .table, .alert, .carousel {
     #sidebar {
         width: 0;
         left: 0;
+        padding-top: 73px;
+        z-index: 1;
     }
 
     #main-container {
@@ -4009,13 +4012,13 @@ p, .table, .alert, .carousel {
     }
 
     #page-container.sidebar-visible-lg-full #main-container {
-        /*margin-left: 220px;*/
+        margin-left: 220px;
     }
 
     /* Sidebar + Fixed Layout */
     #page-container.header-fixed-top #sidebar,
     #page-container.header-fixed-bottom #sidebar {
-        position: fixed;
+        /*position: fixed;*/
         top: 0;
         bottom: 0;
     }
