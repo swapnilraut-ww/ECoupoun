@@ -32,19 +32,21 @@ namespace ECoupoun.Web
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/vendor/modernizr-*"));
+                        "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/vendor/bootstrap.min.js",
-                            "~/Scripts/plugins.js",
-                                  "~/Scripts/app.js"
+            bundles.Add(new ScriptBundle("~/bundles/core").Include(
+                      "~/Scripts/script.js",
+                            "~/Scripts/nav.js",
+                                  "~/Scripts/move-top.js",
+                                  "~/Scripts/easing.js",
+                                  "~/Scripts/nav-hover.js",
+                                  "~/Scripts/jquery.flexslider.js"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/css/bootstrap.min.css",
-                      "~/Content/css/plugins.css",
-                      "~/Content/css/main.css",
-                      "~/Content/css/themes.css"));
+                      "~/Content/css/style.css",
+                      "~/Content/css/menu.css",
+                      "~/Content/css/flexslider.css"));
         }
     }
 }
