@@ -18,8 +18,10 @@ namespace ECoupoun.Data
         {
             this.APIDetails = new HashSet<APIDetail>();
             this.ProductLinks = new HashSet<ProductLink>();
+            this.ProductLinks1 = new HashSet<ProductLink>();
             this.ProductPricings = new HashSet<ProductPricing>();
             this.ProductViewDetails = new HashSet<ProductViewDetail>();
+            this.ProductViewDetails1 = new HashSet<ProductViewDetail>();
         }
     
         public int ProviderId { get; set; }
@@ -29,9 +31,11 @@ namespace ECoupoun.Data
         public bool IsActive { get; set; }
     
         public virtual ICollection<APIDetail> APIDetails { get; set; }
+        public virtual ProviderPriority ProviderPriority { get; set; }
         public virtual ICollection<ProductLink> ProductLinks { get; set; }
+        public virtual ICollection<ProductLink> ProductLinks1 { get; set; }
         public virtual ICollection<ProductPricing> ProductPricings { get; set; }
         public virtual ICollection<ProductViewDetail> ProductViewDetails { get; set; }
-        public virtual ProviderPriority ProviderPriority { get; set; }
+        public virtual ICollection<ProductViewDetail> ProductViewDetails1 { get; set; }
     }
 }

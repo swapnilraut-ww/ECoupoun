@@ -17,7 +17,9 @@ namespace ECoupoun.Data
         public ProductMaster()
         {
             this.ProductLinks = new HashSet<ProductLink>();
+            this.ProductLinks1 = new HashSet<ProductLink>();
             this.ProductPricings = new HashSet<ProductPricing>();
+            this.ProductPricings1 = new HashSet<ProductPricing>();
         }
     
         public int ProductId { get; set; }
@@ -33,6 +35,8 @@ namespace ECoupoun.Data
         public virtual Category Category { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }
         public virtual ICollection<ProductLink> ProductLinks { get; set; }
+        public virtual ICollection<ProductLink> ProductLinks1 { get; set; }
         public virtual ICollection<ProductPricing> ProductPricings { get; set; }
+        public virtual ICollection<ProductPricing> ProductPricings1 { get; set; }
     }
 }

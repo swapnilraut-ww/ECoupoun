@@ -8,26 +8,30 @@
         <EntityTypeShape EntityType="ECoupounModel.APIDetail" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.Category" Width="1.5" PointX="1.5" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.Manufacturer" Width="1.5" PointX="1.5" PointY="24.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECoupounModel.ProductLink" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.ProductMaster" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECoupounModel.ProductPricing" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECoupounModel.ProductViewDetail" Width="1.5" PointX="3" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.Provider" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.ProviderPriority" Width="1.5" PointX="3" PointY="21" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.User" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.ProductHistory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ECoupounModel.ProductLinksHistory" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECoupounModel.ProductPricingHistory" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="ECoupounModel.fk_APICategory" ManuallyRouted="false" />
         <AssociationConnector Association="ECoupounModel.fk_APIProvider" ManuallyRouted="false" />
         <AssociationConnector Association="ECoupounModel.fk_CategoryId" ManuallyRouted="false" />
         <AssociationConnector Association="ECoupounModel.fk_ManufacturerProduct" ManuallyRouted="false" />
-        <AssociationConnector Association="ECoupounModel.fk_ProductLink" ManuallyRouted="false" />
-        <AssociationConnector Association="ECoupounModel.fk_ProviderLink" ManuallyRouted="false" />
-        <AssociationConnector Association="ECoupounModel.fk_ProductPrice" ManuallyRouted="false" />
-        <AssociationConnector Association="ECoupounModel.fk_ProviderPrice" ManuallyRouted="false" />
-        <AssociationConnector Association="ECoupounModel.fk_ProviderView" ManuallyRouted="false" />
         <AssociationConnector Association="ECoupounModel.fk_Priority" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ECoupounModel.ProductLink" Width="1.5" PointX="4.5255446902129544" PointY="15.807817406862888" />
+        <EntityTypeShape EntityType="ECoupounModel.ProductPricing" Width="1.5" PointX="2.4329973992113945" PointY="16.137443758611308" />
+        <EntityTypeShape EntityType="ECoupounModel.ProductPricingHistory" Width="1.5" PointX="9.4805961984585032" PointY="25.373473760380165" />
+        <EntityTypeShape EntityType="ECoupounModel.ProductViewDetail" Width="1.5" PointX="10.867202219957115" PointY="18.581047990629937" />
+        <AssociationConnector Association="ECoupounModel.FK_LinkProductId" />
+        <AssociationConnector Association="ECoupounModel.FK_LinkProviderId" />
+        <AssociationConnector Association="ECoupounModel.fk_ProductLink" />
+        <AssociationConnector Association="ECoupounModel.fk_ProviderLink" />
+        <AssociationConnector Association="ECoupounModel.FK_Pricing_Product" />
+        <AssociationConnector Association="ECoupounModel.fk_ProductPrice" />
+        <AssociationConnector Association="ECoupounModel.fk_ProviderPrice" />
+        <AssociationConnector Association="ECoupounModel.fk_ProviderView" />
+        <AssociationConnector Association="ECoupounModel.FK_View_Provider" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

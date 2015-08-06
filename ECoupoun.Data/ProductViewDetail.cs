@@ -23,5 +23,6 @@ namespace ECoupoun.Data
         public bool IsActive { get; set; }
     
         public virtual Provider Provider { get; set; }
+        public virtual Provider Provider1 { get; set; }
     }
 }

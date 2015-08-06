@@ -4,46 +4,149 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ECoupounModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ECoupounModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ECoupounModelStoreContainer">
+          <EntitySet Name="APIDetails" EntityType="ECoupounModel.Store.APIDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Categories" EntityType="ECoupounModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Manufacturer" EntityType="ECoupounModel.Store.Manufacturer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductHistory" EntityType="ECoupounModel.Store.ProductHistory" store:Type="Tables" store:Schema="dbo" store:Name="ProductHistory">
+            <DefiningQuery>SELECT 
+      [ProductHistory].[ProductId] AS [ProductId], 
+      [ProductHistory].[CategoryId] AS [CategoryId], 
+      [ProductHistory].[ManufacturerId] AS [ManufacturerId], 
+      [ProductHistory].[Name] AS [Name], 
+      [ProductHistory].[LongDescription] AS [LongDescription], 
+      [ProductHistory].[ModelNumber] AS [ModelNumber], 
+      [ProductHistory].[Image] AS [Image], 
+      [ProductHistory].[CreatedOn] AS [CreatedOn], 
+      [ProductHistory].[DeletedOn] AS [DeletedOn]
+      FROM [dbo].[ProductHistory] AS [ProductHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProductLinks" EntityType="ECoupounModel.Store.ProductLinks" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductLinksHistory" EntityType="ECoupounModel.Store.ProductLinksHistory" store:Type="Tables" store:Schema="dbo" store:Name="ProductLinksHistory">
+            <DefiningQuery>SELECT 
+      [ProductLinksHistory].[ProductId] AS [ProductId], 
+      [ProductLinksHistory].[ProviderId] AS [ProviderId], 
+      [ProductLinksHistory].[SoruceUrl] AS [SoruceUrl], 
+      [ProductLinksHistory].[MobileUrl] AS [MobileUrl], 
+      [ProductLinksHistory].[CreatedOn] AS [CreatedOn], 
+      [ProductLinksHistory].[DeletedOn] AS [DeletedOn]
+      FROM [dbo].[ProductLinksHistory] AS [ProductLinksHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProductMaster" EntityType="ECoupounModel.Store.ProductMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductPricing" EntityType="ECoupounModel.Store.ProductPricing" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductPricingHistory" EntityType="ECoupounModel.Store.ProductPricingHistory" store:Type="Tables" store:Schema="dbo" store:Name="ProductPricingHistory">
+            <DefiningQuery>SELECT 
+      [ProductPricingHistory].[ProductId] AS [ProductId], 
+      [ProductPricingHistory].[ProviderId] AS [ProviderId], 
+      [ProductPricingHistory].[SKU] AS [SKU], 
+      [ProductPricingHistory].[RegularPrice] AS [RegularPrice], 
+      [ProductPricingHistory].[SalePrice] AS [SalePrice], 
+      [ProductPricingHistory].[StartDate] AS [StartDate], 
+      [ProductPricingHistory].[EndDate] AS [EndDate]
+      FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProductViewDetails" EntityType="ECoupounModel.Store.ProductViewDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Provider" EntityType="ECoupounModel.Store.Provider" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProviderPriority" EntityType="ECoupounModel.Store.ProviderPriority" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="ECoupounModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="fk_APICategory" Association="ECoupounModel.Store.fk_APICategory">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="APIDetails" EntitySet="APIDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_APIProvider" Association="ECoupounModel.Store.fk_APIProvider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="APIDetails" EntitySet="APIDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CategoryId" Association="ECoupounModel.Store.fk_CategoryId">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="ProductMaster" EntitySet="ProductMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkProductId" Association="ECoupounModel.Store.FK_LinkProductId">
+            <End Role="ProductMaster" EntitySet="ProductMaster" />
+            <End Role="ProductLinks" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkProviderId" Association="ECoupounModel.Store.FK_LinkProviderId">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="ProductLinks" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ManufacturerProduct" Association="ECoupounModel.Store.fk_ManufacturerProduct">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="ProductMaster" EntitySet="ProductMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pricing_Product" Association="ECoupounModel.Store.FK_Pricing_Product">
+            <End Role="ProductMaster" EntitySet="ProductMaster" />
+            <End Role="ProductPricing" EntitySet="ProductPricing" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Priority" Association="ECoupounModel.Store.fk_Priority">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="ProviderPriority" EntitySet="ProviderPriority" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductLink" Association="ECoupounModel.Store.fk_ProductLink">
+            <End Role="ProductMaster" EntitySet="ProductMaster" />
+            <End Role="ProductLinks" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductPrice" Association="ECoupounModel.Store.fk_ProductPrice">
+            <End Role="ProductMaster" EntitySet="ProductMaster" />
+            <End Role="ProductPricing" EntitySet="ProductPricing" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProviderLink" Association="ECoupounModel.Store.fk_ProviderLink">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="ProductLinks" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProviderPrice" Association="ECoupounModel.Store.fk_ProviderPrice">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="ProductPricing" EntitySet="ProductPricing" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProviderView" Association="ECoupounModel.Store.fk_ProviderView">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="ProductViewDetails" EntitySet="ProductViewDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_View_Provider" Association="ECoupounModel.Store.FK_View_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="ProductViewDetails" EntitySet="ProductViewDetails" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="APIDetails">
           <Key>
             <PropertyRef Name="APIId" />
           </Key>
-          <Property Name="APIId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APIId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="ProviderId" Type="int" Nullable="false" />
-          <Property Name="ProviderCatName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProviderCatName" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="ServiceUrl" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="APIKey" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="APIKey" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
           </Key>
-          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CategoryParentId" Type="int" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="Description" Type="varchar" MaxLength="150" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
             <PropertyRef Name="ManufacturerId" />
           </Key>
-          <Property Name="ManufacturerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManufacturerId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ImageLogo" Type="nvarchar(max)" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ECoupoun.dbo.ProductHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+      warning 6002: The table/view 'ECoupoun.dbo.ProductHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
         <EntityType Name="ProductHistory">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -52,15 +155,15 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductHistory' does not have a prima
             <PropertyRef Name="Name" />
             <PropertyRef Name="CreatedOn" />
           </Key>
-          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="ManufacturerId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
           <Property Name="LongDescription" Type="nvarchar(max)" />
           <Property Name="ModelNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Image" Type="nvarchar(max)" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="DeletedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime2" />
         </EntityType>
         <EntityType Name="ProductLinks">
           <Key>
@@ -71,12 +174,13 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductHistory' does not have a prima
           <Property Name="ProviderId" Type="int" Nullable="false" />
           <Property Name="SoruceUrl" Type="nvarchar(max)" Nullable="false" />
           <Property Name="MobileUrl" Type="nvarchar(max)" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ECoupoun.dbo.ProductLinksHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+      warning 6002: The table/view 'ECoupoun.dbo.ProductLinksHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
         <EntityType Name="ProductLinksHistory">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -88,22 +192,22 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductLinksHistory' does not have a 
           <Property Name="ProviderId" Type="int" Nullable="false" />
           <Property Name="SoruceUrl" Type="nvarchar(max)" Nullable="false" />
           <Property Name="MobileUrl" Type="nvarchar(max)" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="DeletedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime2" />
         </EntityType>
         <EntityType Name="ProductMaster">
           <Key>
             <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="ManufacturerId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
           <Property Name="LongDescription" Type="nvarchar(max)" />
           <Property Name="ModelNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Image" Type="nvarchar(max)" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
         </EntityType>
         <EntityType Name="ProductPricing">
           <Key>
@@ -113,12 +217,13 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductLinksHistory' does not have a 
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="ProviderId" Type="int" Nullable="false" />
           <Property Name="SKU" Type="int" Nullable="false" />
-          <Property Name="RegularPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="SalePrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="AsofDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="RegularPrice" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SalePrice" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="AsofDate" Type="datetime2" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+      warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
         <EntityType Name="ProductPricingHistory">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -132,10 +237,10 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="ProviderId" Type="int" Nullable="false" />
           <Property Name="SKU" Type="int" Nullable="false" />
-          <Property Name="RegularPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="SalePrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="StartDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="EndDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="RegularPrice" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SalePrice" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="StartDate" Type="datetime2" Nullable="false" />
+          <Property Name="EndDate" Type="datetime2" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductViewDetails">
           <Key>
@@ -146,18 +251,18 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           <Property Name="ProviderId" Type="int" Nullable="false" />
           <Property Name="SoruceUrl" Type="nvarchar(max)" Nullable="false" />
           <Property Name="MobileUrl" Type="nvarchar(max)" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Provider">
           <Key>
             <PropertyRef Name="ProviderId" />
           </Key>
-          <Property Name="ProviderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="ProviderId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProviderPriority">
@@ -166,25 +271,25 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </Key>
           <Property Name="ProviderId" Type="int" Nullable="false" />
           <Property Name="Priority" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Role" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime2" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="fk_APICategory">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-          <End Role="APIDetails" Type="Self.APIDetails" Multiplicity="*" />
+          <End Role="Categories" Type="ECoupounModel.Store.Categories" Multiplicity="1" />
+          <End Role="APIDetails" Type="ECoupounModel.Store.APIDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="CategoryId" />
@@ -195,8 +300,8 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_APIProvider">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="APIDetails" Type="Self.APIDetails" Multiplicity="*" />
+          <End Role="Provider" Type="ECoupounModel.Store.Provider" Multiplicity="1" />
+          <End Role="APIDetails" Type="ECoupounModel.Store.APIDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provider">
               <PropertyRef Name="ProviderId" />
@@ -207,8 +312,8 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_CategoryId">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-          <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="*" />
+          <End Role="Categories" Type="ECoupounModel.Store.Categories" Multiplicity="1" />
+          <End Role="ProductMaster" Type="ECoupounModel.Store.ProductMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="CategoryId" />
@@ -218,9 +323,33 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LinkProductId">
+          <End Role="ProductMaster" Type="ECoupounModel.Store.ProductMaster" Multiplicity="1" />
+          <End Role="ProductLinks" Type="ECoupounModel.Store.ProductLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductLinks">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkProviderId">
+          <End Role="Provider" Type="ECoupounModel.Store.Provider" Multiplicity="1" />
+          <End Role="ProductLinks" Type="ECoupounModel.Store.ProductLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="ProductLinks">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_ManufacturerProduct">
-          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
-          <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="*" />
+          <End Role="Manufacturer" Type="ECoupounModel.Store.Manufacturer" Multiplicity="1" />
+          <End Role="ProductMaster" Type="ECoupounModel.Store.ProductMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Manufacturer">
               <PropertyRef Name="ManufacturerId" />
@@ -230,9 +359,21 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pricing_Product">
+          <End Role="ProductMaster" Type="ECoupounModel.Store.ProductMaster" Multiplicity="1" />
+          <End Role="ProductPricing" Type="ECoupounModel.Store.ProductPricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductPricing">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Priority">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="ProviderPriority" Type="Self.ProviderPriority" Multiplicity="0..1" />
+          <End Role="Provider" Type="ECoupounModel.Store.Provider" Multiplicity="1" />
+          <End Role="ProviderPriority" Type="ECoupounModel.Store.ProviderPriority" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Provider">
               <PropertyRef Name="ProviderId" />
@@ -243,8 +384,8 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_ProductLink">
-          <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
-          <End Role="ProductLinks" Type="Self.ProductLinks" Multiplicity="*" />
+          <End Role="ProductMaster" Type="ECoupounModel.Store.ProductMaster" Multiplicity="1" />
+          <End Role="ProductLinks" Type="ECoupounModel.Store.ProductLinks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductMaster">
               <PropertyRef Name="ProductId" />
@@ -255,8 +396,8 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_ProductPrice">
-          <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
-          <End Role="ProductPricing" Type="Self.ProductPricing" Multiplicity="*" />
+          <End Role="ProductMaster" Type="ECoupounModel.Store.ProductMaster" Multiplicity="1" />
+          <End Role="ProductPricing" Type="ECoupounModel.Store.ProductPricing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductMaster">
               <PropertyRef Name="ProductId" />
@@ -267,8 +408,8 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_ProviderLink">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="ProductLinks" Type="Self.ProductLinks" Multiplicity="*" />
+          <End Role="Provider" Type="ECoupounModel.Store.Provider" Multiplicity="1" />
+          <End Role="ProductLinks" Type="ECoupounModel.Store.ProductLinks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provider">
               <PropertyRef Name="ProviderId" />
@@ -279,8 +420,8 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_ProviderPrice">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="ProductPricing" Type="Self.ProductPricing" Multiplicity="*" />
+          <End Role="Provider" Type="ECoupounModel.Store.Provider" Multiplicity="1" />
+          <End Role="ProductPricing" Type="ECoupounModel.Store.ProductPricing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provider">
               <PropertyRef Name="ProviderId" />
@@ -291,8 +432,8 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_ProviderView">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="ProductViewDetails" Type="Self.ProductViewDetails" Multiplicity="*" />
+          <End Role="Provider" Type="ECoupounModel.Store.Provider" Multiplicity="1" />
+          <End Role="ProductViewDetails" Type="ECoupounModel.Store.ProductViewDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provider">
               <PropertyRef Name="ProviderId" />
@@ -302,94 +443,19 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ECoupounModelStoreContainer">
-          <EntitySet Name="APIDetails" EntityType="Self.APIDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductLinks" EntityType="Self.ProductLinks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductMaster" EntityType="Self.ProductMaster" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductPricing" EntityType="Self.ProductPricing" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductViewDetails" EntityType="Self.ProductViewDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProviderPriority" EntityType="Self.ProviderPriority" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductHistory" EntityType="Self.ProductHistory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[ProductHistory].[ProductId] AS [ProductId], 
-[ProductHistory].[CategoryId] AS [CategoryId], 
-[ProductHistory].[ManufacturerId] AS [ManufacturerId], 
-[ProductHistory].[Name] AS [Name], 
-[ProductHistory].[LongDescription] AS [LongDescription], 
-[ProductHistory].[ModelNumber] AS [ModelNumber], 
-[ProductHistory].[Image] AS [Image], 
-[ProductHistory].[CreatedOn] AS [CreatedOn], 
-[ProductHistory].[DeletedOn] AS [DeletedOn]
-FROM [dbo].[ProductHistory] AS [ProductHistory]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ProductLinksHistory" EntityType="Self.ProductLinksHistory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[ProductLinksHistory].[ProductId] AS [ProductId], 
-[ProductLinksHistory].[ProviderId] AS [ProviderId], 
-[ProductLinksHistory].[SoruceUrl] AS [SoruceUrl], 
-[ProductLinksHistory].[MobileUrl] AS [MobileUrl], 
-[ProductLinksHistory].[CreatedOn] AS [CreatedOn], 
-[ProductLinksHistory].[DeletedOn] AS [DeletedOn]
-FROM [dbo].[ProductLinksHistory] AS [ProductLinksHistory]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ProductPricingHistory" EntityType="Self.ProductPricingHistory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[ProductPricingHistory].[ProductId] AS [ProductId], 
-[ProductPricingHistory].[ProviderId] AS [ProviderId], 
-[ProductPricingHistory].[SKU] AS [SKU], 
-[ProductPricingHistory].[RegularPrice] AS [RegularPrice], 
-[ProductPricingHistory].[SalePrice] AS [SalePrice], 
-[ProductPricingHistory].[StartDate] AS [StartDate], 
-[ProductPricingHistory].[EndDate] AS [EndDate]
-FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="fk_APICategory" Association="Self.fk_APICategory">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="APIDetails" EntitySet="APIDetails" />
-          </AssociationSet>
-          <AssociationSet Name="fk_APIProvider" Association="Self.fk_APIProvider">
-            <End Role="Provider" EntitySet="Provider" />
-            <End Role="APIDetails" EntitySet="APIDetails" />
-          </AssociationSet>
-          <AssociationSet Name="fk_CategoryId" Association="Self.fk_CategoryId">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="ProductMaster" EntitySet="ProductMaster" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ManufacturerProduct" Association="Self.fk_ManufacturerProduct">
-            <End Role="Manufacturer" EntitySet="Manufacturer" />
-            <End Role="ProductMaster" EntitySet="ProductMaster" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Priority" Association="Self.fk_Priority">
-            <End Role="Provider" EntitySet="Provider" />
-            <End Role="ProviderPriority" EntitySet="ProviderPriority" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProductLink" Association="Self.fk_ProductLink">
-            <End Role="ProductMaster" EntitySet="ProductMaster" />
-            <End Role="ProductLinks" EntitySet="ProductLinks" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProductPrice" Association="Self.fk_ProductPrice">
-            <End Role="ProductMaster" EntitySet="ProductMaster" />
-            <End Role="ProductPricing" EntitySet="ProductPricing" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProviderLink" Association="Self.fk_ProviderLink">
-            <End Role="Provider" EntitySet="Provider" />
-            <End Role="ProductLinks" EntitySet="ProductLinks" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProviderPrice" Association="Self.fk_ProviderPrice">
-            <End Role="Provider" EntitySet="Provider" />
-            <End Role="ProductPricing" EntitySet="ProductPricing" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProviderView" Association="Self.fk_ProviderView">
-            <End Role="Provider" EntitySet="Provider" />
-            <End Role="ProductViewDetails" EntitySet="ProductViewDetails" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+        <Association Name="FK_View_Provider">
+          <End Role="Provider" Type="ECoupounModel.Store.Provider" Multiplicity="1" />
+          <End Role="ProductViewDetails" Type="ECoupounModel.Store.ProductViewDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="ProductViewDetails">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ECoupounModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -435,21 +501,6 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ProductMasters" Relationship="Self.fk_ManufacturerProduct" FromRole="Manufacturer" ToRole="ProductMaster" />
         </EntityType>
-        <EntityType Name="ProductLink">
-          <Key>
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="ProviderId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="ProviderId" Type="Int32" Nullable="false" />
-          <Property Name="SoruceUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MobileUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="7" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ProductMaster" Relationship="Self.fk_ProductLink" FromRole="ProductLinks" ToRole="ProductMaster" />
-          <NavigationProperty Name="Provider" Relationship="Self.fk_ProviderLink" FromRole="ProductLinks" ToRole="Provider" />
-        </EntityType>
         <EntityType Name="ProductMaster">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -465,36 +516,10 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
           <Property Name="UpdatedOn" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Category" Relationship="Self.fk_CategoryId" FromRole="ProductMaster" ToRole="Categories" />
           <NavigationProperty Name="Manufacturer" Relationship="Self.fk_ManufacturerProduct" FromRole="ProductMaster" ToRole="Manufacturer" />
-          <NavigationProperty Name="ProductLinks" Relationship="Self.fk_ProductLink" FromRole="ProductMaster" ToRole="ProductLinks" />
-          <NavigationProperty Name="ProductPricings" Relationship="Self.fk_ProductPrice" FromRole="ProductMaster" ToRole="ProductPricing" />
-        </EntityType>
-        <EntityType Name="ProductPricing">
-          <Key>
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="ProviderId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="ProviderId" Type="Int32" Nullable="false" />
-          <Property Name="SKU" Type="Int32" Nullable="false" />
-          <Property Name="RegularPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="SalePrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="AsofDate" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="ProductMaster" Relationship="Self.fk_ProductPrice" FromRole="ProductPricing" ToRole="ProductMaster" />
-          <NavigationProperty Name="Provider" Relationship="Self.fk_ProviderPrice" FromRole="ProductPricing" ToRole="Provider" />
-        </EntityType>
-        <EntityType Name="ProductViewDetail">
-          <Key>
-            <PropertyRef Name="SKU" />
-            <PropertyRef Name="ProviderId" />
-          </Key>
-          <Property Name="SKU" Type="Int32" Nullable="false" />
-          <Property Name="ProviderId" Type="Int32" Nullable="false" />
-          <Property Name="SoruceUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MobileUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="7" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Provider" Relationship="Self.fk_ProviderView" FromRole="ProductViewDetails" ToRole="Provider" />
+          <NavigationProperty Name="ProductLinks" Relationship="ECoupounModel.FK_LinkProductId" FromRole="ProductMaster" ToRole="ProductLink" />
+          <NavigationProperty Name="ProductLinks1" Relationship="ECoupounModel.fk_ProductLink" FromRole="ProductMaster" ToRole="ProductLink" />
+          <NavigationProperty Name="ProductPricings" Relationship="ECoupounModel.FK_Pricing_Product" FromRole="ProductMaster" ToRole="ProductPricing" />
+          <NavigationProperty Name="ProductPricings1" Relationship="ECoupounModel.fk_ProductPrice" FromRole="ProductMaster" ToRole="ProductPricing" />
         </EntityType>
         <EntityType Name="Provider">
           <Key>
@@ -506,10 +531,12 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
           <Property Name="UpdatedOn" Type="DateTime" Precision="7" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="APIDetails" Relationship="Self.fk_APIProvider" FromRole="Provider" ToRole="APIDetails" />
-          <NavigationProperty Name="ProductLinks" Relationship="Self.fk_ProviderLink" FromRole="Provider" ToRole="ProductLinks" />
-          <NavigationProperty Name="ProductPricings" Relationship="Self.fk_ProviderPrice" FromRole="Provider" ToRole="ProductPricing" />
-          <NavigationProperty Name="ProductViewDetails" Relationship="Self.fk_ProviderView" FromRole="Provider" ToRole="ProductViewDetails" />
           <NavigationProperty Name="ProviderPriority" Relationship="Self.fk_Priority" FromRole="Provider" ToRole="ProviderPriority" />
+          <NavigationProperty Name="ProductLinks" Relationship="ECoupounModel.FK_LinkProviderId" FromRole="Provider" ToRole="ProductLink" />
+          <NavigationProperty Name="ProductLinks1" Relationship="ECoupounModel.fk_ProviderLink" FromRole="Provider" ToRole="ProductLink" />
+          <NavigationProperty Name="ProductPricings" Relationship="ECoupounModel.fk_ProviderPrice" FromRole="Provider" ToRole="ProductPricing" />
+          <NavigationProperty Name="ProductViewDetails" Relationship="ECoupounModel.fk_ProviderView" FromRole="Provider" ToRole="ProductViewDetail" />
+          <NavigationProperty Name="ProductViewDetails1" Relationship="ECoupounModel.FK_View_Provider" FromRole="Provider" ToRole="ProductViewDetail" />
         </EntityType>
         <EntityType Name="ProviderPriority">
           <Key>
@@ -566,24 +593,6 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="DeletedOn" Type="DateTime" Precision="7" />
         </EntityType>
-        <EntityType Name="ProductPricingHistory">
-          <Key>
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="ProviderId" />
-            <PropertyRef Name="SKU" />
-            <PropertyRef Name="RegularPrice" />
-            <PropertyRef Name="SalePrice" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="ProviderId" Type="Int32" Nullable="false" />
-          <Property Name="SKU" Type="Int32" Nullable="false" />
-          <Property Name="RegularPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="SalePrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="7" />
-        </EntityType>
         <Association Name="fk_APICategory">
           <End Role="Categories" Type="Self.Category" Multiplicity="1" />
           <End Role="APIDetails" Type="Self.APIDetail" Multiplicity="*" />
@@ -632,66 +641,6 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_ProductLink">
-          <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
-          <End Role="ProductLinks" Type="Self.ProductLink" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductMaster">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="ProductLinks">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_ProviderLink">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="ProductLinks" Type="Self.ProductLink" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provider">
-              <PropertyRef Name="ProviderId" />
-            </Principal>
-            <Dependent Role="ProductLinks">
-              <PropertyRef Name="ProviderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_ProductPrice">
-          <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
-          <End Role="ProductPricing" Type="Self.ProductPricing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductMaster">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="ProductPricing">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_ProviderPrice">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="ProductPricing" Type="Self.ProductPricing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provider">
-              <PropertyRef Name="ProviderId" />
-            </Principal>
-            <Dependent Role="ProductPricing">
-              <PropertyRef Name="ProviderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_ProviderView">
-          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
-          <End Role="ProductViewDetails" Type="Self.ProductViewDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provider">
-              <PropertyRef Name="ProviderId" />
-            </Principal>
-            <Dependent Role="ProductViewDetails">
-              <PropertyRef Name="ProviderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_Priority">
           <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
           <End Role="ProviderPriority" Type="Self.ProviderPriority" Multiplicity="0..1" />
@@ -708,16 +657,12 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
           <EntitySet Name="APIDetails" EntityType="Self.APIDetail" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Manufacturers" EntityType="Self.Manufacturer" />
-          <EntitySet Name="ProductLinks" EntityType="Self.ProductLink" />
           <EntitySet Name="ProductMasters" EntityType="Self.ProductMaster" />
-          <EntitySet Name="ProductPricings" EntityType="Self.ProductPricing" />
-          <EntitySet Name="ProductViewDetails" EntityType="Self.ProductViewDetail" />
           <EntitySet Name="Providers" EntityType="Self.Provider" />
           <EntitySet Name="ProviderPriorities" EntityType="Self.ProviderPriority" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="ProductHistories" EntityType="Self.ProductHistory" />
           <EntitySet Name="ProductLinksHistories" EntityType="Self.ProductLinksHistory" />
-          <EntitySet Name="ProductPricingHistories" EntityType="Self.ProductPricingHistory" />
           <AssociationSet Name="fk_APICategory" Association="Self.fk_APICategory">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="APIDetails" EntitySet="APIDetails" />
@@ -734,31 +679,224 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
             <End Role="Manufacturer" EntitySet="Manufacturers" />
             <End Role="ProductMaster" EntitySet="ProductMasters" />
           </AssociationSet>
-          <AssociationSet Name="fk_ProductLink" Association="Self.fk_ProductLink">
-            <End Role="ProductMaster" EntitySet="ProductMasters" />
-            <End Role="ProductLinks" EntitySet="ProductLinks" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProviderLink" Association="Self.fk_ProviderLink">
-            <End Role="Provider" EntitySet="Providers" />
-            <End Role="ProductLinks" EntitySet="ProductLinks" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProductPrice" Association="Self.fk_ProductPrice">
-            <End Role="ProductMaster" EntitySet="ProductMasters" />
-            <End Role="ProductPricing" EntitySet="ProductPricings" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProviderPrice" Association="Self.fk_ProviderPrice">
-            <End Role="Provider" EntitySet="Providers" />
-            <End Role="ProductPricing" EntitySet="ProductPricings" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ProviderView" Association="Self.fk_ProviderView">
-            <End Role="Provider" EntitySet="Providers" />
-            <End Role="ProductViewDetails" EntitySet="ProductViewDetails" />
-          </AssociationSet>
           <AssociationSet Name="fk_Priority" Association="Self.fk_Priority">
             <End Role="Provider" EntitySet="Providers" />
             <End Role="ProviderPriority" EntitySet="ProviderPriorities" />
           </AssociationSet>
+          <EntitySet Name="ProductLinks" EntityType="ECoupounModel.ProductLink" />
+          <EntitySet Name="ProductPricings" EntityType="ECoupounModel.ProductPricing" />
+          <EntitySet Name="ProductPricingHistories" EntityType="ECoupounModel.ProductPricingHistory" />
+          <EntitySet Name="ProductViewDetails" EntityType="ECoupounModel.ProductViewDetail" />
+          <AssociationSet Name="FK_LinkProductId" Association="ECoupounModel.FK_LinkProductId">
+            <End Role="ProductMaster" EntitySet="ProductMasters" />
+            <End Role="ProductLink" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkProviderId" Association="ECoupounModel.FK_LinkProviderId">
+            <End Role="Provider" EntitySet="Providers" />
+            <End Role="ProductLink" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductLink" Association="ECoupounModel.fk_ProductLink">
+            <End Role="ProductMaster" EntitySet="ProductMasters" />
+            <End Role="ProductLink" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProviderLink" Association="ECoupounModel.fk_ProviderLink">
+            <End Role="Provider" EntitySet="Providers" />
+            <End Role="ProductLink" EntitySet="ProductLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pricing_Product" Association="ECoupounModel.FK_Pricing_Product">
+            <End Role="ProductMaster" EntitySet="ProductMasters" />
+            <End Role="ProductPricing" EntitySet="ProductPricings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductPrice" Association="ECoupounModel.fk_ProductPrice">
+            <End Role="ProductMaster" EntitySet="ProductMasters" />
+            <End Role="ProductPricing" EntitySet="ProductPricings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProviderPrice" Association="ECoupounModel.fk_ProviderPrice">
+            <End Role="Provider" EntitySet="Providers" />
+            <End Role="ProductPricing" EntitySet="ProductPricings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProviderView" Association="ECoupounModel.fk_ProviderView">
+            <End Role="Provider" EntitySet="Providers" />
+            <End Role="ProductViewDetail" EntitySet="ProductViewDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_View_Provider" Association="ECoupounModel.FK_View_Provider">
+            <End Role="Provider" EntitySet="Providers" />
+            <End Role="ProductViewDetail" EntitySet="ProductViewDetails" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ProductLink">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="ProviderId" />
+          </Key>
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="Int32" Name="ProviderId" Nullable="false" />
+          <Property Type="String" Name="SoruceUrl" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MobileUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="7" />
+          <Property Type="DateTime" Name="UpdatedOn" Precision="7" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <NavigationProperty Name="ProductMaster" Relationship="ECoupounModel.FK_LinkProductId" FromRole="ProductLink" ToRole="ProductMaster" />
+          <NavigationProperty Name="Provider" Relationship="ECoupounModel.FK_LinkProviderId" FromRole="ProductLink" ToRole="Provider" />
+          <NavigationProperty Name="ProductMaster1" Relationship="ECoupounModel.fk_ProductLink" FromRole="ProductLink" ToRole="ProductMaster" />
+          <NavigationProperty Name="Provider1" Relationship="ECoupounModel.fk_ProviderLink" FromRole="ProductLink" ToRole="Provider" />
+        </EntityType>
+        <EntityType Name="ProductPricing">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="ProviderId" />
+          </Key>
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="Int32" Name="ProviderId" Nullable="false" />
+          <Property Type="Int32" Name="SKU" Nullable="false" />
+          <Property Type="Decimal" Name="RegularPrice" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="SalePrice" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="AsofDate" Nullable="false" Precision="7" />
+          <NavigationProperty Name="ProductMaster" Relationship="ECoupounModel.FK_Pricing_Product" FromRole="ProductPricing" ToRole="ProductMaster" />
+          <NavigationProperty Name="ProductMaster1" Relationship="ECoupounModel.fk_ProductPrice" FromRole="ProductPricing" ToRole="ProductMaster" />
+          <NavigationProperty Name="Provider" Relationship="ECoupounModel.fk_ProviderPrice" FromRole="ProductPricing" ToRole="Provider" />
+        </EntityType>
+        <EntityType Name="ProductPricingHistory">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="ProviderId" />
+            <PropertyRef Name="SKU" />
+            <PropertyRef Name="RegularPrice" />
+            <PropertyRef Name="SalePrice" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="Int32" Name="ProviderId" Nullable="false" />
+          <Property Type="Int32" Name="SKU" Nullable="false" />
+          <Property Type="Decimal" Name="RegularPrice" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="SalePrice" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="7" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="ProductViewDetail">
+          <Key>
+            <PropertyRef Name="SKU" />
+            <PropertyRef Name="ProviderId" />
+          </Key>
+          <Property Type="Int32" Name="SKU" Nullable="false" />
+          <Property Type="Int32" Name="ProviderId" Nullable="false" />
+          <Property Type="String" Name="SoruceUrl" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MobileUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="7" />
+          <Property Type="DateTime" Name="UpdatedOn" Precision="7" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <NavigationProperty Name="Provider" Relationship="ECoupounModel.fk_ProviderView" FromRole="ProductViewDetail" ToRole="Provider" />
+          <NavigationProperty Name="Provider1" Relationship="ECoupounModel.FK_View_Provider" FromRole="ProductViewDetail" ToRole="Provider" />
+        </EntityType>
+        <Association Name="FK_LinkProductId">
+          <End Type="ECoupounModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductLink" Role="ProductLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductLink">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkProviderId">
+          <End Type="ECoupounModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductLink" Role="ProductLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="ProductLink">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductLink">
+          <End Type="ECoupounModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductLink" Role="ProductLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductLink">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProviderLink">
+          <End Type="ECoupounModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductLink" Role="ProductLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="ProductLink">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pricing_Product">
+          <End Type="ECoupounModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductPricing" Role="ProductPricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductPricing">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductPrice">
+          <End Type="ECoupounModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductPricing" Role="ProductPricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductPricing">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProviderPrice">
+          <End Type="ECoupounModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductPricing" Role="ProductPricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="ProductPricing">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProviderView">
+          <End Type="ECoupounModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductViewDetail" Role="ProductViewDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="ProductViewDetail">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_View_Provider">
+          <End Type="ECoupounModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="ECoupounModel.ProductViewDetail" Role="ProductViewDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="ProductViewDetail">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -805,19 +943,6 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProductLinks">
-            <EntityTypeMapping TypeName="ECoupounModel.ProductLink">
-              <MappingFragment StoreEntitySet="ProductLinks">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
-                <ScalarProperty Name="SoruceUrl" ColumnName="SoruceUrl" />
-                <ScalarProperty Name="MobileUrl" ColumnName="MobileUrl" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductMasters">
             <EntityTypeMapping TypeName="ECoupounModel.ProductMaster">
               <MappingFragment StoreEntitySet="ProductMaster">
@@ -830,31 +955,6 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductPricings">
-            <EntityTypeMapping TypeName="ECoupounModel.ProductPricing">
-              <MappingFragment StoreEntitySet="ProductPricing">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
-                <ScalarProperty Name="SKU" ColumnName="SKU" />
-                <ScalarProperty Name="RegularPrice" ColumnName="RegularPrice" />
-                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
-                <ScalarProperty Name="AsofDate" ColumnName="AsofDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductViewDetails">
-            <EntityTypeMapping TypeName="ECoupounModel.ProductViewDetail">
-              <MappingFragment StoreEntitySet="ProductViewDetails">
-                <ScalarProperty Name="SKU" ColumnName="SKU" />
-                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
-                <ScalarProperty Name="SoruceUrl" ColumnName="SoruceUrl" />
-                <ScalarProperty Name="MobileUrl" ColumnName="MobileUrl" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -920,16 +1020,54 @@ FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductLinks">
+            <EntityTypeMapping TypeName="ECoupounModel.ProductLink">
+              <MappingFragment StoreEntitySet="ProductLinks">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="MobileUrl" ColumnName="MobileUrl" />
+                <ScalarProperty Name="SoruceUrl" ColumnName="SoruceUrl" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPricings">
+            <EntityTypeMapping TypeName="ECoupounModel.ProductPricing">
+              <MappingFragment StoreEntitySet="ProductPricing">
+                <ScalarProperty Name="AsofDate" ColumnName="AsofDate" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="RegularPrice" ColumnName="RegularPrice" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ProductPricingHistories">
             <EntityTypeMapping TypeName="ECoupounModel.ProductPricingHistory">
               <MappingFragment StoreEntitySet="ProductPricingHistory">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="RegularPrice" ColumnName="RegularPrice" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductViewDetails">
+            <EntityTypeMapping TypeName="ECoupounModel.ProductViewDetail">
+              <MappingFragment StoreEntitySet="ProductViewDetails">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="MobileUrl" ColumnName="MobileUrl" />
+                <ScalarProperty Name="SoruceUrl" ColumnName="SoruceUrl" />
                 <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
                 <ScalarProperty Name="SKU" ColumnName="SKU" />
-                <ScalarProperty Name="RegularPrice" ColumnName="RegularPrice" />
-                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

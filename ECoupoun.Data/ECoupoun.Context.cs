@@ -28,15 +28,15 @@ namespace ECoupoun.Data
         public DbSet<APIDetail> APIDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
-        public DbSet<ProductLink> ProductLinks { get; set; }
         public DbSet<ProductMaster> ProductMasters { get; set; }
-        public DbSet<ProductPricing> ProductPricings { get; set; }
-        public DbSet<ProductViewDetail> ProductViewDetails { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<ProviderPriority> ProviderPriorities { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ProductHistory> ProductHistories { get; set; }
         public DbSet<ProductLinksHistory> ProductLinksHistories { get; set; }
+        public DbSet<ProductLink> ProductLinks { get; set; }
+        public DbSet<ProductPricing> ProductPricings { get; set; }
         public DbSet<ProductPricingHistory> ProductPricingHistories { get; set; }
+        public DbSet<ProductViewDetail> ProductViewDetails { get; set; }
     }
 }

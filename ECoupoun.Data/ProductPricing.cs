@@ -22,6 +22,7 @@ namespace ECoupoun.Data
         public System.DateTime AsofDate { get; set; }
     
         public virtual ProductMaster ProductMaster { get; set; }
+        public virtual ProductMaster ProductMaster1 { get; set; }
         public virtual Provider Provider { get; set; }
     }
 }
