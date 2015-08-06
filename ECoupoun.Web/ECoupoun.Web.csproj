@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
@@ -294,6 +295,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -306,6 +308,10 @@
     <ProjectReference Include="..\ECoupoun.Common\ECoupoun.Common.csproj">
       <Project>{3c34b331-f268-45b9-b25f-7c43f0335d73}</Project>
       <Name>ECoupoun.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ECoupoun.Data\ECoupoun.Data.csproj">
+      <Project>{e143bcdf-4eb2-42a3-a60d-7289c3cffc13}</Project>
+      <Name>ECoupoun.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\ECoupoun.Entities\ECoupoun.Entities.csproj">
       <Project>{ed2b4741-710e-4572-9c13-7577699a0abf}</Project>

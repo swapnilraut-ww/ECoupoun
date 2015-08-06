@@ -1,23 +1,17 @@
-﻿using ECoupoun.Common;
-using ECoupoun.Data;
+﻿using ECoupoun.Data;
 using ECoupoun.Entities;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 using System.Web.Script.Serialization;
 
 namespace BestBuyRESTFulService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class BestBuyRESTService : IBestBuyRESTService
+    public class BestBuyRESTService : DBData, IBestBuyRESTService
     {
         DBProducts dbProducts = new DBProducts();
 
@@ -63,7 +57,7 @@ namespace BestBuyRESTFulService
         /// <returns></returns>
         public string InsertData()
         {
-            string URL = "http://api.remix.bestbuy.com/v1/products%28longDescription=iPhone*%29?show=sku,name,image,modelNumber,regularPrice,salePrice&apiKey=93j5ggwxgfraye8unmhvgzgv&format=json";
+            List<APIDetail> apiDetailsList = db.APIDetails.Where(x => x.IsActive == true).ToList();
             string responseText = string.Empty;
             bool success = false;
 
@@ -71,22 +65,25 @@ namespace BestBuyRESTFulService
 
             try
             {
-                HttpWebRequest request = WebRequest.Create(URL) as HttpWebRequest;
-               
-                // Get response  
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                foreach (var apiDetail in apiDetailsList)
                 {
-                    // Get the response stream  
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    HttpWebRequest request = WebRequest.Create(apiDetail.ServiceUrl) as HttpWebRequest;
 
-                    var serializer = new JavaScriptSerializer();
-                    var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
-
-                    foreach (var item in jsonObject.Products)
+                    // Get response  
+                    using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                     {
-                        success = dbProducts.InsertProduct(item);
-                        if (success)
-                            count++;
+                        // Get the response stream  
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                        var serializer = new JavaScriptSerializer();
+                        var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
+
+                        foreach (var product in jsonObject.Products)
+                        {
+                            success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
+                            if (success)
+                                count++;
+                        }
                     }
                 }
 

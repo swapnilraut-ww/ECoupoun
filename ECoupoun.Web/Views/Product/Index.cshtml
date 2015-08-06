@@ -1,4 +1,4 @@
-﻿
+﻿@model List<ECoupoun.Entities.ProductModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
@@ -48,46 +48,23 @@
 </div>
 <div class="section group">
     <div class="cont-desc span_1_of_2">
-        <div class="grid_1_of_4 images_1_of_4">
-            <a href="preview-3.html"><img src="~/Content/images/feature-pic1.png" alt="" /></a>
-            <h2>Lorem Ipsum is simply </h2>
-            <p><span class="price">$505.22</span></p>
-            <div class="button"><span><a href="preview-3.html" class="details">Details</a></span></div>
-        </div>
-        <div class="grid_1_of_4 images_1_of_4">
-            <a href="preview-3.html"><img src="~/Content/images/feature-pic1.png" alt="" /></a>
-            <h2>Lorem Ipsum is simply </h2>
-            <p><span class="price">$505.22</span></p>
-            <div class="button"><span><a href="preview-3.html" class="details">Details</a></span></div>
-        </div>
-        <div class="grid_1_of_4 images_1_of_4">
-            <a href="preview-3.html"><img src="~/Content/images/feature-pic1.png" alt="" /></a>
-            <h2>Lorem Ipsum is simply </h2>
-            <p><span class="price">$505.22</span></p>
-            <div class="button"><span><a href="preview-3.html" class="details">Details</a></span></div>
-        </div>
-        <div class="grid_1_of_4 images_1_of_4">
-            <a href="preview-3.html"><img src="~/Content/images/feature-pic1.png" alt="" /></a>
-            <h2>Lorem Ipsum is simply </h2>
-            <p><span class="price">$505.22</span></p>
-            <div class="button"><span><a href="preview-3.html" class="details">Details</a></span></div>
-        </div>
+        @foreach (var item in Model)
+        {
+            <div class="grid_1_of_4 images_1_of_4">
+                <a href="preview-3.html"><img src="@item.ImageUrl" alt="" /></a>
+                <h2>@item.ProductName </h2>
+                <p><span class="price">@item.SalePrice</span></p>
+                <div class="button"><span><a href="@item.ProductUrl" class="details">View</a></span></div>
+            </div>
+        }
     </div>
+
     <div class="rightsidebar span_3_of_1">
         <h2>CATEGORIES</h2>
         <ul>
-            <li><a href="#">Mobile Phones</a></li>
-            <li><a href="#">Desktop</a></li>
-            <li><a href="#">Laptop</a></li>
-            <li><a href="#">Accessories</a></li>
-            <li><a href="#">Software</a></li>
-            <li><a href="#">Sports & Fitness</a></li>
-            <li><a href="#">Footwear</a></li>
-            <li><a href="#">Jewellery</a></li>
-            <li><a href="#">Clothing</a></li>
-            <li><a href="#">Home Decor & Kitchen</a></li>
-            <li><a href="#">Beauty & Healthcare</a></li>
-            <li><a href="#">Toys, Kids & Babies</a></li>
+            <li><a href="#">Monitors</a></li>
+            <li><a href="#">Laptops</a></li>
+            <li><a href="#">Desktops & All-in-one Computers</a></li>
         </ul>
         <div class="subscribe">
             <h2>Newsletters Signup</h2>
@@ -134,4 +111,3 @@
         </div>
     </div>
 </div>
-

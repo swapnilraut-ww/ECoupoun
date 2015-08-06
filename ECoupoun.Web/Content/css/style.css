@@ -492,7 +492,7 @@ p.note{
 		font-size:0.8em;
 		font-family: Arial, "Helvetica Neue", "Helvetica", Tahoma, Verdana, sans-serif;
 		border: 1px solid rgba(0,0,0,0.1);
-        background:#602D8D url(../images/large-button-overlay.png);       
+        background:rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #8dc7a1, #4c855f) repeat scroll 0 0;       
         color             : #fff;
         text-shadow:0 -1px 1px rgba(0, 0, 0, 0.25);
 		-moz-border-radius:5px;
@@ -500,8 +500,8 @@ p.note{
 		border-radius:5px;
 }
 .list_2_of_1 .button a:hover{
-	    border: 1px solid #4D00A0;
-        background:#70389C;
+	    border: 1px solid #4c855f;
+        background:rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #4c855f, #8dc7a1) repeat scroll 0 0;
         text-decoration:none; 
 }
 .header_bottom_right_images{

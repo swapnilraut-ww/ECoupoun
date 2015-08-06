@@ -1,13 +1,13 @@
-﻿@model List<ECoupoun.Entities.Products>
+﻿@model List<ECoupoun.Entities.ProductModel>
 @{
     ViewBag.Title = "Home Page";
 }
-@*@ViewBag.ResponseText
+@ViewBag.ResponseText
     @using (Html.BeginForm("BestBuyInsertData", "Home", FormMethod.Post))
     {
         <input type="submit" value="Get BestBuy Data" />
     }
-
+@*
     @using (Html.BeginForm("WalmartInsertData", "Home", FormMethod.Post))
     {
         <input type="submit" value="Get Walmart Data" />
@@ -93,38 +93,15 @@
     <div class="clear"></div>
 </div>
 <div class="section group">
-    <div class="grid_1_of_4 images_1_of_4">
-        <a href="preview-3.html"><img src="~/Content/images/feature-pic1.png" alt="" /></a>
-        <h2>Lorem Ipsum is simply </h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-        <p><span class="strike">$528.22</span><span class="price">$505.22</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="preview-3.html" class="cart-button">Add to Cart</a></span> </div>
-        <div class="button"><span><a href="preview-3.html" class="details">Details</a></span></div>
-    </div>
-    <div class="grid_1_of_4 images_1_of_4">
-        <a href="preview-2.html"><img src="~/Content/images/feature-pic2.jpg" alt="" /></a>
-        <h2>Lorem Ipsum is simply </h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-        <p><span class="strike">$640.89</span><span class="price">$620.87</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="#" class="cart-button">Add to Cart</a></span> </div>
-        <div class="button"><span><a href="#" class="details">Details</a></span></div>
-    </div>
-    <div class="grid_1_of_4 images_1_of_4">
-        <a href="preview-4.html"><img src="~/Content/images/feature-pic3.jpg" alt="" /></a>
-        <h2>Lorem Ipsum is simply </h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-        <p><span class="strike">$240.66</span><span class="price">$220.97</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="preview-6.html" class="cart-button">Add to Cart</a></span> </div>
-        <div class="button"><span><a href="#" class="details">Details</a></span></div>
-    </div>
-    <div class="grid_1_of_4 images_1_of_4">
-        <img src="~/Content/images/feature-pic4.png" alt="" />
-        <h2>Lorem Ipsum is simply </h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-        <p><span class="strike">$436.22</span><span class="price">$415.54</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="#" class="cart-button">Add to Cart</a></span> </div>
-        <div class="button"><span><a href="#" class="details">Details</a></span></div>
-    </div>
+    @foreach (var item in Model.Take(4))
+    {
+        <div class="grid_1_of_4 images_1_of_4">
+            <a href="preview-3.html"><img src="@item.ImageUrl" alt="" /></a>
+            <h2>@item.ProductName </h2>
+            <p><span class="price">@item.SalePrice</span></p>
+            <div class="button"><span><a href="@item.ProductUrl" class="details">View</a></span></div>
+        </div>
+    }   
 </div>
 <div class="content_bottom">
     <div class="heading">
@@ -169,44 +146,13 @@
     <div class="clear"></div>
 </div>
 <div class="section group">
-    <div class="grid_1_of_4 images_1_of_4">
-        <a href="preview-3.html"><img src="~/Content/images/new-pic1.jpg" alt="" /></a>
-        <div class="discount">
-            <span class="percentage">40%</span>
+    @foreach (var item in Model.Take(4))
+    {
+        <div class="grid_1_of_4 images_1_of_4">
+            <a href="preview-3.html"><img src="@item.ImageUrl" alt="" /></a>
+            <h2>@item.ProductName </h2>
+            <p><span class="price">@item.SalePrice</span></p>
+            <div class="button"><span><a href="@item.ProductUrl" class="details">View</a></span></div>
         </div>
-        <h2>Lorem Ipsum is simply </h2>
-        <p><span class="strike">$438.99</span><span class="price">$403.66</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="preview-3.html" class="cart-button">Add to Cart</a></span> </div>
-        <div class="button"><span><a href="preview-3.html" class="details">Details</a></span></div>
-    </div>
-    <div class="grid_1_of_4 images_1_of_4">
-        <a href="preview-4.html"><img src="~/Content/images/new-pic2.jpg" alt="" /></a>
-        <div class="discount">
-            <span class="percentage">22%</span>
-        </div>
-        <h2>Lorem Ipsum is simply </h2>
-        <p><span class="strike">$667.22</span><span class="price">$621.75</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="preview-4.html" class="cart-button">Add to Cart</a></span></div>
-        <div class="button"><span><a href="preview-4.html" class="details">Details</a></span></div>
-    </div>
-    <div class="grid_1_of_4 images_1_of_4">
-        <a href="preview-2.html"><img src="~/Content/images/feature-pic2.jpg" alt="" /></a>
-        <div class="discount">
-            <span class="percentage">55%</span>
-        </div>
-        <h2>Lorem Ipsum is simply </h2>
-        <p><span class="strike">$457.22</span><span class="price">$428.02</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="preview-2.html" class="cart-button">Add to Cart</a></span> </div>
-        <div class="button"><span><a href="preview-2.html" class="details">Details</a></span></div>
-    </div>
-    <div class="grid_1_of_4 images_1_of_4">
-        <img src="~/Content/images/new-pic3.jpg" alt="" />
-        <div class="discount">
-            <span class="percentage">66%</span>
-        </div>
-        <h2>Lorem Ipsum is simply </h2>
-        <p><span class="strike">$643.22</span><span class="price">$457.88</span></p>
-        <div class="button"><span><img src="~/Content/images/cart.jpg" alt="" /><a href="#" class="cart-button">Add to Cart</a></span> </div>
-        <div class="button"><span><a href="#" class="details">Details</a></span></div>
-    </div>
+    }  
 </div>

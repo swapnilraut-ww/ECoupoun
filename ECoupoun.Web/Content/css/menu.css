@@ -130,7 +130,7 @@ ul.dc_mm-orange .sub li.mega-hdr li a{
 }
 ul.dc_mm-orange .sub li.mega-hdr li a:hover{
 	background:#CCC9C9 url(../images/drop_arrow-hover.png) no-repeat 5px 8px;
-	color:#602D8D;
+	color:#4c855f;
 	text-decoration:none;
 }
 ul.dc_mm-orange .sub ul li{
@@ -150,7 +150,7 @@ ul.dc_mm-orange li .sub-container.non-mega li a{
 }
 ul.dc_mm-orange li .sub-container.non-mega li a:hover{
 	background:#CCC9C9 url(../images/drop_arrow-hover.png) no-repeat 7px 10px;
-	color:#602D8D;
+	color:#4c855f;
 }
 
 @media only screen and (max-width:1024px) {

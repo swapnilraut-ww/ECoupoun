@@ -11,33 +11,24 @@ using System.Web.Mvc;
 
 namespace ECoupoun.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
-            List<Products> productList = new List<Products>();
-            try
-            {
-                var url = ECoupounConstants.BestBuyRESTServiceURL + ECoupounConstants.GetAllProducts;
-                ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
-                client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
+            var productList = (from p in db.ProductMasters
+                               join pl in db.ProductLinks on p.ProductId equals pl.ProductId
+                               join pp in db.ProductPricings on p.ProductId equals pp.ProductId
+                               join pr in db.Providers on pp.ProviderId equals pr.ProviderId
+                               select new ProductModel
+                               {
+                                   ProductName = p.Name,
+                                   ProviderName = pr.Name,
+                                   ProductUrl = pl.SoruceUrl,
+                                   ImageUrl = p.Image,
+                                   SalePrice = pp.SalePrice
+                               }).ToList();
 
-                MemoryStream stream = new MemoryStream();
-                byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
-                stream = new MemoryStream(data);
-
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Products>));
-                serializer = new DataContractJsonSerializer(typeof(List<Products>));
-                productList = (List<Products>)serializer.ReadObject(stream);
-
-                ViewBag.ResponseText = TempData["ResponseText"];
-                return View(productList);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.ResponseText = ex.Message;
-                return View(productList);
-            }
+            return View(productList);
         }
 
         [HttpPost]

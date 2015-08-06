@@ -72,33 +72,33 @@ namespace EBayRESTFulService
                 HttpWebRequest request = WebRequest.Create(URL) as HttpWebRequest;
 
                 // Get response  
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                {
-                    // Get the response stream  
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                //{
+                //    // Get the response stream  
+                //    StreamReader reader = new StreamReader(response.GetResponseStream());
 
-                    var serializer = new JavaScriptSerializer();
-                    var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
+                //    var serializer = new JavaScriptSerializer();
+                //    var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
 
-                    foreach (var SearchResult in jsonObject.SearchResult)
-                    {
-                        foreach (var item in SearchResult.ItemArray.Item)
-                        {
-                            Products product = new Products();
-                            product.Sku = item.ItemID;
-                            product.Name = item.Title;
-                            product.ModelNumber = null;
-                            product.Image = item.GalleryURL;
-                            product.RegularPrice = item.ConvertedCurrentPrice.Value;
-                            product.SalePrice = item.ConvertedCurrentPrice.Value;
+                //    foreach (var SearchResult in jsonObject.SearchResult)
+                //    {
+                //        foreach (var item in SearchResult.ItemArray.Item)
+                //        {
+                //            Products product = new Products();
+                //            product.Sku = item.ItemID;
+                //            product.Name = item.Title;
+                //            product.ModelNumber = null;
+                //            product.ThumbnailImage = item.GalleryURL;
+                //            product.RegularPrice = item.ConvertedCurrentPrice.Value;
+                //            product.SalePrice = item.ConvertedCurrentPrice.Value;
 
-                            success = dbProducts.InsertProduct(product);
-                        }
+                //            success = dbProducts.InsertProduct(product);
+                //        }
                       
-                        if (success)
-                            count++;
-                    }
-                }
+                //        if (success)
+                //            count++;
+                //    }
+                //}
 
                 responseText = string.Format("Inserted {0} Records.", count);
             }

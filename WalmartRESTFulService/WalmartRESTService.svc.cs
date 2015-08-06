@@ -72,29 +72,29 @@ namespace WalmartRESTFulService
                 HttpWebRequest request = WebRequest.Create(URL) as HttpWebRequest;
 
                 // Get response  
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                {
-                    // Get the response stream  
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                //{
+                //    // Get the response stream  
+                //    StreamReader reader = new StreamReader(response.GetResponseStream());
 
-                    var serializer = new JavaScriptSerializer();
-                    var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
+                //    var serializer = new JavaScriptSerializer();
+                //    var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
 
-                    foreach (var item in jsonObject.Items)
-                    {
-                        Products product = new Products();
-                        product.Sku = item.ItemId;
-                        product.Name = item.Name;
-                        product.ModelNumber = item.ModelNumber;
-                        product.Image = item.ThumbnailImage;
-                        product.RegularPrice = item.msrp;
-                        product.SalePrice = item.SalePrice;
+                //    foreach (var item in jsonObject.Items)
+                //    {
+                //        Products product = new Products();
+                //        product.Sku = item.ItemId;
+                //        product.Name = item.Name;
+                //        product.ModelNumber = item.ModelNumber;
+                //        product.ThumbnailImage = item.ThumbnailImage;
+                //        product.RegularPrice = item.msrp;
+                //        product.SalePrice = item.SalePrice;
 
-                        success = dbProducts.InsertProduct(product);
-                        if (success)
-                            count++;
-                    }
-                }
+                //        success = dbProducts.InsertProduct(product);
+                //        if (success)
+                //            count++;
+                //    }
+                //}
 
                 responseText = string.Format("Inserted {0} Records.", count);
             }

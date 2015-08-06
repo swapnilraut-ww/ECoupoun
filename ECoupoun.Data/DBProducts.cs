@@ -9,32 +9,14 @@ using System.Threading.Tasks;
 
 namespace ECoupoun.Data
 {
-    public class DBProducts : DBHelper
+    public class DBProducts : DBData
     {
         public List<Products> GetAllProducts()
         {
             List<Products> productList = new List<Products>();
             try
             {
-                OpenConnection();
-                objCommand = new SqlCommand("GetAllProducts", objConnection);
-                objCommand.CommandType = System.Data.CommandType.StoredProcedure;
-
-                objReader = objCommand.ExecuteReader();
-                if (objReader.HasRows)
-                {
-                    while (objReader.Read())
-                    {
-                        Products product = new Products();
-                        product.Sku = Convert.ToInt64(objReader["Sku"].ToString());
-                        product.Name = objReader["Name"].ToString();
-                        product.Image = objReader["Image"].ToString();
-                        product.ModelNumber = objReader["ModelNumber"].ToString();
-                        product.RegularPrice = Convert.ToDouble(objReader["RegularPrice"]);
-                        product.SalePrice = Convert.ToDouble(objReader["SalePrice"]);
-                        productList.Add(product);
-                    }
-                }
+                var a = db.APIDetails.Where(x => x.CategoryId == 3).FirstOrDefault().ServiceUrl;
             }
             catch (Exception ex)
             {
@@ -42,47 +24,67 @@ namespace ECoupoun.Data
             }
             finally
             {
-                if (objConnection != null)
-                {
-                    objConnection.Close();
-                }
+
             }
 
             return productList;
         }
 
-        public bool InsertProduct(Products products)
+        public bool InsertProduct(int categoryId, int providerId, Products product)
         {
             try
             {
-                OpenConnection();
-                objCommand = new SqlCommand("InsertProduct", objConnection);
-                objCommand.CommandType = System.Data.CommandType.StoredProcedure;
-                objCommand.Parameters.AddWithValue("Sku", products.Sku);
-                objCommand.Parameters.AddWithValue("Name", products.Name);
-                objCommand.Parameters.AddWithValue("Image", products.Image);
-                objCommand.Parameters.AddWithValue("ModelNumber", products.ModelNumber);
-                objCommand.Parameters.AddWithValue("RegularPrice", products.RegularPrice);
-                objCommand.Parameters.AddWithValue("SalePrice", products.SalePrice);
-
-                int data = objCommand.ExecuteNonQuery();
-                if (data > 0)
+                ProductMaster productMaster = db.ProductMasters.Where(x => x.ModelNumber == product.ModelNumber).SingleOrDefault();
+                if (productMaster == null)
                 {
-                    return true;
-                }
+                    Manufacturer manufacturer = db.Manufacturers.Where(x => x.Name == product.Manufacturer).SingleOrDefault();
+                    if (manufacturer == null)
+                    {
+                        manufacturer = new Manufacturer();
+                        manufacturer.Name = product.Manufacturer;
+                        manufacturer.CreatedOn = System.DateTime.Now;
+                        manufacturer.IsActive = true;
+                        db.Manufacturers.Add(manufacturer);
+                    }
+
+                    productMaster = new ProductMaster();
+                    productMaster.CategoryId = categoryId;
+                    productMaster.ManufacturerId = manufacturer.ManufacturerId;
+                    productMaster.Name = product.Name;
+                    productMaster.LongDescription = product.ShortDescription;
+                    productMaster.ModelNumber = product.ModelNumber;
+                    productMaster.Image = product.ThumbnailImage;
+                    productMaster.CreatedOn = System.DateTime.Now;
+                    db.ProductMasters.Add(productMaster);
+
+                    ProductLink productLink = new ProductLink();
+                    productLink.ProductId = productMaster.ProductId;
+                    productLink.ProviderId = providerId;
+                    productLink.SoruceUrl = product.Url;
+                    productLink.MobileUrl = product.MobileUrl;
+                    productLink.CreatedOn = System.DateTime.Now;
+                    productLink.IsActive = true;
+                    db.ProductLinks.Add(productLink);
+
+                    ProductPricing productPricing = new ProductPricing();
+                    productPricing.ProductId = productMaster.ProductId;
+                    productPricing.ProviderId = providerId;
+                    productPricing.SKU = product.Sku;
+                    productPricing.RegularPrice = product.RegularPrice;
+                    productPricing.SalePrice = product.SalePrice;
+                    productPricing.AsofDate = System.DateTime.Now;
+                    db.ProductPricings.Add(productPricing);
+
+                    db.SaveChanges();
+                }              
+
+                return true;
             }
+
             catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex.InnerException);
             }
-            finally
-            {
-                if (objConnection != null)
-                {
-                    objConnection.Close();
-                }
-            }
-            return false;
         }
     }
 }
