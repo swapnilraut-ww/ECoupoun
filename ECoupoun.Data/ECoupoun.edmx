@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ECoupounModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ECoupounModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="APIDetails">
           <Key>
             <PropertyRef Name="APIId" />
@@ -315,37 +315,37 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductHistory" EntityType="Self.ProductHistory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [ProductHistory].[ProductId] AS [ProductId], 
-    [ProductHistory].[CategoryId] AS [CategoryId], 
-    [ProductHistory].[ManufacturerId] AS [ManufacturerId], 
-    [ProductHistory].[Name] AS [Name], 
-    [ProductHistory].[LongDescription] AS [LongDescription], 
-    [ProductHistory].[ModelNumber] AS [ModelNumber], 
-    [ProductHistory].[Image] AS [Image], 
-    [ProductHistory].[CreatedOn] AS [CreatedOn], 
-    [ProductHistory].[DeletedOn] AS [DeletedOn]
-    FROM [dbo].[ProductHistory] AS [ProductHistory]</DefiningQuery>
+[ProductHistory].[ProductId] AS [ProductId], 
+[ProductHistory].[CategoryId] AS [CategoryId], 
+[ProductHistory].[ManufacturerId] AS [ManufacturerId], 
+[ProductHistory].[Name] AS [Name], 
+[ProductHistory].[LongDescription] AS [LongDescription], 
+[ProductHistory].[ModelNumber] AS [ModelNumber], 
+[ProductHistory].[Image] AS [Image], 
+[ProductHistory].[CreatedOn] AS [CreatedOn], 
+[ProductHistory].[DeletedOn] AS [DeletedOn]
+FROM [dbo].[ProductHistory] AS [ProductHistory]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ProductLinksHistory" EntityType="Self.ProductLinksHistory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [ProductLinksHistory].[ProductId] AS [ProductId], 
-    [ProductLinksHistory].[ProviderId] AS [ProviderId], 
-    [ProductLinksHistory].[SoruceUrl] AS [SoruceUrl], 
-    [ProductLinksHistory].[MobileUrl] AS [MobileUrl], 
-    [ProductLinksHistory].[CreatedOn] AS [CreatedOn], 
-    [ProductLinksHistory].[DeletedOn] AS [DeletedOn]
-    FROM [dbo].[ProductLinksHistory] AS [ProductLinksHistory]</DefiningQuery>
+[ProductLinksHistory].[ProductId] AS [ProductId], 
+[ProductLinksHistory].[ProviderId] AS [ProviderId], 
+[ProductLinksHistory].[SoruceUrl] AS [SoruceUrl], 
+[ProductLinksHistory].[MobileUrl] AS [MobileUrl], 
+[ProductLinksHistory].[CreatedOn] AS [CreatedOn], 
+[ProductLinksHistory].[DeletedOn] AS [DeletedOn]
+FROM [dbo].[ProductLinksHistory] AS [ProductLinksHistory]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ProductPricingHistory" EntityType="Self.ProductPricingHistory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [ProductPricingHistory].[ProductId] AS [ProductId], 
-    [ProductPricingHistory].[ProviderId] AS [ProviderId], 
-    [ProductPricingHistory].[SKU] AS [SKU], 
-    [ProductPricingHistory].[RegularPrice] AS [RegularPrice], 
-    [ProductPricingHistory].[SalePrice] AS [SalePrice], 
-    [ProductPricingHistory].[StartDate] AS [StartDate], 
-    [ProductPricingHistory].[EndDate] AS [EndDate]
-    FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
+[ProductPricingHistory].[ProductId] AS [ProductId], 
+[ProductPricingHistory].[ProviderId] AS [ProviderId], 
+[ProductPricingHistory].[SKU] AS [SKU], 
+[ProductPricingHistory].[RegularPrice] AS [RegularPrice], 
+[ProductPricingHistory].[SalePrice] AS [SalePrice], 
+[ProductPricingHistory].[StartDate] AS [StartDate], 
+[ProductPricingHistory].[EndDate] AS [EndDate]
+FROM [dbo].[ProductPricingHistory] AS [ProductPricingHistory]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="fk_APICategory" Association="Self.fk_APICategory">
             <End Role="Categories" EntitySet="Categories" />
@@ -949,7 +949,7 @@ warning 6002: The table/view 'ECoupoun.dbo.ProductPricingHistory' does not have 
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
