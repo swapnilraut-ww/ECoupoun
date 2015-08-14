@@ -43,10 +43,14 @@ namespace ECoupoun.Web
                                   "~/Scripts/jquery.flexslider.js"
                       ));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/css").Include(              
                       "~/Content/css/style.css",
                       "~/Content/css/menu.css",
-                      "~/Content/css/flexslider.css"));
+                      "~/Content/css/flexslider.css",
+                      "~/Content/css/bootstrap.css",
+                      "~/Content/css/bootstrap.min.css",
+                      "~/Content/css/CustomLayout.css"
+                      ));
         }
     }
 }

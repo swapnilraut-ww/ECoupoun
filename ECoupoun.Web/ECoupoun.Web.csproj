@@ -173,6 +173,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\CustomLayout.css" />
     <Content Include="Content\css\flexslider.css" />
     <Content Include="Content\css\menu.css" />
     <Content Include="Content\css\style.css" />

@@ -1,0 +1,129 @@
+﻿body {
+}
+
+ul li {
+    list-style: outside none none;
+}
+li {
+    line-height: 1.4;
+}
+
+/*.images_1_of_4 {
+	width: 95%;
+	padding:1.5%;
+	text-align:center;
+	position:relative; 
+}*/
+
+.images_1_of_4 h2 {
+    color: #CC3636;
+    font-family: 'Monda', sans-serif;
+    /*font-size:0.9em;*/
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: normal;
+}
+
+.images_1_of_4 .button {
+    margin-top: .3em;
+    align-self: center;
+    line-height: 1.9em;
+    float: left;
+    width: 100%;
+}
+
+.images_1_of_4  p span.price{
+	font-size:13px;
+	font-family: 'Monda', sans-serif;
+	color: #414045;
+	/*margin-left:15px;*/
+    text-align: left !important;
+}
+
+.span_1_of_2 {
+    padding: 1.5%;
+    width: 78%;
+}
+
+.span_3_of_1 {
+    padding: 1.5%;
+    width: 17%;
+}
+
+/****** Custom Layout *****/
+.prt_img_height {
+    height: 200px;
+    width:95%;
+    max-width: 100%;
+}
+
+
+.product_list{
+    height: 265px;
+    margin-bottom: 15px !important;
+}
+
+.product_detail {
+    border: 2px solid #f7f7f7;
+    margin-bottom: 15px;
+    padding: 10px;
+    text-align: left;
+}
+
+#product_item:hover
+{
+    border: 2px solid #602D8D;
+}
+
+#product_item a 
+{
+    outline: medium none !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease-in-out 0s;
+
+}
+
+.product_img {
+    border-bottom: 2px solid #eee;
+    height: 150px;
+    overflow: hidden;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.product_img img 
+{
+    max-height: 145px;
+    max-width: 100%;
+}
+
+.product_name {
+    font-size: 11px;
+    padding: 10px 0 3px 10px;
+    text-align: left !important;
+}
+.product_name h4 {
+    font-family:'Monda', sans-serif;
+    color: #414045;
+    font-size:12px;
+	font-weight : normal;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family:'Monda', sans-serif;
+    font-weight: 600;
+}
+
+.product_price {
+    font-size: 11px;
+    padding: 3px 0 3px 10px;
+    text-align: left !important;
+}
+
+.actual-price {
+    color: #ff7f00;
+    font-size: 17px;
+    font-weight: bold;
+}

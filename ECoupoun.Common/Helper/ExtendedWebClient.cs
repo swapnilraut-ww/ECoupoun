@@ -14,7 +14,7 @@ namespace ECoupoun.Common.Helper
 
         public ExtendedWebClient(Uri address)
         {
-            var WebClientTimeout = 600000;//In Milli seconds
+            var WebClientTimeout = 1000000;   //600000;//In Milli seconds
             this.Timeout = WebClientTimeout;
         }
 
