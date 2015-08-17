@@ -36,6 +36,7 @@ namespace ECoupoun.Web
 
             bundles.Add(new ScriptBundle("~/bundles/core").Include(
                       "~/Scripts/script.js",
+                      "~/Scripts/CustomJs/GlobalJs.js",
                             "~/Scripts/nav.js",
                                   "~/Scripts/move-top.js",
                                   "~/Scripts/easing.js",

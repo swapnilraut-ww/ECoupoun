@@ -1,0 +1,39 @@
+﻿@model List<ECoupoun.Data.Category>
+
+<ul id="dc_mega-menu-orange" class="dc_mm-orange">
+    <li><a href="index.html">Home</a></li>
+    @foreach (var item in Model.Where(x => x.CategoryParentId == null))
+    {
+        <li>
+            <a href="products.html">@item.Name</a>
+            @GenerateMenu(Model, item.CategoryId)
+        </li>
+    }
+    <div class="clear"></div>
+</ul>
+
+@helper GenerateMenu(IEnumerable<ECoupoun.Data.Category> categories, int? parentId)
+{
+    if (categories.Any(n => n.CategoryParentId == parentId))
+    { 
+    <ul>
+        @foreach (var category in categories.Where(n => n.CategoryParentId == parentId))
+        {
+            if (categories.Where(x => x.CategoryParentId == category.CategoryId).Count() > 0)
+            {
+            <li>
+                <a>@category.Name</a>
+                @GenerateMenu(categories, category.CategoryId)
+            </li>
+            }
+            else
+            {
+            <li>
+                <a href="/Product/Index?parentid=@category.CategoryParentId&catid=@category.CategoryId">@category.Name</a>
+                @GenerateMenu(categories, category.CategoryId)
+            </li>
+            }
+        }
+    </ul>
+    }
+}

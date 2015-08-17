@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Web;
 using System.Web.Mvc;
+using ECoupoun.Data;
 
 namespace ECoupoun.Web.Controllers
 {
@@ -21,13 +22,15 @@ namespace ECoupoun.Web.Controllers
                                join pr in db.Providers on pp.ProviderId equals pr.ProviderId
                                select new ProductModel
                                {
+                                   ProviderId = pr.ProviderId,
                                    ProductName = p.Name,
+                                   Sku = pp.SKU,
                                    ProviderName = pr.Name,
                                    ProductUrl = pl.SoruceUrl,
                                    ImageUrl = p.Image,
-                                   SalePrice = pp.SalePrice
-                               }).ToList();
+                                   SalePrice = pp.SalePrice,
 
+                               }).ToList();
             return View(productList);
         }
 
@@ -77,6 +80,12 @@ namespace ECoupoun.Web.Controllers
             {
                 return ex.Message;
             }
+        }
+
+        public ActionResult Menu()
+        {
+            List<Category> menues = db.Categories.ToList();
+            return PartialView("_MenuPartial", menues);
         }
     }
 }

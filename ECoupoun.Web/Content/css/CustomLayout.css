@@ -127,3 +127,8 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 17px;
     font-weight: bold;
 }
+
+/*Menu*/
+.mega-hdr-a {
+    height: 25px !important;
+}

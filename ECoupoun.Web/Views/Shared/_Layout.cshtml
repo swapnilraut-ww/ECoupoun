@@ -6,15 +6,16 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Doppio+One' rel='stylesheet' type='text/css'>
+  @*  <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Doppio+One' rel='stylesheet' type='text/css'>*@
 </head>
 <body>
     <div class="wrap">
         <div class="header">
             <div class="header_top">
                 <div class="logo">
-                    <a href="index.html"><img src="~/Content/images/logo.png" alt="" /></a>
+                    <a href="index.html">
+                        <img src="~/Content/images/logo.png" alt="" /></a>
                 </div>
                 <div class="header_top_right">
                     <div class="search_box">
@@ -27,40 +28,15 @@
                 <div class="clear"></div>
             </div>
             <div class="menu">
-                <ul id="dc_mega-menu-orange" class="dc_mm-orange">
-                    <li><a href="/Home/Index">Home</a></li>
-                    <li>
-                        <a href="/Product/Index">Electronics</a>
-                        <ul>
-                            <li>
-                                <a href="/Product/Index">Computers</a>
-                                <ul>
-                                    <li><a href="/Product/Index">Monitors</a></li>
-                                    <li><a href="/Product/Index">Laptops</a></li>
-                                    <li><a href="/Product/Index">Desktops</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="products.html">Top Brands</a>
-                        <ul>
-                            <li><a href="products.html">Brand Name 1</a></li>
-                            <li><a href="products.html">Brand Name 2</a></li>
-                            <li><a href="products.html">Brand Name 3</a></li>
-                        </ul>
-                    </li>                 
-                    <li><a href="#">About</a></li>
-                    <li><a href="contact.html">Contact</a> </li>
-                    <div class="clear"></div>
-                </ul>
+                @{Html.RenderAction("Menu", "Home");}            
             </div>
             <div class="header_bottom">
                 <div class="header_bottom_left">
                     <div class="section group">
                         <div class="listview_1_of_2 images_1_of_2">
                             <div class="listimg listimg_2_of_1">
-                                <a href="preview.html"> <img src="~/Content/images/pic4.png" alt="" /></a>
+                                <a href="preview.html">
+                                    <img src="~/Content/images/pic4.png" alt="" /></a>
                             </div>
                             <div class="text list_2_of_1">
                                 <h2>Iphone</h2>
@@ -70,7 +46,9 @@
                         </div>
                         <div class="listview_1_of_2 images_1_of_2">
                             <div class="listimg listimg_2_of_1">
-                                <a href="preview-5.html"><img src="~/Content/images/pic3.png" alt="" /> ></a>
+                                <a href="preview-5.html">
+                                    <img src="~/Content/images/pic3.png" alt="" />
+                                    ></a>
                             </div>
                             <div class="text list_2_of_1">
                                 <h2>Sansung</h2>
@@ -82,7 +60,8 @@
                     <div class="section group">
                         <div class="listview_1_of_2 images_1_of_2">
                             <div class="listimg listimg_2_of_1">
-                                <a href="preview-3.html"> <img src="~/Content/images/pic3.jpg" alt="" /></a>
+                                <a href="preview-3.html">
+                                    <img src="~/Content/images/pic3.jpg" alt="" /></a>
                             </div>
                             <div class="text list_2_of_1">
                                 <h2>Acer</h2>
@@ -92,7 +71,8 @@
                         </div>
                         <div class="listview_1_of_2 images_1_of_2">
                             <div class="listimg listimg_2_of_1">
-                                <a href="preview-6.html"><img src="~/Content/images/pic1.png" alt="" /></a>
+                                <a href="preview-6.html">
+                                    <img src="~/Content/images/pic1.png" alt="" /></a>
                             </div>
                             <div class="text list_2_of_1">
                                 <h2>Canon</h2>
@@ -108,10 +88,14 @@
                     <section class="slider">
                         <div class="flexslider">
                             <ul class="slides">
-                                <li><img src="~/Content/images/1.jpg" alt="" /></li>
-                                <li><img src="~/Content/images/2.jpg" alt="" /></li>
-                                <li><img src="~/Content/images/3.jpg" alt="" /></li>
-                                <li><img src="~/Content/images/4.jpg" alt="" /></li>
+                                <li>
+                                    <img src="~/Content/images/1.jpg" alt="" /></li>
+                                <li>
+                                    <img src="~/Content/images/2.jpg" alt="" /></li>
+                                <li>
+                                    <img src="~/Content/images/3.jpg" alt="" /></li>
+                                <li>
+                                    <img src="~/Content/images/4.jpg" alt="" /></li>
                             </ul>
                         </div>
                     </section>
@@ -168,10 +152,10 @@
                     <div class="social-icons">
                         <h4>Follow Us</h4>
                         <ul>
-                            <li class="facebook"><a href="#" target="_blank"> </a></li>
-                            <li class="twitter"><a href="#" target="_blank"> </a></li>
-                            <li class="googleplus"><a href="#" target="_blank"> </a></li>
-                            <li class="contact"><a href="#" target="_blank"> </a></li>
+                            <li class="facebook"><a href="#" target="_blank"></a></li>
+                            <li class="twitter"><a href="#" target="_blank"></a></li>
+                            <li class="googleplus"><a href="#" target="_blank"></a></li>
+                            <li class="contact"><a href="#" target="_blank"></a></li>
                             <div class="clear"></div>
                         </ul>
                     </div>
