@@ -298,6 +298,7 @@
     <Content Include="Views\Shared\_MenuPartial.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Product\SubCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

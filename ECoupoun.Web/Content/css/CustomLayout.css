@@ -46,7 +46,7 @@ li {
 }
 
 .span_3_of_1 {
-    padding: 1.5%;
+    padding: 0 !important;
     width: 17%;
 }
 
@@ -60,7 +60,7 @@ li {
 
 .product_list{
     height: 265px;
-    margin-bottom: 15px !important;
+    margin-bottom: 30px !important;
 }
 
 .product_detail {
@@ -101,6 +101,7 @@ li {
     font-size: 11px;
     padding: 10px 0 3px 10px;
     text-align: left !important;
+    height: 60px;
 }
 .product_name h4 {
     font-family:'Monda', sans-serif;
@@ -131,4 +132,55 @@ h1, h2, h3, h4, h5, h6 {
 /*Menu*/
 .mega-hdr-a {
     height: 25px !important;
+}
+
+/*Category List*/
+.category {
+    background-color: #f3f3f3;
+    border: 1px solid #dbdbdb;
+    margin: 10px 0;
+    min-height: 240px;
+    position: relative;
+    width: 100%;
+}
+
+.category a {
+    display: inline-block;
+    outline: medium none;
+    text-decoration: none;
+    width: 100%;
+}
+
+.category .categoryimg_box {
+    display: inline-block;
+    padding: 10px 0 0;
+    text-align: center;
+    width: 100%;
+}
+
+.category .categoryimg_box img {
+    display: inline-block;
+    max-height: 170px;
+    max-width: 100%;
+    width: auto;
+}
+
+.category .categoryCaption span::after {
+    content: url("http://www.dealspricer.in/static/images/arrow-calltoaction.png");
+    float: right;
+}
+
+.category .categoryCaption {
+    background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+    bottom: 0;
+    color: #fff;
+    display: inline-block;
+    font-family: "Open Sans",sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    left: 0;
+    padding: 10px 2px 10px 10px;
+    position: absolute;
+    text-transform: uppercase;
+    width: 100%;
 }

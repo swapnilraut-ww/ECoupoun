@@ -6,7 +6,7 @@
 
 <div class="content_top">
     <div class="back-links">
-        <p><a href="#">Home</a> >> <a href="#">Electronics</a></p>
+        @Html.Raw(ViewBag.BreadCrumb)
     </div>
     <div class="sort">
         <p>
@@ -52,28 +52,44 @@
             @foreach (var item in Model)
             {
                 <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-               <div id="product_item" class="product_detail"> 
+                    <div id="product_item" class="product_detail">
                         <div class="product_img">
-                            <a href="@item.ProductUrl"><img src="@item.ImageUrl" alt="Product Image" /></a></div>
-                       
-                       <a href="@item.ProductUrl">
-                       <div class="product_name"><h4>@item.ProductName </h4></div>
-                       <div class="product_price"><p><span class="actual-price">@item.SalePrice</span></p></div>
-                       
-                   </a>
+                            <a href="@item.ProductUrl"><img src="@item.ImageUrl" alt="Product Image" /></a>
+                        </div>
+
+                        <a href="@item.ProductUrl">
+                            <div class="product_name">
+
+                                @if (item.ProductName.Length > 50)
+                                {
+                                    <h4 title="@item.ProductName">
+                                        @item.ProductName.Substring(0, 50) <span>...</span>
+                                    </h4>
+                                }
+                                else
+                                {
+                                    <h4>
+                                        @item.ProductName
+                                    </h4>
+                                }
+
+                            </div>
+                            <div class="product_price"><p><span class="actual-price">@item.SalePrice</span></p></div>
+
+                        </a>
                         @*<div style="height:25%">
                             <div class="button">
                                 <span>
                                     <a href="@item.ProductUrl">View</a></span></div></div>*@
                     </div>
-                                       @*<div class="grid_1_of_4 images_1_of_4 prt_img_height">
-                        <div style="height:25%"><a href="preview-3.html"><img src="@item.ImageUrl" alt="" /></a></div>
-                        <div style="height:20%"><h2>@item.ProductName </h2></div>
-                        <div style="height:20%"><p><span class="price">@item.SalePrice</span></p></div>
-                        <div style="height:25%"><div class="button"><span><a href="@item.ProductUrl" @*class="details">View</a></span></div></div>
-                    </div>*@
+                    @*<div class="grid_1_of_4 images_1_of_4 prt_img_height">
+                            <div style="height:25%"><a href="preview-3.html"><img src="@item.ImageUrl" alt="" /></a></div>
+                            <div style="height:20%"><h2>@item.ProductName </h2></div>
+                            <div style="height:20%"><p><span class="price">@item.SalePrice</span></p></div>
+                            <div style="height:25%"><div class="button"><span><a href="@item.ProductUrl" @*class="details">View</a></span></div></div>
+                        </div>*@
                 </li>
-            }l
+            }
         </ul>
     </div>
 
@@ -84,48 +100,5 @@
             <li><a href="#">Laptops</a></li>
             <li><a href="#">Desktops & All-in-one Computers</a></li>
         </ul>
-        <div class="subscribe">
-            <h2>Newsletters Signup</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.......</p>
-            <div class="signup">
-                <form>
-                    <input type="text" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';"><input type="submit" value="Sign up">
-                </form>
-            </div>
-        </div>
-        <div class="community-poll">
-            <h2>Community POll</h2>
-            <p>What is the main reason for you to purchase products online?</p>
-            <div class="poll">
-                <form>
-                    <ul>
-                        <li>
-                            <input type="radio" name="vote" class="radio" value="1">
-                            <span class="label"><label>More convenient shipping and delivery </label></span>
-                        </li>
-                        <li>
-                            <input type="radio" name="vote" class="radio" value="2">
-                            <span class="label"><label for="vote_2">Lower price</label></span>
-                        </li>
-                        <li>
-                            <input type="radio" name="vote" class="radio" value="3">
-                            <span class="label"><label for="vote_3">Bigger choice</label></span>
-                        </li>
-                        <li>
-                            <input type="radio" name="vote" class="radio" value="5">
-                            <span class="label"><label for="vote_5">Payments security </label></span>
-                        </li>
-                        <li>
-                            <input type="radio" name="vote" class="radio" value="6">
-                            <span class="label"><label for="vote_6">30-day Money Back Guarantee </label></span>
-                        </li>
-                        <li>
-                            <input type="radio" name="vote" class="radio" value="7">
-                            <span class="label"><label for="vote_7">Other.</label></span>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </div>
     </div>
 </div>

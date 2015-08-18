@@ -888,7 +888,7 @@ p.note{
 .rightsidebar{
 	display: block;
 	float:left;
-	margin: 0% 0 0% 1.6%;
+	margin: 0;/*0% 0 0% 1.6%;*/
 }
 .cont-desc:first-child { margin-left: 0; } 
 .desc{
