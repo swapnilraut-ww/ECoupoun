@@ -2,39 +2,56 @@
 
 <ul id="dc_mega-menu-orange" class="dc_mm-orange">
     <li><a href="/">Home</a></li>
-    @foreach (var item in Model.Where(x => x.CategoryParentId == null))
+    @foreach (var parentCategory in Model.Where(x => x.CategoryParentId == null))
     {
         <li>
-            <a href="javascript:void(0);">@item.Name</a>
-            @GenerateMenu(Model, item.CategoryId)
+            <a href="javascript:void(0);">@parentCategory.Name</a>
+            @* @GenerateMenu(Model, parentCategory.CategoryId)*@
+            <ul>
+                @foreach (var category in Model.Where(x => x.CategoryParentId == parentCategory.CategoryId))
+                {
+                    <li>
+                        <a href="/@parentCategory.MappingName/@category.MappingName/">@category.Name</a>
+                        <ul>
+                            @foreach (var subCategory in Model.Where(x => x.CategoryParentId == category.CategoryId))
+                            {
+                          
+                                <li>
+                                    <a href="/buy_@subCategory.MappingName">@subCategory.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
         </li>
     }
     <div class="clear"></div>
 </ul>
 
-@helper GenerateMenu(IEnumerable<ECoupoun.Data.Category> categories, int? parentId)
+@*@helper GenerateMenu(IEnumerable<ECoupoun.Data.Category> categories, int? parentId)
 {
     if (categories.Any(n => n.CategoryParentId == parentId))
     {
-        <ul>
-            @foreach (var category in categories.Where(n => n.CategoryParentId == parentId))
+    <ul>
+        @foreach (var category in categories.Where(n => n.CategoryParentId == parentId))
+        {
+            string parentCategoryName = categories.Where(n => n.CategoryId == parentId).SingleOrDefault().MappingName;
+            if (categories.Where(x => x.CategoryParentId == category.CategoryId).Count() > 0)
             {
-                string parentCategoryName = categories.Where(n => n.CategoryId == parentId).SingleOrDefault().MappingName;
-                if (categories.Where(x => x.CategoryParentId == category.CategoryId).Count() > 0)
-                {
-                    <li>
-                        <a href="/@parentCategoryName/@category.MappingName/">@category.Name</a>
-                        @GenerateMenu(categories, category.CategoryId)
-                    </li>
-                }
-                else
-                {
-                    <li>
-                        <a href="/buy_@category.MappingName">@category.Name</a>
-                        @GenerateMenu(categories, category.CategoryId)
-                    </li>
-                }
+            <li>
+                <a href="/@parentCategoryName/@category.MappingName/">@category.Name</a>
+                @GenerateMenu(categories, category.CategoryId)
+            </li>
             }
-        </ul>
+            else
+            {
+            <li>
+                <a href="/buy_@category.MappingName">@category.Name</a>
+                @GenerateMenu(categories, category.CategoryId)
+            </li>
+            }
+        }
+    </ul>
     }
-}
+}*@

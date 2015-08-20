@@ -84,7 +84,7 @@ namespace ECoupoun.Web.Controllers
 
         public ActionResult Menu()
         {
-            List<Category> menues = db.Categories.ToList();
+            List<Category> menues = db.Categories.Where(x => x.IsActive == true).ToList();
             return PartialView("_MenuPartial", menues);
         }
     }

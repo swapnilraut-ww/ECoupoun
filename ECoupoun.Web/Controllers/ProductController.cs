@@ -46,6 +46,7 @@ namespace ECoupoun.Web.Controllers
             {
                 Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[1]).SingleOrDefault();
                 ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
+                ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
                 var productList = (from p in db.ProductMasters
                                    join pl in db.ProductLinks on p.ProductId equals pl.ProductId
                                    join pp in db.ProductPricings on p.ProductId equals pp.ProductId

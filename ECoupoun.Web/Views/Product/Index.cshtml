@@ -54,7 +54,8 @@
                 <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div id="product_item" class="product_detail">
                         <div class="product_img">
-                            <a href="@item.ProductUrl"><img src="@item.ImageUrl" alt="Product Image" /></a>
+                            <a href="@item.ProductUrl">
+                                <img src="@item.ImageUrl" alt="Product Image" /></a>
                         </div>
 
                         <a href="@item.ProductUrl">
@@ -74,7 +75,9 @@
                                 }
 
                             </div>
-                            <div class="product_price"><p><span class="actual-price">@item.SalePrice</span></p></div>
+                            <div class="product_price">
+                                <p><span class="actual-price">@item.SalePrice</span></p>
+                            </div>
 
                         </a>
                         @*<div style="height:25%">
@@ -96,9 +99,10 @@
     <div class="rightsidebar span_3_of_1">
         <h2>CATEGORIES</h2>
         <ul>
-            <li><a href="#">Monitors</a></li>
-            <li><a href="#">Laptops</a></li>
-            <li><a href="#">Desktops & All-in-one Computers</a></li>
+            @foreach (var item in ViewBag.SubCategories)
+            {
+                <li><a href="javascript:void(0)">@item.Name</a></li>
+            }
         </ul>
     </div>
 </div>

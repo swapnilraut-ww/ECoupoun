@@ -46,6 +46,14 @@ namespace ECoupoun.Web
                     id = UrlParameter.Optional
                 }
             );
+
+
+            //if role is Administrator
+            routes.MapRoute(
+                "DefaultAdmin", // Route name
+                "Admin/{controller}/{action}/{id}", // URL with parameters
+                new { Area = "Admin", controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }
