@@ -87,5 +87,11 @@ namespace ECoupoun.Web.Controllers
             List<Category> menues = db.Categories.Where(x => x.IsActive == true).ToList();
             return PartialView("_MenuPartial", menues);
         }
+
+        public ActionResult GetSearchData(string term)
+        {
+            var productList = db.ProductMasters.ToList().Where(x => x.Name.ToLower().Contains(term.ToLower())).Select(x => new { id = x.ProductId, label = x.Name, value = x.Name }).ToList();
+            return Json(productList, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -4,6 +4,7 @@
 ul li {
     list-style: outside none none;
 }
+
 li {
     line-height: 1.4;
 }
@@ -32,11 +33,11 @@ li {
     width: 100%;
 }
 
-.images_1_of_4  p span.price{
-	font-size:13px;
-	font-family: 'Monda', sans-serif;
-	color: #414045;
-	/*margin-left:15px;*/
+.images_1_of_4 p span.price {
+    font-size: 13px;
+    font-family: 'Monda', sans-serif;
+    color: #414045;
+    /*margin-left:15px;*/
     text-align: left !important;
 }
 
@@ -53,12 +54,12 @@ li {
 /****** Custom Layout *****/
 .prt_img_height {
     height: 200px;
-    width:95%;
+    width: 95%;
     max-width: 100%;
 }
 
 
-.product_list{
+.product_list {
     height: 265px;
     margin-bottom: 30px !important;
 }
@@ -70,17 +71,14 @@ li {
     text-align: left;
 }
 
-#product_item:hover
-{
+#product_item:hover {
     border: 2px solid #602D8D;
 }
 
-#product_item a 
-{
+#product_item a {
     outline: medium none !important;
     text-decoration: none !important;
     transition: all 0.3s ease-in-out 0s;
-
 }
 
 .product_img {
@@ -91,11 +89,10 @@ li {
     text-align: center;
 }
 
-.product_img img 
-{
-    max-height: 145px;
-    max-width: 100%;
-}
+    .product_img img {
+        max-height: 145px;
+        max-width: 100%;
+    }
 
 .product_name {
     font-size: 11px;
@@ -103,17 +100,19 @@ li {
     text-align: left !important;
     height: 60px;
 }
-.product_name h4 {
-    font-family:'Monda', sans-serif;
-    color: #414045;
-    font-size:12px;
-	font-weight : normal;
-    line-height: 1.2;
-    margin: 0;
-    padding: 0;
-}
+
+    .product_name h4 {
+        font-family: 'Monda', sans-serif;
+        color: #414045;
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 1.2;
+        margin: 0;
+        padding: 0;
+    }
+
 h1, h2, h3, h4, h5, h6 {
-    font-family:'Monda', sans-serif;
+    font-family: 'Monda', sans-serif;
     font-weight: 600;
 }
 
@@ -144,43 +143,48 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
-.category a {
-    display: inline-block;
-    outline: medium none;
-    text-decoration: none;
-    width: 100%;
-}
+    .category a {
+        display: inline-block;
+        outline: medium none;
+        text-decoration: none;
+        width: 100%;
+    }
 
-.category .categoryimg_box {
-    display: inline-block;
-    padding: 10px 0 0;
-    text-align: center;
-    width: 100%;
-}
+    .category .categoryimg_box {
+        display: inline-block;
+        padding: 10px 0 0;
+        text-align: center;
+        width: 100%;
+    }
 
-.category .categoryimg_box img {
-    display: inline-block;
-    max-height: 170px;
-    max-width: 100%;
-    width: auto;
-}
+        .category .categoryimg_box img {
+            display: inline-block;
+            max-height: 170px;
+            max-width: 100%;
+            width: auto;
+        }
 
-.category .categoryCaption span::after {
-    content: url("http://www.dealspricer.in/static/images/arrow-calltoaction.png");
-    float: right;
-}
+    .category .categoryCaption span::after {
+        content: url("http://www.dealspricer.in/static/images/arrow-calltoaction.png");
+        float: right;
+    }
 
-.category .categoryCaption {
-    background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
-    bottom: 0;
-    color: #fff;
-    display: inline-block;
-    font-family: "Open Sans",sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    left: 0;
-    padding: 10px 2px 10px 10px;
-    position: absolute;
-    text-transform: uppercase;
-    width: 100%;
+    .category .categoryCaption {
+        background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+        bottom: 0;
+        color: #fff;
+        display: inline-block;
+        font-family: "Open Sans",sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        left: 0;
+        padding: 10px 2px 10px 10px;
+        position: absolute;
+        text-transform: uppercase;
+        width: 100%;
+    }
+
+/*Admin*/
+.body-content {
+    padding-top: 50px;
 }

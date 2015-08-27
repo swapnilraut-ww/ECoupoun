@@ -21,7 +21,8 @@ namespace ECoupoun.Web
                     controller = "Product",
                     action = "Index",
                     product = "{id}"
-                }
+                },
+                namespaces: new[] { "ECoupoun.Web.Controllers" }
             );
 
             // Sub Category/
@@ -33,7 +34,8 @@ namespace ECoupoun.Web
                     controller = "Product",
                     action = "Index",
                     product = "{id}"
-                }
+                },
+                namespaces: new[] { "ECoupoun.Web.Controllers" }
             );
 
             routes.MapRoute(
@@ -44,7 +46,8 @@ namespace ECoupoun.Web
                     controller = "Home",
                     action = "Index",
                     id = UrlParameter.Optional
-                }
+                },
+                namespaces: new[] {"ECoupoun.Web.Controllers"}
             );
 
 
@@ -52,7 +55,8 @@ namespace ECoupoun.Web
             routes.MapRoute(
                 "DefaultAdmin", // Route name
                 "Admin/{controller}/{action}/{id}", // URL with parameters
-                new { Area = "Admin", controller = "Home", action = "Index", id = UrlParameter.Optional }
+                new { Area = "Admin", controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "ECoupoun.Web.Areas.Admin.Controllers" }
             );
         }
     }
