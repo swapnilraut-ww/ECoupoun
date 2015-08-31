@@ -62,9 +62,12 @@ namespace BestBuyRESTFulService
             bool success = false;
 
             int count = 0;
+            int failCount = 0;
 
             try
             {
+                db.DeleteProducts();
+
                 foreach (var apiDetail in apiDetailsList)
                 {
                     HttpWebRequest request = WebRequest.Create(apiDetail.ServiceUrl) as HttpWebRequest;
@@ -78,16 +81,42 @@ namespace BestBuyRESTFulService
                         var serializer = new JavaScriptSerializer();
                         var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
 
-                        foreach (var product in jsonObject.Products)
+                        switch (apiDetail.Provider.Name)
                         {
-                            success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
-                            if (success)
-                                count++;
+                            case "BestBuy":
+                                foreach (var product in jsonObject.Products)
+                                {
+                                    success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
+                                    if (success)
+                                        count++;
+                                    else
+                                        failCount++;
+                                }
+                                break;
+                            case "Walmart":
+                                foreach (var item in jsonObject.Items)
+                                {
+                                    Products product = new Products();
+                                    product.Sku = item.ItemId;
+                                    product.Name = item.Name;
+                                    product.ModelNumber = item.ModelNumber;
+                                    product.Image = item.MediumImage;
+                                    product.RegularPrice = item.msrp;
+                                    product.SalePrice = item.SalePrice;
+                                    product.Manufacturer = item.BrandName;
+                                    product.Url = item.ProductUrl;
+                                    success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
+                                    if (success)
+                                        count++;
+                                }
+                                break;
                         }
+
                     }
                 }
 
                 responseText = string.Format("Inserted {0} Records.", count);
+                responseText = string.Format("Duplicate {0} Records.", failCount);
             }
             catch (Exception ex)
             {

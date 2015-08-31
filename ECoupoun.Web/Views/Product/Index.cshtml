@@ -8,7 +8,7 @@
     <div class="back-links">
         @Html.Raw(ViewBag.BreadCrumb)
     </div>
-    <div class="sort">
+    @*  <div class="sort">
         <p>
             Sort by:
             <select>
@@ -43,7 +43,7 @@
                 <li>[<a href="#"> Next>>></a>]</li>
             </ul>
         </p>
-    </div>
+    </div>*@
     <div class="clear"></div>
 </div>
 <div class="section group">
@@ -52,7 +52,7 @@
             @foreach (var item in Model)
             {
                 <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <div id="product_item" class="product_detail">
+                    <div id="product_item" class="product_detail" data-providerid="@item.ProviderId" data-sku="@item.Sku" data-producturl="@item.ProductUrl">
                         <div class="product_img">
                             <a href="@item.ProductUrl">
                                 <img src="@item.ImageUrl" alt="Product Image" /></a>
@@ -96,13 +96,16 @@
         </ul>
     </div>
 
-    <div class="rightsidebar span_3_of_1">
-        <h2>CATEGORIES</h2>
-        <ul>
-            @foreach (var item in ViewBag.SubCategories)
-            {
-                <li><a href="javascript:void(0)">@item.Name</a></li>
-            }
-        </ul>
-    </div>
+    @if (ViewBag.SubCategories.Count > 0)
+    {
+        <div class="rightsidebar span_3_of_1">
+            <h2>CATEGORIES</h2>
+            <ul>
+                @foreach (var item in ViewBag.SubCategories)
+                {
+                    <li><a href="/buy_sub_@item.MappingName">@item.Name</a></li>
+                }
+            </ul>
+        </div>
+    }
 </div>

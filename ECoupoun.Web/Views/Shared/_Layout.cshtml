@@ -9,10 +9,7 @@
     <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Doppio+One' rel='stylesheet' type='text/css'>
 </head>
-<body>
-    <div id="bloodhound">
-        <input class="typeahead" type="text" placeholder="States of USA">
-    </div>
+<body>  
     <div class="wrap">
         <div class="header">
             <div class="header_top">
@@ -22,8 +19,9 @@
                 </div>
                 <div class="header_top_right">
                     <div class="search_box">
-                        <form>
-                            <input type="text" value="Search for Products" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="SEARCH">
+                        <form action="/search" method="get">
+                            <input id="q" name="q" type="text" value="Search for Products" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}">
+                            <input type="submit" value="SEARCH">
                         </form>
                     </div>
                     <div class="clear"></div>
@@ -176,7 +174,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/core")
     @RenderSection("scripts", required: false)
-    <script src="~/Scripts/typeahead.bundle.js"></script>
     <script type="text/javascript">
         function DropDown(el) {
             this.dd = el;
@@ -266,36 +263,7 @@
     <script type="text/javascript">
         $(document).ready(function ($) {
             $('#dc_mega-menu-orange').dcMegaMenu({ rowItems: '4', speed: 'fast', effect: 'fade' });
-        });
-
-        var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-    'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-    'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-    'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-    'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-    'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ];
-
-        // constructs the suggestion engine
-        var states = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            // `states` is an array of state names defined in "The Basics"
-            local: states
-        });
-
-        $('#bloodhound .typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'states',
-            source: states
-        });
+        });      
     </script>
 </body>
 </html>

@@ -24,7 +24,7 @@ namespace ECoupoun.Entities
     {
         public long Sku { get; set; }
         public string Name { get; set; }
-        public string ThumbnailImage { get; set; }
+        public string Image { get; set; }
         public string ModelNumber { get; set; }
         public string Manufacturer { get; set; }
         public string Url { get; set; }
@@ -32,16 +32,26 @@ namespace ECoupoun.Entities
         public string ShortDescription { get; set; }
         public decimal RegularPrice { get; set; }
         public decimal SalePrice { get; set; }
+        public List<CategoryPath> CategoryPath { get; set; }
+    }
+
+    public class CategoryPath
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class WalmartItems
     {
         public int ItemId { get; set; }
         public string Name { get; set; }
-        public string ThumbnailImage { get; set; }
+        public string MediumImage { get; set; }
         public string ModelNumber { get; set; }
+        public string BrandName { get; set; }
+        public string ProductUrl { get; set; }
         public decimal msrp { get; set; }
         public decimal SalePrice { get; set; }
+
     }
 
     public class EbaySearchResult

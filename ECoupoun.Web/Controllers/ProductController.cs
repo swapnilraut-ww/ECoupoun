@@ -32,11 +32,32 @@ namespace ECoupoun.Web.Controllers
         //    return View(productList);
         //}
 
-        public ActionResult Index(string parentCategory, string categoryName)
+        public ActionResult Index(string parentCategory, string categoryName, string q)
         {
-            
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                List<ProductModel> productList = (from p in db.ProductMasters
+                                                  join pl in db.ProductLinks on p.ProductId equals pl.ProductId
+                                                  join pp in db.ProductPricings on p.ProductId equals pp.ProductId
+                                                  join pr in db.Providers on pp.ProviderId equals pr.ProviderId
+                                                  where p.Name.Contains(q)
+                                                  select new ProductModel
+                                                  {
+                                                      ProviderId = pr.ProviderId,
+                                                      ProductName = p.Name,
+                                                      Sku = pp.SKU,
+                                                      ProviderName = pr.Name,
+                                                      ProductUrl = pl.SoruceUrl,
+                                                      ImageUrl = p.Image,
+                                                      SalePrice = pp.SalePrice
+                                                  }).ToList();
+
+                ViewBag.SubCategories = new List<Category>();
+                return View(productList);
+            }
+
             if (!string.IsNullOrWhiteSpace(categoryName))
-            {                
+            {
                 Category category = db.Categories.Where(x => x.MappingName == categoryName).SingleOrDefault();
                 ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
                 List<Category> subCategoryList = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
@@ -44,30 +65,56 @@ namespace ECoupoun.Web.Controllers
             }
             else
             {
-                Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[1]).SingleOrDefault();
-                ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
-                ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
-                var productList = (from p in db.ProductMasters
-                                   join pl in db.ProductLinks on p.ProductId equals pl.ProductId
-                                   join pp in db.ProductPricings on p.ProductId equals pp.ProductId
-                                   join pr in db.Providers on pp.ProviderId equals pr.ProviderId
-                                   where p.CategoryId == category.CategoryId
-                                   select new ProductModel
-                                    {
-                                        ProviderId = pr.ProviderId,
-                                        ProductName = p.Name,
-                                        Sku = pp.SKU,
-                                        ProviderName = pr.Name,
-                                        ProductUrl = pl.SoruceUrl,
-                                        ImageUrl = p.Image,
-                                        SalePrice = pp.SalePrice
-                                    }).ToList();
-                return View(productList);
+                if (parentCategory.Split('_').Length > 2)
+                {
+                    Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[2]).SingleOrDefault();
+                    Category parentCategoryName = db.Categories.Where(x => x.CategoryId == category.CategoryParentId).SingleOrDefault();
+                    ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='/buy_" + parentCategoryName.MappingName + "'>" + parentCategoryName.Name + "</a>  >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
+                    ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
+                    var productList = (from p in db.ProductMasters
+                                       join pl in db.ProductLinks on p.ProductId equals pl.ProductId
+                                       join pp in db.ProductPricings on p.ProductId equals pp.ProductId
+                                       join pr in db.Providers on pp.ProviderId equals pr.ProviderId
+                                       where p.SubCategoryId == category.CategoryId
+                                       select new ProductModel
+                                       {
+                                           ProviderId = pr.ProviderId,
+                                           ProductName = p.Name,
+                                           Sku = pp.SKU,
+                                           ProviderName = pr.Name,
+                                           ProductUrl = pl.SoruceUrl,
+                                           ImageUrl = p.Image,
+                                           SalePrice = pp.SalePrice
+                                       }).ToList();
+                    return View(productList);
+                }
+                else
+                {
+                    Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[1]).SingleOrDefault();
+                    ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
+                    ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
+                    var productList = (from p in db.ProductMasters
+                                       join pl in db.ProductLinks on p.ProductId equals pl.ProductId
+                                       join pp in db.ProductPricings on p.ProductId equals pp.ProductId
+                                       join pr in db.Providers on pp.ProviderId equals pr.ProviderId
+                                       where p.CategoryId == category.CategoryId
+                                       select new ProductModel
+                                        {
+                                            ProviderId = pr.ProviderId,
+                                            ProductName = p.Name,
+                                            Sku = pp.SKU,
+                                            ProviderName = pr.Name,
+                                            ProductUrl = pl.SoruceUrl,
+                                            ImageUrl = p.Image,
+                                            SalePrice = pp.SalePrice
+                                        }).ToList();
+                    return View(productList);
+                }
             }
         }
 
         [HttpPost]
-        public ActionResult SaveProductViewDetails(int providerId, int sku)
+        public ActionResult SaveProductViewDetails(int providerId, int sku, string productUrl)
         {
             try
             {
@@ -91,11 +138,11 @@ namespace ECoupoun.Web.Controllers
                 }
 
                 db.SaveChanges();
-                return Json(new { Success = true, Message = message });
+                return Json(new { Success = true, Message = message, ProductUrl = productUrl });
             }
             catch (Exception ex)
             {
-                return Json(new { Success = false, Message = ex.Message });
+                return Json(new { Success = true, Message = ex.Message, ProductUrl = productUrl });
             }
         }
     }

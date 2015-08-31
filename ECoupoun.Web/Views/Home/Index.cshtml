@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Home Page";
 }
-@ViewBag.ResponseText
+@*@ViewBag.ResponseText*@
 @using (Html.BeginForm("BestBuyInsertData", "Home", FormMethod.Post))
 {
     <input type="submit" value="Get BestBuy Data" />
@@ -54,7 +54,7 @@
     <div class="heading">
         <h3>Feature Products</h3>
     </div>
-    <div class="sort">
+    @* <div class="sort">
         <p>
             Sort by:
             <select>
@@ -89,7 +89,7 @@
                 <li>[<a href="#"> Next>>></a>]</li>
             </ul>
         </p>
-    </div>
+    </div>*@
     <div class="clear"></div>
 </div>
 <div class="section group">
@@ -97,14 +97,19 @@
         @foreach (var item in Model.Take(4))
         {
             <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div id="product_item" class="product_detail">
+                <div id="product_item" class="product_detail" data-ProviderId="@item.ProviderId" data-SKU="@item.Sku" data-ProductUrl="@item.ProductUrl">
                     <div class="product_img">
-                        <a href="@item.ProductUrl"><img src="@item.ImageUrl" alt="Product Image" /></a>
+                        <a href="@item.ProductUrl">
+                            <img src="@item.ImageUrl" alt="Product Image" /></a>
                     </div>
 
                     <a href="@item.ProductUrl">
-                        <div class="product_name"><h4>@item.ProductName </h4></div>
-                        <div class="product_price"><p><span class="actual-price">@item.SalePrice</span></p></div>
+                        <div class="product_name">
+                            <h4>@item.ProductName </h4>
+                        </div>
+                        <div class="product_price">
+                            <p><span class="actual-price">@item.SalePrice</span></p>
+                        </div>
 
                     </a>
                 </div>
@@ -112,7 +117,7 @@
         }
     </ul>
 </div>
-<div class="content_bottom">
+@*<div class="content_bottom">
     <div class="heading">
         <h3>New Products</h3>
     </div>
@@ -153,8 +158,8 @@
         </p>
     </div>
     <div class="clear"></div>
-</div>
-<div class="section group">
+</div>*@
+@*<div class="section group">
     <ul>
         @foreach (var item in Model.Take(4))
         {
@@ -174,4 +179,4 @@
             </li>
         }
     </ul>
-</div>
+</div>*@
