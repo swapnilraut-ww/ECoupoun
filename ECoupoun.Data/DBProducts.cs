@@ -48,12 +48,21 @@ namespace ECoupoun.Data
                     }
 
                     productMaster = new ProductMaster();
+
+                    if (product.CategoryPath != null && product.CategoryPath.Count > 3)
+                    {
+                        Category subCategory =  db.Categories.ToList().Where(x => x.Name == product.CategoryPath[3].Name.ToString()).SingleOrDefault();
+                        if (subCategory != null)
+                            productMaster.SubCategoryId = subCategory.CategoryId;
+                    }
+                   
                     productMaster.CategoryId = categoryId;
                     productMaster.ManufacturerId = manufacturer.ManufacturerId;
+                   
                     productMaster.Name = product.Name;
                     productMaster.LongDescription = product.ShortDescription;
                     productMaster.ModelNumber = product.ModelNumber;
-                    productMaster.Image = product.ThumbnailImage;
+                    productMaster.Image = product.Image;
                     productMaster.CreatedOn = System.DateTime.Now;
                     db.ProductMasters.Add(productMaster);
 
@@ -75,15 +84,15 @@ namespace ECoupoun.Data
                     productPricing.AsofDate = System.DateTime.Now;
                     db.ProductPricings.Add(productPricing);
 
-                    db.SaveChanges();
-                }              
+                    db.SaveChanges();                                       
+                }
 
                 return true;
             }
 
             catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex.InnerException);
+                return false;
             }
         }
     }
