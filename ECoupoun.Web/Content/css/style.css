@@ -537,7 +537,7 @@ p.note{
 .heading h3{
 	font-family: 'Monda', sans-serif;
 	font-size:22px;
-	color:#602D8D;
+	color:#4c855f/*#602D8D*/;
 	text-transform:uppercase;
 }
 .sort,.show{

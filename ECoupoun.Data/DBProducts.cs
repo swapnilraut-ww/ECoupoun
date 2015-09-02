@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -37,17 +38,23 @@ namespace ECoupoun.Data
                 ProductMaster productMaster = db.ProductMasters.Where(x => x.ModelNumber == product.ModelNumber).SingleOrDefault();
                 if (productMaster == null)
                 {
+                    productMaster = new ProductMaster();
+
                     Manufacturer manufacturer = db.Manufacturers.Where(x => x.Name == product.Manufacturer).SingleOrDefault();
-                    if (manufacturer == null)
+                    if (manufacturer != null)
+                    {
+                        productMaster.ManufacturerId = manufacturer.ManufacturerId;
+                    }
+                    else if (manufacturer == null && product.Manufacturer != null)
                     {
                         manufacturer = new Manufacturer();
                         manufacturer.Name = product.Manufacturer;
                         manufacturer.CreatedOn = System.DateTime.Now;
                         manufacturer.IsActive = true;
                         db.Manufacturers.Add(manufacturer);
-                    }
 
-                    productMaster = new ProductMaster();
+                        productMaster.ManufacturerId = manufacturer.ManufacturerId;
+                    }
 
                     if (product.CategoryPath != null && product.CategoryPath.Count > 3)
                     {
@@ -57,8 +64,6 @@ namespace ECoupoun.Data
                     }
                    
                     productMaster.CategoryId = categoryId;
-                    productMaster.ManufacturerId = manufacturer.ManufacturerId;
-                   
                     productMaster.Name = product.Name;
                     productMaster.LongDescription = product.ShortDescription;
                     productMaster.ModelNumber = product.ModelNumber;
@@ -89,7 +94,20 @@ namespace ECoupoun.Data
 
                 return true;
             }
-
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
             catch (Exception ex)
             {
                 return false;

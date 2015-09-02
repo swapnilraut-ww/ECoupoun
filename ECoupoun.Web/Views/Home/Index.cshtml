@@ -3,10 +3,10 @@
     ViewBag.Title = "Home Page";
 }
 @*@ViewBag.ResponseText*@
-@using (Html.BeginForm("BestBuyInsertData", "Home", FormMethod.Post))
-{
-    <input type="submit" value="Get BestBuy Data" />
-}
+@*@using (Html.BeginForm("BestBuyInsertData", "Home", FormMethod.Post))
+    {
+        <input type="submit" value="Get BestBuy Data" />
+    }*@
 @*
     @using (Html.BeginForm("WalmartInsertData", "Home", FormMethod.Post))
     {
@@ -50,46 +50,47 @@
             </div>
         </div>
     </div>*@
-<div class="content_top">
+<hr />
+<div class="content_top" style="border:0px;">
     <div class="heading">
         <h3>Feature Products</h3>
     </div>
     @* <div class="sort">
-        <p>
-            Sort by:
-            <select>
-                <option>Lowest Price</option>
-                <option>Highest Price</option>
-                <option>Lowest Price</option>
-                <option>Lowest Price</option>
-                <option>Lowest Price</option>
-                <option>In Stock</option>
-            </select>
-        </p>
-    </div>
-    <div class="show">
-        <p>
-            Show:
-            <select>
-                <option>4</option>
-                <option>8</option>
-                <option>12</option>
-                <option>16</option>
-                <option>20</option>
-                <option>In Stock</option>
-            </select>
-        </p>
-    </div>
-    <div class="page-no">
-        <p>
-            Result Pages:<ul>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li>[<a href="#"> Next>>></a>]</li>
-            </ul>
-        </p>
-    </div>*@
+            <p>
+                Sort by:
+                <select>
+                    <option>Lowest Price</option>
+                    <option>Highest Price</option>
+                    <option>Lowest Price</option>
+                    <option>Lowest Price</option>
+                    <option>Lowest Price</option>
+                    <option>In Stock</option>
+                </select>
+            </p>
+        </div>
+        <div class="show">
+            <p>
+                Show:
+                <select>
+                    <option>4</option>
+                    <option>8</option>
+                    <option>12</option>
+                    <option>16</option>
+                    <option>20</option>
+                    <option>In Stock</option>
+                </select>
+            </p>
+        </div>
+        <div class="page-no">
+            <p>
+                Result Pages:<ul>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li>[<a href="#"> Next>>></a>]</li>
+                </ul>
+            </p>
+        </div>*@
     <div class="clear"></div>
 </div>
 <div class="section group">
@@ -97,10 +98,11 @@
         @foreach (var item in Model.Take(4))
         {
             <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div id="product_item" class="product_detail" data-ProviderId="@item.ProviderId" data-SKU="@item.Sku" data-ProductUrl="@item.ProductUrl">
+                <div id="product_item" class="product_detail" data-providerid="@item.ProviderId" data-sku="@item.Sku" data-producturl="@item.ProductUrl">
                     <div class="product_img">
-                        <a href="@item.ProductUrl">
-                            <img src="@item.ImageUrl" alt="Product Image" /></a>
+                        <a>
+                            <img src="@item.ImageUrl" alt="Product Image" />
+                        </a>
                     </div>
 
                     <a href="@item.ProductUrl">
@@ -110,7 +112,6 @@
                         <div class="product_price">
                             <p><span class="actual-price">@item.SalePrice</span></p>
                         </div>
-
                     </a>
                 </div>
             </li>
@@ -118,65 +119,65 @@
     </ul>
 </div>
 @*<div class="content_bottom">
-    <div class="heading">
-        <h3>New Products</h3>
-    </div>
-    <div class="sort">
-        <p>
-            Sort by:
-            <select>
-                <option>Lowest Price</option>
-                <option>Highest Price</option>
-                <option>Lowest Price</option>
-                <option>Lowest Price</option>
-                <option>Lowest Price</option>
-                <option>In Stock</option>
-            </select>
-        </p>
-    </div>
-    <div class="show">
-        <p>
-            Show:
-            <select>
-                <option>4</option>
-                <option>8</option>
-                <option>12</option>
-                <option>16</option>
-                <option>20</option>
-                <option>In Stock</option>
-            </select>
-        </p>
-    </div>
-    <div class="page-no">
-        <p>
-            Result Pages:<ul>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li>[<a href="#"> Next>>></a>]</li>
-            </ul>
-        </p>
-    </div>
-    <div class="clear"></div>
-</div>*@
+        <div class="heading">
+            <h3>New Products</h3>
+        </div>
+        <div class="sort">
+            <p>
+                Sort by:
+                <select>
+                    <option>Lowest Price</option>
+                    <option>Highest Price</option>
+                    <option>Lowest Price</option>
+                    <option>Lowest Price</option>
+                    <option>Lowest Price</option>
+                    <option>In Stock</option>
+                </select>
+            </p>
+        </div>
+        <div class="show">
+            <p>
+                Show:
+                <select>
+                    <option>4</option>
+                    <option>8</option>
+                    <option>12</option>
+                    <option>16</option>
+                    <option>20</option>
+                    <option>In Stock</option>
+                </select>
+            </p>
+        </div>
+        <div class="page-no">
+            <p>
+                Result Pages:<ul>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li>[<a href="#"> Next>>></a>]</li>
+                </ul>
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>*@
 @*<div class="section group">
-    <ul>
-        @foreach (var item in Model.Take(4))
-        {
+        <ul>
+            @foreach (var item in Model.Take(4))
+            {
 
-            <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div id="product_item" class="product_detail">
-                    <div class="product_img">
-                        <a href="@item.ProductUrl"><img src="@item.ImageUrl" alt="Product Image" /></a>
+                <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <div id="product_item" class="product_detail">
+                        <div class="product_img">
+                            <a href="@item.ProductUrl"><img src="@item.ImageUrl" alt="Product Image" /></a>
+                        </div>
+
+                        <a href="@item.ProductUrl">
+                            <div class="product_name"><h4>@item.ProductName </h4></div>
+                            <div class="product_price"><p><span class="actual-price">@item.SalePrice</span></p></div>
+
+                        </a>
                     </div>
-
-                    <a href="@item.ProductUrl">
-                        <div class="product_name"><h4>@item.ProductName </h4></div>
-                        <div class="product_price"><p><span class="actual-price">@item.SalePrice</span></p></div>
-
-                    </a>
-                </div>
-            </li>
-        }
-    </ul>
-</div>*@
+                </li>
+            }
+        </ul>
+    </div>*@

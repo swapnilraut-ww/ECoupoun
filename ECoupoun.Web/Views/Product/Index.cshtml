@@ -9,41 +9,41 @@
         @Html.Raw(ViewBag.BreadCrumb)
     </div>
     @*  <div class="sort">
-        <p>
-            Sort by:
-            <select>
-                <option>Lowest Price</option>
-                <option>Highest Price</option>
-                <option>Lowest Price</option>
-                <option>Lowest Price</option>
-                <option>Lowest Price</option>
-                <option>In Stock</option>
-            </select>
-        </p>
-    </div>
-    <div class="show">
-        <p>
-            Show:
-            <select>
-                <option>4</option>
-                <option>8</option>
-                <option>12</option>
-                <option>16</option>
-                <option>20</option>
-                <option>In Stock</option>
-            </select>
-        </p>
-    </div>
-    <div class="page-no">
-        <p>
-            Result Pages:<ul>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li>[<a href="#"> Next>>></a>]</li>
-            </ul>
-        </p>
-    </div>*@
+            <p>
+                Sort by:
+                <select>
+                    <option>Lowest Price</option>
+                    <option>Highest Price</option>
+                    <option>Lowest Price</option>
+                    <option>Lowest Price</option>
+                    <option>Lowest Price</option>
+                    <option>In Stock</option>
+                </select>
+            </p>
+        </div>
+        <div class="show">
+            <p>
+                Show:
+                <select>
+                    <option>4</option>
+                    <option>8</option>
+                    <option>12</option>
+                    <option>16</option>
+                    <option>20</option>
+                    <option>In Stock</option>
+                </select>
+            </p>
+        </div>
+        <div class="page-no">
+            <p>
+                Result Pages:<ul>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li>[<a href="#"> Next>>></a>]</li>
+                </ul>
+            </p>
+        </div>*@
     <div class="clear"></div>
 </div>
 <div class="section group">
@@ -54,8 +54,9 @@
                 <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div id="product_item" class="product_detail" data-providerid="@item.ProviderId" data-sku="@item.Sku" data-producturl="@item.ProductUrl">
                         <div class="product_img">
-                            <a href="@item.ProductUrl">
-                                <img src="@item.ImageUrl" alt="Product Image" /></a>
+                            <a>
+                                <img src="@item.ImageUrl" alt="Product Image" />
+                            </a>
                         </div>
 
                         <a href="@item.ProductUrl">

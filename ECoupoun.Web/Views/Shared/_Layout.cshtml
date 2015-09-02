@@ -8,14 +8,16 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Doppio+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 </head>
-<body>  
+<body>
     <div class="wrap">
         <div class="header">
             <div class="header_top">
                 <div class="logo">
-                    <a href="index.html">
-                        <img src="~/Content/images/logo.png" alt="" /></a>
+                    <a href="/">
+                        <img src="~/Content/images/logo.png" alt="" />
+                    </a>
                 </div>
                 <div class="header_top_right">
                     <div class="search_box">
@@ -33,55 +35,113 @@
             </div>
             <div class="header_bottom">
                 <div class="header_bottom_left">
-                    <div class="section group">
-                        <div class="listview_1_of_2 images_1_of_2">
-                            <div class="listimg listimg_2_of_1">
-                                <a href="preview.html">
-                                    <img src="~/Content/images/pic4.png" alt="" /></a>
+                    <ul>
+                        <li class="product_list col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="home_category">
+                                        <a href="/buy_Monitor">
+                                            <span class="categoryimg_box">
+                                                <img src="http://www.dealspricer.in/static/images/category/type/led-monitor.png" alt="...">
+                                            </span>
+                                            <div class="categoryCaption">
+                                                <span>Monitor</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="home_category">
+                                        <a href="/buy_Monitor">
+                                            <span class="categoryimg_box">
+                                                <img src="http://www.dealspricer.in/static/images/category/type/led-monitor.png" alt="...">
+                                            </span>
+                                            <div class="categoryCaption">
+                                                <span>Monitor</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="home_category">
+                                        <a href="/buy_Monitor">
+                                            <span class="categoryimg_box">
+                                                <img src="http://www.dealspricer.in/static/images/category/type/led-monitor.png" alt="...">
+                                            </span>
+                                            <div class="categoryCaption">
+                                                <span>Monitor</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="home_category">
+                                        <a href="/buy_Monitor">
+                                            <span class="categoryimg_box">
+                                                <img src="http://www.dealspricer.in/static/images/category/type/led-monitor.png" alt="...">
+                                            </span>
+                                            <div class="categoryCaption">
+                                                <span>Monitor</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text list_2_of_1">
-                                <h2>Iphone</h2>
-                                <p>Lorem ipsum dolor sit amet sed do eiusmod.</p>
-                                <div class="button"><span><a href="preview.html">Add to cart</a></span></div>
+
+                        </li>
+                    </ul>
+                    @*<div class="section group">
+                            <div class="listview_1_of_2 images_1_of_2">
+                                <div class="listimg listimg_2_of_1">
+                                    <a href="preview.html">
+                                        <img src="~/Content/images/pic4.png" alt="" />
+                                    </a>
+                                </div>
+                                <div class="text list_2_of_1">
+                                    <h2>Iphone</h2>
+                                    <p>Lorem ipsum dolor sit amet sed do eiusmod.</p>
+                                    <div class="button"><span><a href="preview.html">View</a></span></div>
+                                </div>
+                            </div>
+                            <div class="listview_1_of_2 images_1_of_2">
+                                <div class="listimg listimg_2_of_1">
+                                    <a href="preview-5.html">
+                                        <img src="~/Content/images/pic3.png" alt="" />
+                                    </a>
+                                </div>
+                                <div class="text list_2_of_1">
+                                    <h2>Sansung</h2>
+                                    <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
+                                    <div class="button"><span><a href="preview-5.html">View</a></span></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="listview_1_of_2 images_1_of_2">
-                            <div class="listimg listimg_2_of_1">
-                                <a href="preview-5.html">
-                                    <img src="~/Content/images/pic3.png" alt="" />
-                                    ></a>
+                        <div class="section group">
+                            <div class="listview_1_of_2 images_1_of_2">
+                                <div class="listimg listimg_2_of_1">
+                                    <a href="preview-3.html">
+                                        <img src="~/Content/images/pic3.jpg" alt="" />
+                                    </a>
+                                </div>
+                                <div class="text list_2_of_1">
+                                    <h2>Acer</h2>
+                                    <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
+                                    <div class="button"><span><a href="preview-3.html">View</a></span></div>
+                                </div>
                             </div>
-                            <div class="text list_2_of_1">
-                                <h2>Sansung</h2>
-                                <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
-                                <div class="button"><span><a href="preview-5.html">Add to cart</a></span></div>
+                            <div class="listview_1_of_2 images_1_of_2">
+                                <div class="listimg listimg_2_of_1">
+                                    <a href="preview-6.html">
+                                        <img src="~/Content/images/pic1.png" alt="" />
+                                    </a>
+                                </div>
+                                <div class="text list_2_of_1">
+                                    <h2>Canon</h2>
+                                    <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
+                                    <div class="button"><span><a href="preview-6.html">View</a></span></div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="section group">
-                        <div class="listview_1_of_2 images_1_of_2">
-                            <div class="listimg listimg_2_of_1">
-                                <a href="preview-3.html">
-                                    <img src="~/Content/images/pic3.jpg" alt="" /></a>
-                            </div>
-                            <div class="text list_2_of_1">
-                                <h2>Acer</h2>
-                                <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
-                                <div class="button"><span><a href="preview-3.html">Add to cart</a></span></div>
-                            </div>
-                        </div>
-                        <div class="listview_1_of_2 images_1_of_2">
-                            <div class="listimg listimg_2_of_1">
-                                <a href="preview-6.html">
-                                    <img src="~/Content/images/pic1.png" alt="" /></a>
-                            </div>
-                            <div class="text list_2_of_1">
-                                <h2>Canon</h2>
-                                <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
-                                <div class="button"><span><a href="preview-6.html">Add to cart</a></span></div>
-                            </div>
-                        </div>
-                    </div>
+                        </div>*@
                     <div class="clear"></div>
                 </div>
                 <div class="header_bottom_right_images">
@@ -90,13 +150,17 @@
                         <div class="flexslider">
                             <ul class="slides">
                                 <li>
-                                    <img src="~/Content/images/1.jpg" alt="" /></li>
+                                    <img src="~/Content/images/1.jpg" alt="" />
+                                </li>
                                 <li>
-                                    <img src="~/Content/images/2.jpg" alt="" /></li>
+                                    <img src="~/Content/images/2.jpg" alt="" />
+                                </li>
                                 <li>
-                                    <img src="~/Content/images/3.jpg" alt="" /></li>
+                                    <img src="~/Content/images/3.jpg" alt="" />
+                                </li>
                                 <li>
-                                    <img src="~/Content/images/4.jpg" alt="" /></li>
+                                    <img src="~/Content/images/4.jpg" alt="" />
+                                </li>
                             </ul>
                         </div>
                     </section>
@@ -260,10 +324,28 @@
         });
 
     </script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function ($) {
             $('#dc_mega-menu-orange').dcMegaMenu({ rowItems: '4', speed: 'fast', effect: 'fade' });
-        });      
+
+            var cache = {};
+            $("#q").autocomplete({
+                minLength: 2,
+                source: function (request, response) {
+                    var term = request.term;
+                    if (term in cache) {
+                        response(cache[term]);
+                        return;
+                    }
+
+                    $.getJSON("/Ajax/Home/GetSearchData", request, function (data, status, xhr) {
+                        cache[term] = data;
+                        response(data);
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>

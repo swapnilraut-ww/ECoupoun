@@ -13,42 +13,42 @@ namespace ECoupoun.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute(
-            //    name: "ParentCategory",
-            //    url: "{parentCategory}",
-            //    defaults: new
-            //    {
-            //        controller = "Product",
-            //        action = "Index",
-            //        product = "{id}"
-            //    },
-            //    namespaces: new[] { "ECoupoun.Web.Controllers" }
-            //);
+            routes.MapRoute(
+                name: "ParentCategory",
+                url: "{parentCategory}",
+                defaults: new
+                {
+                    controller = "Product",
+                    action = "Index",
+                    product = "{id}"
+                },
+                namespaces: new[] { "ECoupoun.Web.Controllers" }
+            );
 
-            //// Sub Category/
-            //routes.MapRoute(
-            //    name: "Category",
-            //    url: "{parentCategory}/{categoryName}",
-            //    defaults: new
-            //    {
-            //        controller = "Product",
-            //        action = "Index",
-            //        product = "{id}"
-            //    },
-            //    namespaces: new[] { "ECoupoun.Web.Controllers" }
-            //);
+            // Sub Category/
+            routes.MapRoute(
+                name: "Category",
+                url: "{parentCategory}/{categoryName}",
+                defaults: new
+                {
+                    controller = "Product",
+                    action = "Index",
+                    product = "{id}"
+                },
+                namespaces: new[] { "ECoupoun.Web.Controllers" }
+            );
 
-            //routes.MapRoute(
-            //   name: "AjaxRequest",
-            //   url: "Ajax/{controller}/{action}/{id}",
-            //   defaults: new
-            //   {
-            //       controller = "Home",
-            //       action = "Index",
-            //       id = UrlParameter.Optional
-            //   },
-            //   namespaces: new[] { "ECoupoun.Web.Controllers" }
-            // );
+            routes.MapRoute(
+               name: "AjaxRequest",
+               url: "Ajax/{controller}/{action}/{id}",
+               defaults: new
+               {
+                   controller = "Home",
+                   action = "Index",
+                   id = UrlParameter.Optional
+               },
+               namespaces: new[] { "ECoupoun.Web.Controllers" }
+             );
 
             routes.MapRoute(
                 name: "Default",

@@ -133,6 +133,57 @@ h1, h2, h3, h4, h5, h6 {
     height: 25px !important;
 }
 
+/*Home Category*/
+.home_category {
+    background-color: #f3f3f3;
+    border: 1px solid #dbdbdb;
+    margin: 10px 0;
+    min-height: 146px;
+    position: relative;
+    width: 100%;
+}
+
+    .home_category a {
+        display: inline-block;
+        outline: medium none;
+        text-decoration: none;
+        width: 100%;
+    }
+
+    .home_category .categoryimg_box {
+        display: inline-block;
+        padding: 10px 0 0;
+        text-align: center;
+        width: 100%;
+    }
+
+        .home_category .categoryimg_box img {
+            display: inline-block;
+            max-height: 90px;
+            max-width: 100%;
+            width: auto;
+        }
+
+    .home_category .categoryCaption {
+        background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+        bottom: 0;
+        color: #fff;
+        display: inline-block;
+        font-family: "Open Sans",sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        left: 0;
+        padding: 10px 10px 10px 5px;
+        position: absolute;
+        text-transform: uppercase;
+        width: 100%;
+    }
+
+        .home_category .categoryCaption span::after {
+            content: url("http://www.dealspricer.in/static/images/arrow-calltoaction.png");
+            float: right;
+        }
+
 /*Category List*/
 .category {
     background-color: #f3f3f3;
@@ -187,4 +238,14 @@ h1, h2, h3, h4, h5, h6 {
 /*Admin*/
 .body-content {
     padding-top: 50px;
+}
+
+.images_1_of_2 {
+    height: 170px;
+}
+
+
+/*Autocomplete*/
+.ui-autocomplete {
+    width: 36% !important;
 }

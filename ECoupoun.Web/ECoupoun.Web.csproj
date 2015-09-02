@@ -163,7 +163,10 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProviderApiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProviderController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -254,6 +257,21 @@
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\ProviderApi\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ProviderApi\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ProviderApi\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ProviderApi\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProviderApi\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Provider\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Provider\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Provider\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Provider\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Provider\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJs\GlobalJs.js" />
     <Content Include="Scripts\easing.js" />
@@ -315,6 +333,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Uploads\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
