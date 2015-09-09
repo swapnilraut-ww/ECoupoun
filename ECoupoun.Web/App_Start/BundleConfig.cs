@@ -41,7 +41,8 @@ namespace ECoupoun.Web
                                   "~/Scripts/move-top.js",
                                   "~/Scripts/easing.js",
                                   "~/Scripts/nav-hover.js",
-                                  "~/Scripts/jquery.flexslider.js"
+                                  "~/Scripts/jquery.flexslider.js",
+                                  "~/Scripts/bootstrap-select.js"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(              
@@ -50,7 +51,8 @@ namespace ECoupoun.Web
                       "~/Content/css/flexslider.css",
                       "~/Content/css/bootstrap.css",
                       "~/Content/css/bootstrap.min.css",
-                      "~/Content/css/CustomLayout.css"
+                      "~/Content/css/CustomLayout.css",
+                      "~/Content/css/bootstrap-select.css"
                       ));
         }
     }

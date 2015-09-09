@@ -3,101 +3,73 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
 }
+@section scripts
+{
+    <script type="text/javascript">
+        var manufacturer, provider;
+        //$('.selectpicker').selectpicker({
+        //});
+        $(document).on('click', '.dropdown-menu li a', function (e) {
+            manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
+            provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
+            $.ajax({
+                url: "/Ajax/Product/GetProductList",
+                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider },
+                type: "post",
+                success: function (data) {
+                    $(".productList").html(data);
+                }
+            });
+        });
 
+        $(document).on("click", ".btnApply", function () {
+            manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
+            provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
+            $.ajax({
+                url: "/Ajax/Product/GetProductList",
+                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider },
+                type: "post",
+                success: function (data) {
+                    $(".productList").html(data);
+                }
+            });
+        });
+
+        $(document).on("click", ".btnClear", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $("#" + $(this).data("selectid")).selectpicker('deselectAll');
+        });
+    </script>
+}
 <div class="content_top">
     <div class="back-links">
         @Html.Raw(ViewBag.BreadCrumb)
     </div>
-    @*  <div class="sort">
-            <p>
-                Sort by:
-                <select>
-                    <option>Lowest Price</option>
-                    <option>Highest Price</option>
-                    <option>Lowest Price</option>
-                    <option>Lowest Price</option>
-                    <option>Lowest Price</option>
-                    <option>In Stock</option>
-                </select>
-            </p>
-        </div>
-        <div class="show">
-            <p>
-                Show:
-                <select>
-                    <option>4</option>
-                    <option>8</option>
-                    <option>12</option>
-                    <option>16</option>
-                    <option>20</option>
-                    <option>In Stock</option>
-                </select>
-            </p>
-        </div>
-        <div class="page-no">
-            <p>
-                Result Pages:<ul>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li>[<a href="#"> Next>>></a>]</li>
-                </ul>
-            </p>
-        </div>*@
     <div class="clear"></div>
 </div>
 <div class="section group">
     <div class="cont-desc span_1_of_2">
-        <ul>
-            @foreach (var item in Model)
-            {
-                <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <div id="product_item" class="product_detail" data-providerid="@item.ProviderId" data-sku="@item.Sku" data-producturl="@item.ProductUrl">
-                        <div class="product_img">
-                            <a>
-                                <img src="@item.ImageUrl" alt="Product Image" />
-                            </a>
-                        </div>
+        <select id="sort" name="sort" class="selectpicker" data-done-button="true" data-none-selected-text="Sort By">
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+        </select>
+        @*<select class="selectpicker" multiple data-done-button="true" data-none-selected-text="Price">
+            <option>2</option>
+        </select>*@
 
-                        <a href="@item.ProductUrl">
-                            <div class="product_name">
+        @Html.DropDownList("Manufacturer", (IEnumerable<SelectListItem>)ViewBag.ManufacturerList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Brand", data_clear_button_select_id = "Manufacturer",data_live_search="true" })
 
-                                @if (item.ProductName.Length > 50)
-                                {
-                                    <h4 title="@item.ProductName">
-                                        @item.ProductName.Substring(0, 50) <span>...</span>
-                                    </h4>
-                                }
-                                else
-                                {
-                                    <h4>
-                                        @item.ProductName
-                                    </h4>
-                                }
+        @Html.DropDownList("Provider", (IEnumerable<SelectListItem>)ViewBag.ProviderList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Store", data_clear_button_select_id = "Provider",data_live_search="true" })
 
-                            </div>
-                            <div class="product_price">
-                                <p><span class="actual-price">@item.SalePrice</span></p>
-                            </div>
-
-                        </a>
-                        @*<div style="height:25%">
-                            <div class="button">
-                                <span>
-                                    <a href="@item.ProductUrl">View</a></span></div></div>*@
-                    </div>
-                    @*<div class="grid_1_of_4 images_1_of_4 prt_img_height">
-                            <div style="height:25%"><a href="preview-3.html"><img src="@item.ImageUrl" alt="" /></a></div>
-                            <div style="height:20%"><h2>@item.ProductName </h2></div>
-                            <div style="height:20%"><p><span class="price">@item.SalePrice</span></p></div>
-                            <div style="height:25%"><div class="button"><span><a href="@item.ProductUrl" @*class="details">View</a></span></div></div>
-                        </div>*@
-                </li>
-            }
-        </ul>
+    </div>
+</div>
+<div class="section group">
+    <div class="cont-desc span_1_of_2 productList">
+        @{Html.RenderPartial("_ProductPartial", Model);}
     </div>
 
-    @if (ViewBag.SubCategories.Count > 0)
+    @* @if (ViewBag.SubCategories.Count > 0)
     {
         <div class="rightsidebar span_3_of_1">
             <h2>CATEGORIES</h2>
@@ -108,5 +80,5 @@
                 }
             </ul>
         </div>
-    }
+    }*@
 </div>

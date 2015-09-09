@@ -9,12 +9,14 @@ namespace ECoupoun.Entities
     public class ProductModel
     {
         public int ProviderId { get; set; }
-        public long Sku { get; set; }
         public int TotalVisitors { get; set; }
+        public int ManufacturerId { get; set; }
+        public long Sku { get; set; }
         public string ProductName { get; set; }
         public string ProviderName { get; set; }
         public string ProductUrl { get; set; }
         public string ImageUrl { get; set; }
+        public string Manufacturer { get; set; }
         public decimal SalePrice { get; set; }
 
     }

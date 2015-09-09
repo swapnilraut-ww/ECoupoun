@@ -70,20 +70,15 @@ namespace BestBuyRESTFulService
 
                 foreach (var apiDetail in apiDetailsList)
                 {
-                    HttpWebRequest request = WebRequest.Create(apiDetail.ServiceUrl) as HttpWebRequest;
+                    var jsonObject = MakeAPICall(apiDetail.ServiceUrl);
 
-                    // Get response  
-                    using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                    switch (apiDetail.Provider.Name)
                     {
-                        // Get the response stream  
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        case "BestBuy":
+                            for (int i = 1; i <= jsonObject.totalPages; i++)
+                            {
+                                jsonObject = MakeAPICall(apiDetail.ServiceUrl + "&page=" + i);
 
-                        var serializer = new JavaScriptSerializer();
-                        var jsonObject = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
-
-                        switch (apiDetail.Provider.Name)
-                        {
-                            case "BestBuy":
                                 foreach (var product in jsonObject.Products)
                                 {
                                     success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
@@ -92,26 +87,26 @@ namespace BestBuyRESTFulService
                                     else
                                         failCount++;
                                 }
-                                break;
-                            case "Walmart":
-                                foreach (var item in jsonObject.Items)
-                                {
-                                    Products product = new Products();
-                                    product.Sku = item.ItemId;
-                                    product.Name = item.Name;
-                                    product.ModelNumber = item.ModelNumber;
-                                    product.Image = item.MediumImage;
-                                    product.RegularPrice = item.msrp;
-                                    product.SalePrice = item.SalePrice;
-                                    product.Manufacturer = item.BrandName;
-                                    product.Url = item.ProductUrl;
-                                    success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
-                                    if (success)
-                                        count++;
-                                }
-                                break;
-                        }
+                            }
+                            break;
+                        case "Walmart":
 
+                            foreach (var item in jsonObject.Items)
+                            {
+                                Products product = new Products();
+                                product.Sku = item.ItemId;
+                                product.Name = item.Name;
+                                product.ModelNumber = item.ModelNumber;
+                                product.Image = item.MediumImage;
+                                product.RegularPrice = item.msrp;
+                                product.SalePrice = item.SalePrice;
+                                product.Manufacturer = item.BrandName;
+                                product.Url = item.ProductUrl;
+                                success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
+                                if (success)
+                                    count++;
+                            }
+                            break;
                     }
                 }
 
@@ -129,6 +124,24 @@ namespace BestBuyRESTFulService
         {
             List<Products> productList = dbProducts.GetAllProducts();
             return productList;
+        }
+
+        public ProductsJSON MakeAPICall(string url)
+        {
+            ProductsJSON productsJSON = null;
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+
+            // Get response  
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                // Get the response stream  
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                var serializer = new JavaScriptSerializer();
+                productsJSON = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
+            }
+
+            return productsJSON;
         }
     }
 }

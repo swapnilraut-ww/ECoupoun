@@ -55,6 +55,9 @@
     <Compile Include="Category.cs">
       <DependentUpon>ECoupoun.tt</DependentUpon>
     </Compile>
+    <Compile Include="CategoryProviderMapping.cs">
+      <DependentUpon>ECoupoun.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBData.cs" />
     <Compile Include="DBHelper.cs" />
     <Compile Include="DBProducts.cs" />
@@ -107,6 +110,8 @@
     <Compile Include="User.cs">
       <DependentUpon>ECoupoun.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\APIDetailModel.cs" />
+    <Compile Include="ViewModel\Category.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ECoupoun.Entities\ECoupoun.Entities.csproj">

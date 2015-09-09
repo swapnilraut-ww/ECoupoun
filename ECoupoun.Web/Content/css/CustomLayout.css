@@ -244,8 +244,28 @@ h1, h2, h3, h4, h5, h6 {
     height: 170px;
 }
 
-
 /*Autocomplete*/
 .ui-autocomplete {
     width: 36% !important;
+    max-height: 600px !important;
+    overflow: scroll !important;
+}
+
+/*Select Picker*/
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: auto !important;
+    max-width: 200px !important;
+    margin-right: 10px !important;
+}
+
+.bs-donebutton .btn-group button {
+    width: 49% !important;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li a span.text {
+    float: none;
+}
+
+.dropdown-menu > li > a {
+    padding: 3px 25px !important; 
 }

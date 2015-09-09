@@ -25,7 +25,7 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Name, false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { Area = "Admin" });
             }
             return View();
         }

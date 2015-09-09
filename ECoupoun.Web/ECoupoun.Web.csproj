@@ -180,6 +180,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\bootstrap-select.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\CustomLayout.css" />
@@ -272,7 +273,12 @@
     <Content Include="Areas\Admin\Views\Provider\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Provider\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Provider\Index.cshtml" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\CustomJs\GlobalJs.js" />
     <Content Include="Scripts\easing.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -329,6 +335,8 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Product\SubCategories.cshtml" />
+    <Content Include="Views\Shared\_FilterPatrial.cshtml" />
+    <Content Include="Views\Product\_ProductPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

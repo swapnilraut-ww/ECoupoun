@@ -14,9 +14,10 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
     public class CategoryController : BaseController
     {
         // GET: /Admin/Category/
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.Categories.ToList());
+            ViewBag.ParentCategoryId = id;
+            return View(db.Categories.Where(x => x.CategoryParentId == id).ToList());
         }
 
         // GET: /Admin/Category/Details/5
@@ -35,10 +36,12 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
         }
 
         // GET: /Admin/Category/Create
-        public ActionResult Create()
+        public ActionResult Create(int? parentCategoryId)
         {
-            ViewBag.CategoryList = new SelectList(db.Categories.ToList(), "CategoryId", "Name");
-            return View();
+            Category category = new Category();
+            category.CategoryParentId = parentCategoryId;
+            ViewBag.CategoryList = new SelectList(db.Categories.ToList(), "CategoryId", "Name", parentCategoryId);
+            return View(category);
         }
 
         // POST: /Admin/Category/Create

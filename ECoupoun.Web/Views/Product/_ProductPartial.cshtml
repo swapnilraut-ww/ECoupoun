@@ -1,0 +1,38 @@
+﻿@model List<ECoupoun.Entities.ProductModel>
+<ul>
+    @foreach (var item in Model)
+    {
+        <li class="product_list col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div id="product_item" class="product_detail" data-providerid="@item.ProviderId" data-sku="@item.Sku" data-producturl="@item.ProductUrl">
+                <div class="product_img">
+                    <a>
+                        <img src="@item.ImageUrl" alt="Product Image" />
+                    </a>
+                </div>
+
+                <a href="@item.ProductUrl">
+                    <div class="product_name">
+
+                        @if (item.ProductName.Length > 50)
+                        {
+                            <h4 title="@item.ProductName">
+                                @item.ProductName.Substring(0, 50) <span>...</span>
+                            </h4>
+                        }
+                        else
+                        {
+                            <h4>
+                                @item.ProductName
+                            </h4>
+                        }
+
+                    </div>
+                    <div class="product_price">
+                        <p><span class="actual-price">@item.SalePrice</span></p>
+                    </div>
+
+                </a>
+            </div>
+        </li>
+    }
+</ul>
