@@ -5,18 +5,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace ECoupoun.Data
 {
     [MetadataType(typeof(CategoryModel))]
     public partial class Category
     {
-        
+
     }
 
     public class CategoryModel
     {
-        [Display(Name = "Parent Category")]        
+        [Display(Name = "Parent Category")]
         public int CategoryParentId { get; set; }
 
         [Display(Name = "Active")]
@@ -34,6 +35,7 @@ namespace ECoupoun.Data
 
         [Display(Name = "Mapping Name")]
         [Required]
+        [Remote("IsMappingNameAvailable", "Category", ErrorMessage = "Mapping Name already exist.", AdditionalFields = "InitialMappingName")]
         public string MappingName { get; set; }
     }
 }

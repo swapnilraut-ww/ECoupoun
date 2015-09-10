@@ -98,7 +98,9 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
             {
                 if (image != null)
                 {
-                    System.IO.File.Delete(Server.MapPath("~/Areas/Admin/Uploads/" + category.Image));
+                    string tempPath = Server.MapPath("~/Areas/Admin/Uploads/" + category.Image);
+                    if (!string.IsNullOrWhiteSpace(category.Image))
+                        System.IO.File.Delete(Server.MapPath("~/Areas/Admin/Uploads/" + category.Image));
 
                     string ext = System.IO.Path.GetExtension(image.FileName);
                     string path = System.IO.Path.Combine(
@@ -149,6 +151,23 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult IsMappingNameAvailable(string mappingName, string InitialMappingName)
+        {
+            if (mappingName.ToLower() != InitialMappingName.ToLower())
+            {
+                Category category = db.Categories.Where(x => x.MappingName == mappingName).SingleOrDefault();
+                if (category == null)
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                else
+                    return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

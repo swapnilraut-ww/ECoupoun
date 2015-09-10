@@ -58,11 +58,11 @@ namespace ECoupoun.Data
 
                     if (product.CategoryPath != null && product.CategoryPath.Count > 3)
                     {
-                        Category subCategory =  db.Categories.ToList().Where(x => x.Name == product.CategoryPath[3].Name.ToString()).SingleOrDefault();
+                        Category subCategory = db.Categories.Where(x => x.IsActive == true).ToList().Where(x => x.Name == product.CategoryPath[3].Name.ToString()).SingleOrDefault();
                         if (subCategory != null)
                             productMaster.SubCategoryId = subCategory.CategoryId;
                     }
-                   
+
                     productMaster.CategoryId = categoryId;
                     productMaster.Name = product.Name;
                     productMaster.LongDescription = product.ShortDescription;
@@ -89,7 +89,7 @@ namespace ECoupoun.Data
                     productPricing.AsofDate = System.DateTime.Now;
                     db.ProductPricings.Add(productPricing);
 
-                    db.SaveChanges();                                       
+                    db.SaveChanges();
                 }
 
                 return true;

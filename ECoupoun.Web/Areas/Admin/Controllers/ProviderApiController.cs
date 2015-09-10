@@ -38,26 +38,26 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.ProviderId = new SelectList(db.Providers, "ProviderId", "Name");
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
+            ViewBag.CategoryId = new SelectList(db.GetCategoriesForAPI(), "CategoryId", "Name");
             return View();
         }
 
         // POST: /Admin/ProviderApi/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "APIId,CategoryId,ProviderId,ProviderCatName,ServiceUrl,APIKey,CreatedOn,UpdatedOn,IsActive")] APIDetail apidetail)
+        public ActionResult Create(APIDetail apidetail)
         {
             if (ModelState.IsValid)
             {
+                apidetail.CreatedOn = System.DateTime.Now;
+
                 db.APIDetails.Add(apidetail);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.ProviderId = new SelectList(db.Providers, "ProviderId", "Name", apidetail.ProviderId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", apidetail.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.GetCategoriesForAPI(), "CategoryId", "Name", apidetail.CategoryId);
             return View(apidetail);
         }
 
@@ -74,25 +74,25 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProviderId = new SelectList(db.Providers, "ProviderId", "Name", apidetail.ProviderId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", apidetail.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.GetCategoriesForAPI(), "CategoryId", "Name", apidetail.CategoryId);
             return View(apidetail);
         }
 
         // POST: /Admin/ProviderApi/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "APIId,CategoryId,ProviderId,ProviderCatName,ServiceUrl,APIKey,CreatedOn,UpdatedOn,IsActive")] APIDetail apidetail)
+        public ActionResult Edit(APIDetail apidetail)
         {
             if (ModelState.IsValid)
             {
+                apidetail.UpdatedOn = System.DateTime.Now;
+
                 db.Entry(apidetail).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.ProviderId = new SelectList(db.Providers, "ProviderId", "Name", apidetail.ProviderId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", apidetail.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.GetCategoriesForAPI(), "CategoryId", "Name", apidetail.CategoryId);
             return View(apidetail);
         }
 

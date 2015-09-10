@@ -43,7 +43,7 @@ li {
 
 .span_1_of_2 {
     padding: 1.5%;
-    width: 78%;
+    width: 100%;
 }
 
 .span_3_of_1 {
@@ -267,5 +267,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dropdown-menu > li > a {
-    padding: 3px 25px !important; 
+    padding: 3px 25px !important;
+}
+
+.productFilter.sticky {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    /*left: 50%;*/
+    /*margin-left: -540px;*/
+    margin-right: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    /*width: 980px;*/
+    z-index: 4900001;
+    min-height: 28px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.sticky {
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.4);
+    position: fixed;
 }

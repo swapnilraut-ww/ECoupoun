@@ -63,7 +63,7 @@ namespace BestBuyRESTFulService
 
             int count = 0;
             int failCount = 0;
-
+            
             try
             {
                 db.DeleteProducts();
@@ -110,12 +110,14 @@ namespace BestBuyRESTFulService
                     }
                 }
 
-                responseText = string.Format("Inserted {0} Records.", count);
-                responseText = string.Format("Duplicate {0} Records.", failCount);
+                responseText += string.Format("Inserted {0} Records.\n", count);
+                responseText += string.Format("Duplicate {0} Records.\n", failCount);
             }
             catch (Exception ex)
             {
-                responseText = "Some exception is occurred while Inserting Data, exception is : " + ex.Message;
+                responseText += string.Format("Inserted {0} Records. \n", count);
+                responseText += string.Format("Duplicate {0} Records. \n", failCount);
+                responseText += "Some exception is occurred while Inserting Data, exception is : " + ex.Message;
             }
             return responseText;
         }

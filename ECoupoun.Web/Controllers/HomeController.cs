@@ -16,22 +16,29 @@ namespace ECoupoun.Web.Controllers
     {
         public ActionResult Index()
         {
-            var productList = (from p in db.ProductMasters
-                               join pl in db.ProductLinks on p.ProductId equals pl.ProductId
-                               join pp in db.ProductPricings on p.ProductId equals pp.ProductId
-                               join pr in db.Providers on pp.ProviderId equals pr.ProviderId
-                               select new ProductModel
-                               {
-                                   ProviderId = pr.ProviderId,
-                                   ProductName = p.Name,
-                                   Sku = pp.SKU,
-                                   ProviderName = pr.Name,
-                                   ProductUrl = pl.SoruceUrl,
-                                   ImageUrl = p.Image,
-                                   SalePrice = pp.SalePrice,
+            try
+            {
+                var productList = (from p in db.ProductMasters
+                                   join pl in db.ProductLinks on p.ProductId equals pl.ProductId
+                                   join pp in db.ProductPricings on p.ProductId equals pp.ProductId
+                                   join pr in db.Providers on pp.ProviderId equals pr.ProviderId
+                                   select new ProductModel
+                                   {
+                                       ProviderId = pr.ProviderId,
+                                       ProductName = p.Name,
+                                       Sku = pp.SKU,
+                                       ProviderName = pr.Name,
+                                       ProductUrl = pl.SoruceUrl,
+                                       ImageUrl = p.Image,
+                                       SalePrice = pp.SalePrice,
 
-                               }).ToList();
-            return View(productList);
+                                   }).ToList();
+                return View(productList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpPost]
@@ -92,6 +99,16 @@ namespace ECoupoun.Web.Controllers
         {
             var productList = db.ProductMasters.ToList().Where(x => x.Name.ToLower().Contains(term.ToLower())).Select(x => new { id = x.ProductId, label = x.Name, value = x.Name }).ToList();
             return Json(productList, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult HomeCategoryPartial()
+        {
+            Random rnd = new Random();
+            var parentCategories = db.Categories.Where(x => x.CategoryParentId == null && x.IsActive == true).ToList().Select(x => x.CategoryId.ToString()).ToList();
+
+            var firstLevelCategories = db.Categories.Where(x => x.IsActive == true).ToList().Where(x => parentCategories.Contains(x.CategoryParentId.ToString())).OrderBy(x => rnd.Next()).Take(4).ToList();
+
+            return PartialView("_HomeCategoryPartial", firstLevelCategories);
         }
     }
 }

@@ -10,14 +10,15 @@
                             new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Category</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.CategoryId)
         @Html.HiddenFor(model => model.CreatedOn)
-
+        @Html.HiddenFor(model => model.Image)
+        @Html.Hidden("InitialMappingName", Model.MappingName)
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryParentId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">

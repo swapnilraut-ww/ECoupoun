@@ -55,24 +55,28 @@ namespace ECoupoun.Web.Controllers
                                    SalePrice = pp.SalePrice
                                }).ToList();
 
-                ViewBag.SubCategories = new List<Category>();
+                //ViewBag.SubCategories = new List<Category>();
             }
 
             if (!string.IsNullOrWhiteSpace(categoryName))
             {
-                Category category = db.Categories.Where(x => x.MappingName == categoryName).SingleOrDefault();
+                Category category = db.Categories.Where(x => x.MappingName == categoryName && x.IsActive == true).SingleOrDefault();
                 ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
-                List<Category> subCategoryList = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
+                List<Category> subCategoryList = db.Categories.Where(x => x.CategoryParentId == category.CategoryId && x.IsActive == true).ToList();
                 return View("SubCategories", subCategoryList);
             }
             else
             {
-                if (parentCategory.Split('_').Length > 2)
+                if (parentCategory == "search")
                 {
-                    Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[2]).SingleOrDefault();
-                    Category parentCategoryName = db.Categories.Where(x => x.CategoryId == category.CategoryParentId).SingleOrDefault();
+                    ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + q + "</a></p>";
+                }
+                else if (parentCategory.Split('_').Length > 2)
+                {
+                    Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[2] && x.IsActive == true).SingleOrDefault();
+                    Category parentCategoryName = db.Categories.Where(x => x.CategoryId == category.CategoryParentId && x.IsActive == true).SingleOrDefault();
                     ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='/buy_" + parentCategoryName.MappingName + "'>" + parentCategoryName.Name + "</a>  >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
-                    ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
+                    //ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
                     productList = (from p in db.ProductMasters
                                    join pl in db.ProductLinks on p.ProductId equals pl.ProductId
                                    join pp in db.ProductPricings on p.ProductId equals pp.ProductId
@@ -93,9 +97,9 @@ namespace ECoupoun.Web.Controllers
                 }
                 else
                 {
-                    Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[1]).SingleOrDefault();
+                    Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[1] && x.IsActive == true).SingleOrDefault();
                     ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
-                    ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
+                    //ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
                     productList = (from p in db.ProductMasters
                                    join pl in db.ProductLinks on p.ProductId equals pl.ProductId
                                    join pp in db.ProductPricings on p.ProductId equals pp.ProductId

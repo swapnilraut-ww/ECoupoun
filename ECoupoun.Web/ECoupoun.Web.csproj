@@ -337,6 +337,7 @@
     <Content Include="Views\Product\SubCategories.cshtml" />
     <Content Include="Views\Shared\_FilterPatrial.cshtml" />
     <Content Include="Views\Product\_ProductPartial.cshtml" />
+    <Content Include="Views\Shared\_HomeCategoryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

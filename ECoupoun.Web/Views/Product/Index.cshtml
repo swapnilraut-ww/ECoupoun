@@ -40,6 +40,15 @@
             e.stopPropagation();
             $("#" + $(this).data("selectid")).selectpicker('deselectAll');
         });
+
+        // Cache selectors outside callback for performance. 
+        var $window = $(window),
+            $stickyEl = $('.productFilter'),
+            elTop = $stickyEl.offset().top;
+
+        $window.scroll(function () {
+            $stickyEl.toggleClass('navbar-fixed-top sticky', $window.scrollTop() > elTop);
+        });
     </script>
 }
 <div class="content_top">
@@ -49,7 +58,7 @@
     <div class="clear"></div>
 </div>
 <div class="section group">
-    <div class="cont-desc span_1_of_2">
+    <div id="filters" class="cont-desc span_1_of_2 productFilter">
         <select id="sort" name="sort" class="selectpicker" data-done-button="true" data-none-selected-text="Sort By">
             <option value="low">Price: Low to High</option>
             <option value="high">Price: High to Low</option>
