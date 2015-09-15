@@ -53,21 +53,28 @@ namespace ECoupoun.WinService
         /// <param name="obj"></param>
         private void GetProducts(object obj)
         {
-            LogHelper.WriteTraceLog("GetProducts Called");
+            try
+            {
+                LogHelper.WriteTraceLog("GetProducts Called");
 
-            var url = ECoupounConstants.BestBuyRESTServiceURL + ECoupounConstants.InsertData;
-            string responseText = string.Empty;
-            ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
-            client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
+                var url = ECoupounConstants.BestBuyRESTServiceURL + ECoupounConstants.InsertData;
+                string responseText = string.Empty;
+                ExtendedWebClient client = new ExtendedWebClient(new Uri(url));
+                client.Headers[ECoupounConstants.ContentTypeText] = ECoupounConstants.ContentTypeValue;
 
-            MemoryStream stream = new MemoryStream();
-            byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
-            stream = new MemoryStream(data);
+                MemoryStream stream = new MemoryStream();
+                byte[] data = client.UploadData(string.Format("{0}", url), "POST", stream.ToArray());
+                stream = new MemoryStream(data);
 
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(string));
-            serializer = new DataContractJsonSerializer(typeof(string));
-            responseText = (string)serializer.ReadObject(stream);
-            LogHelper.WriteTraceLog(responseText);
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(string));
+                serializer = new DataContractJsonSerializer(typeof(string));
+                responseText = (string)serializer.ReadObject(stream);
+                LogHelper.WriteTraceLog(responseText);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteTraceLog(ex.Message);
+            }
         }
 
         private double GetNextInterval()
