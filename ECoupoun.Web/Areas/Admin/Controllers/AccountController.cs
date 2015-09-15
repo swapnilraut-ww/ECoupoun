@@ -27,6 +27,7 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
                 FormsAuthentication.SetAuthCookie(user.Name, false);
                 return RedirectToAction("Index", "Home", new { Area = "Admin" });
             }
+            ModelState.AddModelError("", "Invalid Username or Password");
             return View();
         }
 
@@ -34,7 +35,7 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }

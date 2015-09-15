@@ -1,4 +1,5 @@
-﻿using ECoupoun.Data;
+﻿using ECoupoun.Common;
+using ECoupoun.Data;
 using ECoupoun.Entities;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ namespace ECoupoun.Web.Controllers
 
         public ActionResult Index(string parentCategory, string categoryName, string q)
         {
+            int startIndex = 0;
+
             List<ProductModel> productList = new List<ProductModel>();
             if (!string.IsNullOrWhiteSpace(q))
             {
@@ -52,7 +55,9 @@ namespace ECoupoun.Web.Controllers
                                    ProviderName = pr.Name,
                                    ProductUrl = pl.SoruceUrl,
                                    ImageUrl = p.Image,
-                                   SalePrice = pp.SalePrice
+                                   SalePrice = pp.SalePrice,
+                                   Color = p.Color,
+                                   Size = p.Size.HasValue ? p.Size.Value : 0
                                }).ToList();
 
                 //ViewBag.SubCategories = new List<Category>();
@@ -76,7 +81,7 @@ namespace ECoupoun.Web.Controllers
                     Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[2] && x.IsActive == true).SingleOrDefault();
                     Category parentCategoryName = db.Categories.Where(x => x.CategoryId == category.CategoryParentId && x.IsActive == true).SingleOrDefault();
                     ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='/buy_" + parentCategoryName.MappingName + "'>" + parentCategoryName.Name + "</a>  >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
-                    //ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
+                    ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.Category1.CategoryId).ToList().Where(x => x.MappingName != parentCategory.Split('_')[2]).ToList();
                     productList = (from p in db.ProductMasters
                                    join pl in db.ProductLinks on p.ProductId equals pl.ProductId
                                    join pp in db.ProductPricings on p.ProductId equals pp.ProductId
@@ -92,14 +97,16 @@ namespace ECoupoun.Web.Controllers
                                        ProviderName = pr.Name,
                                        ProductUrl = pl.SoruceUrl,
                                        ImageUrl = p.Image,
-                                       SalePrice = pp.SalePrice
+                                       SalePrice = pp.SalePrice,
+                                       Color = p.Color,
+                                       Size = p.Size.HasValue ? p.Size.Value : 0
                                    }).ToList();
                 }
                 else
                 {
                     Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[1] && x.IsActive == true).SingleOrDefault();
                     ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
-                    //ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
+                    ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
                     productList = (from p in db.ProductMasters
                                    join pl in db.ProductLinks on p.ProductId equals pl.ProductId
                                    join pp in db.ProductPricings on p.ProductId equals pp.ProductId
@@ -117,7 +124,8 @@ namespace ECoupoun.Web.Controllers
                                         ProductUrl = pl.SoruceUrl,
                                         ImageUrl = p.Image,
                                         SalePrice = pp.SalePrice,
-
+                                        Color = p.Color,
+                                        Size = p.Size.HasValue ? p.Size.Value : 0
                                     }).ToList();
                 }
 
@@ -125,8 +133,25 @@ namespace ECoupoun.Web.Controllers
 
             ViewBag.ManufacturerList = productList.GroupBy(x => x.Manufacturer).Select(x => new SelectListItem() { Text = x.First().Manufacturer, Value = x.First().ManufacturerId.ToString() }).Distinct();
             ViewBag.ProviderList = productList.GroupBy(x => x.ProviderName).Select(x => new SelectListItem() { Text = x.First().ProviderName, Value = x.First().ProviderId.ToString() });
+            ViewBag.ColorList = productList.Where(x => x.Color != null).OrderBy(x => x.Color).GroupBy(x => x.Color).Select(x => new SelectListItem() { Text = x.First().Color, Value = x.First().Color });
+            ViewBag.SizeList = productList.Where(x => x.Size != 0).OrderBy(x => x.Size).GroupBy(x => x.Size).Select(x => new SelectListItem() { Text = x.First().Size.ToString(), Value = x.First().Size.ToString() });
             Session["ProductList"] = productList;
-            return View(productList);
+            return View(productList.Skip(startIndex).Take(ECoupounConstants.BlockSize).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult InfinateScroll(int blockNumber)
+        {
+            List<ProductModel> productList = (List<ProductModel>)Session["ProductList"];
+
+            int startIndex = (blockNumber - 1) * ECoupounConstants.BlockSize;
+            productList = productList.Skip(startIndex).Take(ECoupounConstants.BlockSize).ToList();
+
+            JsonModel jsonModel = new JsonModel();
+            jsonModel.NoMoreData = productList.Count < ECoupounConstants.BlockSize;
+            jsonModel.HTMLString = this.RenderPartialViewToString("_ProductPartial", productList);
+
+            return Json(jsonModel);
         }
 
         [HttpPost]
@@ -163,12 +188,15 @@ namespace ECoupoun.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetProductList(string sortBy, string manufacturer, string provider)
+        public ActionResult GetProductList(string sortBy, string manufacturer, string provider, string color, string size, int blockNumber = 1)
         {
+            int startIndex = (blockNumber - 1) * ECoupounConstants.BlockSize;
             List<ProductModel> productList = (List<ProductModel>)Session["ProductList"];
 
             List<string> manufacturerList = null;
             List<string> providerList = null;
+            List<string> colorList = null;
+            List<double> sizeList = null;
             if (!string.IsNullOrWhiteSpace(manufacturer))
             {
                 manufacturerList = manufacturer.Split(',').ToList();
@@ -186,7 +214,25 @@ namespace ECoupoun.Web.Controllers
             else if (!string.IsNullOrWhiteSpace(sortBy) && sortBy == "high")
                 productList = productList.OrderByDescending(x => x.SalePrice).ToList();
 
-            return PartialView("_ProductPartial", productList);
+            if (!string.IsNullOrWhiteSpace(color))
+            {
+                colorList = color.Split(',').ToList();
+                productList = productList.Where(p => colorList.Contains(p.Color)).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(size))
+            {
+                sizeList = size.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToList();
+                productList = productList.Where(p => sizeList.Contains(p.Size)).ToList();
+            }
+
+            productList = productList.Skip(startIndex).Take(ECoupounConstants.BlockSize).ToList();
+
+            JsonModel jsonModel = new JsonModel();
+            jsonModel.NoMoreData = productList.Count < ECoupounConstants.BlockSize;
+            jsonModel.HTMLString = this.RenderPartialViewToString("_ProductPartial", productList);
+
+            return Json(jsonModel);
         }
     }
 }

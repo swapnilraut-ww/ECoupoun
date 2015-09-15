@@ -17,7 +17,9 @@ namespace ECoupoun.Entities
         public string ProductUrl { get; set; }
         public string ImageUrl { get; set; }
         public string Manufacturer { get; set; }
+        public string Color { get; set; }
         public decimal SalePrice { get; set; }
+        public double Size { get; set; }
 
     }
 }

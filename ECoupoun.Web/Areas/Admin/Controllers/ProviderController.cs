@@ -10,6 +10,7 @@ using ECoupoun.Data;
 
 namespace ECoupoun.Web.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ProviderController : BaseController
     {
         // GET: /Admin/Provider/

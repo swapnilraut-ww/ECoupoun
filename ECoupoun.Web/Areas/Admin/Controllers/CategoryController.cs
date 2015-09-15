@@ -66,7 +66,7 @@ namespace ECoupoun.Web.Areas.Admin.Controllers
 
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = category.CategoryParentId });
             }
 
             return View(category);

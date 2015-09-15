@@ -68,6 +68,8 @@ namespace ECoupoun.Data
                     productMaster.LongDescription = product.ShortDescription;
                     productMaster.ModelNumber = product.ModelNumber;
                     productMaster.Image = product.Image;
+                    productMaster.Color = product.Color;
+                    productMaster.Size = product.ScreenSizeIn;
                     productMaster.CreatedOn = System.DateTime.Now;
                     db.ProductMasters.Add(productMaster);
 

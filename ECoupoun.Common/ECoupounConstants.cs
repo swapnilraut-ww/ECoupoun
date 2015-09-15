@@ -29,5 +29,7 @@ namespace ECoupoun.Common
         public const string TestPOSTAPI = "TestPOSTAPI";
         public const string InsertData = "InsertData";
         public const string GetAllProducts = "GetAllProducts";
+
+        public const int BlockSize = 12;
     }
 }

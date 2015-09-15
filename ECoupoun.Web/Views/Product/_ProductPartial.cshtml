@@ -1,4 +1,8 @@
 ﻿@model List<ECoupoun.Entities.ProductModel>
+@*@if (Model.Count == 0)
+{ 
+    @: Sorry no products for now. Come back later
+}*@
 <ul>
     @foreach (var item in Model)
     {

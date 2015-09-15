@@ -30,8 +30,10 @@ namespace ECoupoun.Entities
         public string Url { get; set; }
         public string MobileUrl { get; set; }
         public string ShortDescription { get; set; }
+        public string Color { get; set; }
         public decimal RegularPrice { get; set; }
         public decimal SalePrice { get; set; }
+        public double ScreenSizeIn { get; set; }
         public List<CategoryPath> CategoryPath { get; set; }
     }
 

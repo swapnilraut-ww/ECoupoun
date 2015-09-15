@@ -6,31 +6,41 @@
 @section scripts
 {
     <script type="text/javascript">
-        var manufacturer, provider;
-        //$('.selectpicker').selectpicker({
-        //});
+        var BlockNumber = 2;  //Infinate Scroll starts from second block
+        var NoMoreData = false;
+        var inProgress = false;
+
+        var manufacturer, provider, color, size;
+
         $(document).on('click', '.dropdown-menu li a', function (e) {
             manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
             provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
+            color = $("#Color").val() ? $("#Color").val().toString() : '';
+            size = $("#Size").val() ? $("#Size").val().toString() : '';
             $.ajax({
                 url: "/Ajax/Product/GetProductList",
-                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider },
+                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size },
                 type: "post",
                 success: function (data) {
-                    $(".productList").html(data);
+                    $("#productListDiv").html(data.HTMLString);
+                    $("#loadingDiv").hide();
                 }
             });
         });
 
         $(document).on("click", ".btnApply", function () {
+            BlockNumber = 2;
             manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
             provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
+            color = $("#Color").val() ? $("#Color").val().toString() : '';
+            size = $("#Size").val() ? $("#Size").val().toString() : '';
             $.ajax({
                 url: "/Ajax/Product/GetProductList",
-                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider },
+                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size },
                 type: "post",
                 success: function (data) {
-                    $(".productList").html(data);
+                    $("#productListDiv").html(data.HTMLString);
+                    $("#loadingDiv").hide();
                 }
             });
         });
@@ -41,7 +51,6 @@
             $("#" + $(this).data("selectid")).selectpicker('deselectAll');
         });
 
-        // Cache selectors outside callback for performance. 
         var $window = $(window),
             $stickyEl = $('.productFilter'),
             elTop = $stickyEl.offset().top;
@@ -49,45 +58,89 @@
         $window.scroll(function () {
             $stickyEl.toggleClass('navbar-fixed-top sticky', $window.scrollTop() > elTop);
         });
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height() && !NoMoreData && !inProgress) {
+
+                inProgress = true;
+                $("#loadingDiv").show();
+                manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
+                provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
+                color = $("#Color").val() ? $("#Color").val().toString() : '';
+                size = $("#Size").val() ? $("#Size").val().toString() : '';
+                $.post("/Ajax/Product/GetProductList", { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size, "blockNumber": BlockNumber },
+                    function (data) {
+
+                        BlockNumber = BlockNumber + 1;
+                        NoMoreData = data.NoMoreData;
+                        $("#productListDiv").append(data.HTMLString);
+                        $("#loadingDiv").hide();
+                        inProgress = false;
+                    });
+            }
+        });
     </script>
 }
 <div class="content_top">
     <div class="back-links">
         @Html.Raw(ViewBag.BreadCrumb)
     </div>
-    <div class="clear"></div>
-</div>
-<div class="section group">
-    <div id="filters" class="cont-desc span_1_of_2 productFilter">
-        <select id="sort" name="sort" class="selectpicker" data-done-button="true" data-none-selected-text="Sort By">
-            <option value="low">Price: Low to High</option>
-            <option value="high">Price: High to Low</option>
-        </select>
-        @*<select class="selectpicker" multiple data-done-button="true" data-none-selected-text="Price">
-            <option>2</option>
-        </select>*@
-
-        @Html.DropDownList("Manufacturer", (IEnumerable<SelectListItem>)ViewBag.ManufacturerList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Brand", data_clear_button_select_id = "Manufacturer",data_live_search="true" })
-
-        @Html.DropDownList("Provider", (IEnumerable<SelectListItem>)ViewBag.ProviderList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Store", data_clear_button_select_id = "Provider",data_live_search="true" })
-
+    <div class="clear">
     </div>
 </div>
 <div class="section group">
-    <div class="cont-desc span_1_of_2 productList">
+    @if (Model.Count > 0)
+    {
+        <div id="filters" class="cont-desc span_1_of_2 productFilter">
+            <select id="sort" name="sort" class="selectpicker" data-done-button="true" data-none-selected-text="Sort By">
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+            </select>
+            @*<select class="selectpicker" multiple data-done-button="true" data-none-selected-text="Price">
+                    <option>2</option>
+                </select>*@
+            @Html.DropDownList("Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Color", data_clear_button_select_id = "Color", data_live_search = "true" })
+
+            @Html.DropDownList("Size", (IEnumerable<SelectListItem>)ViewBag.SizeList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Size", data_clear_button_select_id = "Size", data_live_search = "true" })
+
+
+            @Html.DropDownList("Manufacturer", (IEnumerable<SelectListItem>)ViewBag.ManufacturerList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Brand", data_clear_button_select_id = "Manufacturer", data_live_search = "true" })
+
+            @Html.DropDownList("Provider", (IEnumerable<SelectListItem>)ViewBag.ProviderList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Store", data_clear_button_select_id = "Provider", data_live_search = "true" })
+
+        </div>
+    }
+</div>
+@if (ViewBag.SubCategories != null)
+{
+    <div class="section group span_1_of_2">
+        Related:
+        <span class="related">
+            @foreach (var item in ViewBag.SubCategories)
+            {
+                <a href="/buy_sub_@item.MappingName">@item.Name</a>@:,
+        }
+
+        </span>
+    </div>
+}
+<div class="section group">
+    <div id="productListDiv" class="cont-desc span_1_of_2 productList">
         @{Html.RenderPartial("_ProductPartial", Model);}
     </div>
-
+    <div id="loadingDiv" style="text-align: center; display: none; margin-bottom: 20px;">
+        <img alt="Loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" />
+    </div>
     @* @if (ViewBag.SubCategories.Count > 0)
-    {
-        <div class="rightsidebar span_3_of_1">
-            <h2>CATEGORIES</h2>
-            <ul>
-                @foreach (var item in ViewBag.SubCategories)
-                {
-                    <li><a href="/buy_sub_@item.MappingName">@item.Name</a></li>
-                }
-            </ul>
-        </div>
-    }*@
+        {
+            <div class="rightsidebar span_3_of_1">
+                <h2>CATEGORIES</h2>
+                <ul>
+                    @foreach (var item in ViewBag.SubCategories)
+                    {
+                        <li><a href="/buy_sub_@item.MappingName">@item.Name</a></li>
+                    }
+                </ul>
+            </div>
+        }*@
 </div>
