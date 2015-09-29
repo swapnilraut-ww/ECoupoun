@@ -33,6 +33,7 @@ namespace ECoupoun.Data
 
         public bool InsertProduct(int categoryId, int providerId, Products product)
         {
+            string table = string.Empty;
             try
             {
                 ProductMaster productMaster = db.ProductMasters.Where(x => x.ModelNumber == product.ModelNumber).SingleOrDefault();
@@ -55,6 +56,7 @@ namespace ECoupoun.Data
 
                         productMaster.ManufacturerId = manufacturer.ManufacturerId;
                     }
+                    table = "manufacturer";
 
                     if (product.CategoryPath != null && product.CategoryPath.Count > 3)
                     {
@@ -69,9 +71,10 @@ namespace ECoupoun.Data
                     productMaster.ModelNumber = product.ModelNumber;
                     productMaster.Image = product.Image;
                     productMaster.Color = product.Color;
-                    productMaster.Size = product.ScreenSizeIn;
+                    productMaster.Size = string.IsNullOrWhiteSpace(product.ScreenSizeIn) ? 0 : Convert.ToDouble(product.ScreenSizeIn);
                     productMaster.CreatedOn = System.DateTime.Now;
                     db.ProductMasters.Add(productMaster);
+                    table = "ProductMasters";
 
                     ProductLink productLink = new ProductLink();
                     productLink.ProductId = productMaster.ProductId;
@@ -81,6 +84,7 @@ namespace ECoupoun.Data
                     productLink.CreatedOn = System.DateTime.Now;
                     productLink.IsActive = true;
                     db.ProductLinks.Add(productLink);
+                    table = "ProductLink";
 
                     ProductPricing productPricing = new ProductPricing();
                     productPricing.ProductId = productMaster.ProductId;
@@ -90,6 +94,7 @@ namespace ECoupoun.Data
                     productPricing.SalePrice = product.SalePrice;
                     productPricing.AsofDate = System.DateTime.Now;
                     db.ProductPricings.Add(productPricing);
+                    table = "ProductPricing";
 
                     db.SaveChanges();
                 }

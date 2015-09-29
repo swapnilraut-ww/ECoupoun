@@ -8,8 +8,10 @@ namespace ECoupoun.Entities
 {
     public class ProductModel
     {
+        public int CategoryId { get; set; }
         public int ProviderId { get; set; }
         public int TotalVisitors { get; set; }
+        public int SubCategoryId { get; set; }
         public int ManufacturerId { get; set; }
         public long Sku { get; set; }
         public string ProductName { get; set; }

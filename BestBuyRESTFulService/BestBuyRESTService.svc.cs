@@ -70,8 +70,8 @@ namespace BestBuyRESTFulService
 
                 foreach (var apiDetail in apiDetailsList)
                 {
+                    responseText += string.Format("ServiceUrl = {0} \n", apiDetail.ServiceUrl);
                     var jsonObject = MakeAPICall(apiDetail.ServiceUrl);
-
                     switch (apiDetail.Provider.Name)
                     {
                         case "BestBuy":
@@ -130,20 +130,27 @@ namespace BestBuyRESTFulService
 
         public ProductsJSON MakeAPICall(string url)
         {
-            ProductsJSON productsJSON = null;
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-
-            // Get response  
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            try
             {
-                // Get the response stream  
-                StreamReader reader = new StreamReader(response.GetResponseStream());
+                ProductsJSON productsJSON = null;
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
 
-                var serializer = new JavaScriptSerializer();
-                productsJSON = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
+                // Get response  
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    var serializer = new JavaScriptSerializer();
+                    productsJSON = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
+                }
+
+                return productsJSON;
             }
-
-            return productsJSON;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

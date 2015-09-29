@@ -11,55 +11,42 @@ namespace ECoupoun.Web.Controllers
 {
     public class ProductController : BaseController
     {
-        //
-        // GET: /Product/
-        //public ActionResult Index(int parentid, int catid)
-        //{
-        //    var productList = (from p in db.ProductMasters
-        //                       join pl in db.ProductLinks on p.ProductId equals pl.ProductId
-        //                       join pp in db.ProductPricings on p.ProductId equals pp.ProductId
-        //                       join pr in db.Providers on pp.ProviderId equals pr.ProviderId
-        //                       where p.CategoryId == catid
-        //                       select new ProductModel
-        //                        {
-        //                            ProviderId = pr.ProviderId,
-        //                            ProductName = p.Name,
-        //                            Sku = pp.SKU,
-        //                            ProviderName = pr.Name,
-        //                            ProductUrl = pl.SoruceUrl,
-        //                            ImageUrl = p.Image,
-        //                            SalePrice = pp.SalePrice
-        //                        }).ToList();
-        //    return View(productList);
-        //}
-
         public ActionResult Index(string parentCategory, string categoryName, string q)
         {
+            switch (parentCategory) 
+            {
+                case "About":
+                    return View("~/Views/Home/About.cshtml");
+                case "Contact":
+                    return View("~/Views/Home/Contact.cshtml");
+                case "Help":
+                    return View("~/Views/Home/Help.cshtml");
+            }
             int startIndex = 0;
+            List<ProductModel> productList = (from p in db.ProductMasters
+                                              join pl in db.ProductLinks on p.ProductId equals pl.ProductId
+                                              join pp in db.ProductPricings on p.ProductId equals pp.ProductId
+                                              join pr in db.Providers on pp.ProviderId equals pr.ProviderId
+                                              join m in db.Manufacturers on p.ManufacturerId equals m.ManufacturerId
+                                              select new ProductModel
+                                             {
+                                                 CategoryId = p.CategoryId,
+                                                 ProviderId = pr.ProviderId,
+                                                 SubCategoryId = p.SubCategoryId.HasValue ? p.SubCategoryId.Value : 0,
+                                                 ProductName = p.Name,
+                                                 Manufacturer = m.Name,
+                                                 Sku = pp.SKU,
+                                                 ProviderName = pr.Name,
+                                                 ProductUrl = pl.SoruceUrl,
+                                                 ImageUrl = p.Image,
+                                                 SalePrice = pp.SalePrice,
+                                                 Color = p.Color,
+                                                 Size = p.Size.HasValue ? p.Size.Value : 0
+                                             }).ToList();
 
-            List<ProductModel> productList = new List<ProductModel>();
             if (!string.IsNullOrWhiteSpace(q))
             {
-                productList = (from p in db.ProductMasters
-                               join pl in db.ProductLinks on p.ProductId equals pl.ProductId
-                               join pp in db.ProductPricings on p.ProductId equals pp.ProductId
-                               join pr in db.Providers on pp.ProviderId equals pr.ProviderId
-                               join m in db.Manufacturers on p.ManufacturerId equals m.ManufacturerId
-                               where p.Name.Contains(q)
-                               select new ProductModel
-                               {
-                                   ProviderId = pr.ProviderId,
-                                   ProductName = p.Name,
-                                   Manufacturer = m.Name,
-                                   Sku = pp.SKU,
-                                   ProviderName = pr.Name,
-                                   ProductUrl = pl.SoruceUrl,
-                                   ImageUrl = p.Image,
-                                   SalePrice = pp.SalePrice,
-                                   Color = p.Color,
-                                   Size = p.Size.HasValue ? p.Size.Value : 0
-                               }).ToList();
-
+                productList = productList.Where(x => x.ProductName.ToLower().Contains(q.ToLower())).ToList();
                 //ViewBag.SubCategories = new List<Category>();
             }
 
@@ -82,53 +69,17 @@ namespace ECoupoun.Web.Controllers
                     Category parentCategoryName = db.Categories.Where(x => x.CategoryId == category.CategoryParentId && x.IsActive == true).SingleOrDefault();
                     ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='/buy_" + parentCategoryName.MappingName + "'>" + parentCategoryName.Name + "</a>  >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
                     ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.Category1.CategoryId).ToList().Where(x => x.MappingName != parentCategory.Split('_')[2]).ToList();
-                    productList = (from p in db.ProductMasters
-                                   join pl in db.ProductLinks on p.ProductId equals pl.ProductId
-                                   join pp in db.ProductPricings on p.ProductId equals pp.ProductId
-                                   join pr in db.Providers on pp.ProviderId equals pr.ProviderId
-                                   join m in db.Manufacturers on p.ManufacturerId equals m.ManufacturerId
-                                   where p.SubCategoryId == category.CategoryId
-                                   select new ProductModel
-                                   {
-                                       ProviderId = pr.ProviderId,
-                                       ProductName = p.Name,
-                                       Manufacturer = m.Name,
-                                       Sku = pp.SKU,
-                                       ProviderName = pr.Name,
-                                       ProductUrl = pl.SoruceUrl,
-                                       ImageUrl = p.Image,
-                                       SalePrice = pp.SalePrice,
-                                       Color = p.Color,
-                                       Size = p.Size.HasValue ? p.Size.Value : 0
-                                   }).ToList();
+
+                    productList = productList.Where(x => x.SubCategoryId == category.CategoryId).ToList();
                 }
                 else
                 {
                     Category category = db.Categories.ToList().Where(x => x.MappingName == parentCategory.Split('_')[1] && x.IsActive == true).SingleOrDefault();
                     ViewBag.BreadCrumb = "<p><a href='/'>Home</a> >> <a href='javascript:void(0)'>" + category.Name + "</a></p>";
                     ViewBag.SubCategories = db.Categories.Where(x => x.CategoryParentId == category.CategoryId).ToList();
-                    productList = (from p in db.ProductMasters
-                                   join pl in db.ProductLinks on p.ProductId equals pl.ProductId
-                                   join pp in db.ProductPricings on p.ProductId equals pp.ProductId
-                                   join pr in db.Providers on pp.ProviderId equals pr.ProviderId
-                                   join m in db.Manufacturers on p.ManufacturerId equals m.ManufacturerId
-                                   where p.CategoryId == category.CategoryId
-                                   select new ProductModel
-                                    {
-                                        ProviderId = pr.ProviderId,
-                                        ProductName = p.Name,
-                                        ManufacturerId = m.ManufacturerId,
-                                        Manufacturer = m.Name,
-                                        Sku = pp.SKU,
-                                        ProviderName = pr.Name,
-                                        ProductUrl = pl.SoruceUrl,
-                                        ImageUrl = p.Image,
-                                        SalePrice = pp.SalePrice,
-                                        Color = p.Color,
-                                        Size = p.Size.HasValue ? p.Size.Value : 0
-                                    }).ToList();
-                }
 
+                    productList = productList.Where(x => x.CategoryId == category.CategoryId).ToList();
+                }
             }
 
             ViewBag.ManufacturerList = productList.GroupBy(x => x.Manufacturer).Select(x => new SelectListItem() { Text = x.First().Manufacturer, Value = x.First().ManufacturerId.ToString() }).Distinct();
@@ -188,14 +139,16 @@ namespace ECoupoun.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetProductList(string sortBy, string manufacturer, string provider, string color, string size, int blockNumber = 1)
+        public ActionResult GetProductList(string sortBy, string manufacturer, string provider, string color, string size, string price, int blockNumber = 1)
         {
             int startIndex = (blockNumber - 1) * ECoupounConstants.BlockSize;
             List<ProductModel> productList = (List<ProductModel>)Session["ProductList"];
+            List<ProductModel> filteredProducts = new List<ProductModel>();
 
             List<string> manufacturerList = null;
             List<string> providerList = null;
             List<string> colorList = null;
+            List<string> priceList = null;
             List<double> sizeList = null;
             if (!string.IsNullOrWhiteSpace(manufacturer))
             {
@@ -226,7 +179,24 @@ namespace ECoupoun.Web.Controllers
                 productList = productList.Where(p => sizeList.Contains(p.Size)).ToList();
             }
 
-            productList = productList.Skip(startIndex).Take(ECoupounConstants.BlockSize).ToList();
+            if (!string.IsNullOrWhiteSpace(price))
+            {
+                priceList = price.Split(',').ToList();
+                foreach (string strPrice in priceList)
+                {
+                    string[] priceRange = strPrice.Split('-');
+                    int fromRange = Convert.ToInt32(priceRange[0]);
+                    int toRange = Convert.ToInt32(priceRange[1]);
+                    List<ProductModel> productsInRange = productList.Where(p => p.SalePrice >= fromRange && p.SalePrice <= toRange).ToList();
+                    filteredProducts.AddRange(productsInRange);
+                }
+
+                productList = filteredProducts.Skip(startIndex).Take(ECoupounConstants.BlockSize).ToList();
+            }
+            else
+            {
+                productList = productList.Skip(startIndex).Take(ECoupounConstants.BlockSize).ToList();
+            }
 
             JsonModel jsonModel = new JsonModel();
             jsonModel.NoMoreData = productList.Count < ECoupounConstants.BlockSize;

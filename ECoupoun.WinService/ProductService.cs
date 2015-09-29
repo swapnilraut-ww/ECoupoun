@@ -70,10 +70,12 @@ namespace ECoupoun.WinService
                 serializer = new DataContractJsonSerializer(typeof(string));
                 responseText = (string)serializer.ReadObject(stream);
                 LogHelper.WriteTraceLog(responseText);
+                _reconnectionTimer.Change(Convert.ToInt32(GetNextInterval()), 0);
             }
             catch (Exception ex)
             {
                 LogHelper.WriteTraceLog(ex.Message);
+                _reconnectionTimer.Change(Convert.ToInt32(GetNextInterval()), 0);
             }
         }
 
@@ -107,6 +109,7 @@ namespace ECoupoun.WinService
             ts = (TimeSpan)(t - System.DateTime.Now);
 
             LogHelper.WriteTraceLog("TotalMilliseconds = " + ts.TotalMilliseconds.ToString());
+
             return ts.TotalMilliseconds;
         }
     }

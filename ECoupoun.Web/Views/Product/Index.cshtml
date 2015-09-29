@@ -10,39 +10,16 @@
         var NoMoreData = false;
         var inProgress = false;
 
-        var manufacturer, provider, color, size;
+        var manufacturer, provider, color, size, price;
 
         $(document).on('click', '.dropdown-menu li a', function (e) {
-            manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
-            provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
-            color = $("#Color").val() ? $("#Color").val().toString() : '';
-            size = $("#Size").val() ? $("#Size").val().toString() : '';
-            $.ajax({
-                url: "/Ajax/Product/GetProductList",
-                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size },
-                type: "post",
-                success: function (data) {
-                    $("#productListDiv").html(data.HTMLString);
-                    $("#loadingDiv").hide();
-                }
-            });
+            GetProducts();
         });
 
         $(document).on("click", ".btnApply", function () {
+            NoMoreData = false;
             BlockNumber = 2;
-            manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
-            provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
-            color = $("#Color").val() ? $("#Color").val().toString() : '';
-            size = $("#Size").val() ? $("#Size").val().toString() : '';
-            $.ajax({
-                url: "/Ajax/Product/GetProductList",
-                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size },
-                type: "post",
-                success: function (data) {
-                    $("#productListDiv").html(data.HTMLString);
-                    $("#loadingDiv").hide();
-                }
-            });
+            GetProducts();
         });
 
         $(document).on("click", ".btnClear", function (e) {
@@ -61,16 +38,15 @@
 
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() - $(window).height() && !NoMoreData && !inProgress) {
-
                 inProgress = true;
                 $("#loadingDiv").show();
                 manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
                 provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
                 color = $("#Color").val() ? $("#Color").val().toString() : '';
                 size = $("#Size").val() ? $("#Size").val().toString() : '';
-                $.post("/Ajax/Product/GetProductList", { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size, "blockNumber": BlockNumber },
+                price = $("#Price").val() ? $("#Price").val().toString() : '';
+                $.post("/Ajax/Product/GetProductList", { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size, "blockNumber": BlockNumber, price: price },
                     function (data) {
-
                         BlockNumber = BlockNumber + 1;
                         NoMoreData = data.NoMoreData;
                         $("#productListDiv").append(data.HTMLString);
@@ -79,6 +55,23 @@
                     });
             }
         });
+
+        function GetProducts() {
+            manufacturer = $("#Manufacturer").val() ? $("#Manufacturer").val().toString() : '';
+            provider = $("#Provider").val() ? $("#Provider").val().toString() : '';
+            color = $("#Color").val() ? $("#Color").val().toString() : '';
+            size = $("#Size").val() ? $("#Size").val().toString() : '';
+            price = $("#Price").val() ? $("#Price").val().toString() : '';
+            $.ajax({
+                url: "/Ajax/Product/GetProductList",
+                data: { sortBy: $("#sort").val(), manufacturer: manufacturer, provider: provider, color: color, size: size, price: price },
+                type: "post",
+                success: function (data) {
+                    $("#productListDiv").html(data.HTMLString);
+                    $("#loadingDiv").hide();
+                }
+            });
+        }
     </script>
 }
 <div class="content_top">
@@ -96,13 +89,16 @@
                 <option value="low">Price: Low to High</option>
                 <option value="high">Price: High to Low</option>
             </select>
-            @*<select class="selectpicker" multiple data-done-button="true" data-none-selected-text="Price">
-                    <option>2</option>
-                </select>*@
-            @Html.DropDownList("Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Color", data_clear_button_select_id = "Color", data_live_search = "true" })
+
+            <select id="Price" name="Price" class="selectpicker" data-done-button="true" multiple data-none-selected-text="Price" data-clear-button-select-id="Price">
+                <option value="0-99">Under $100</option>
+                <option value="100-200">$100 - $200</option>
+                <option value="201-10000">Over $200</option>
+            </select>
 
             @Html.DropDownList("Size", (IEnumerable<SelectListItem>)ViewBag.SizeList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Size", data_clear_button_select_id = "Size", data_live_search = "true" })
 
+            @Html.DropDownList("Color", (IEnumerable<SelectListItem>)ViewBag.ColorList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Color", data_clear_button_select_id = "Color", data_live_search = "true" })
 
             @Html.DropDownList("Manufacturer", (IEnumerable<SelectListItem>)ViewBag.ManufacturerList, new { @class = "selectpicker", @multiple = "multiple", @data_done_button = "true", data_none_selected_text = "Brand", data_clear_button_select_id = "Manufacturer", data_live_search = "true" })
 
@@ -119,8 +115,7 @@
             @foreach (var item in ViewBag.SubCategories)
             {
                 <a href="/buy_sub_@item.MappingName">@item.Name</a>@:,
-        }
-
+            }
         </span>
     </div>
 }
