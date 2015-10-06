@@ -29,7 +29,9 @@ namespace ECoupoun.Common
         public const string TestPOSTAPI = "TestPOSTAPI";
         public const string InsertData = "InsertData";
         public const string GetAllProducts = "GetAllProducts";
-
+        public const string AccessKeyId = "AKIAJDMTVVR36GOHDB7A";
+        public const string SecretKey = "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";
+        public const string DESTINATION = "ecs.amazonaws.com";
         public const int BlockSize = 12;
     }
 }

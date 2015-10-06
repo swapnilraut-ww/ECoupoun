@@ -1,4 +1,6 @@
-﻿using ECoupoun.Data;
+﻿using ECoupoun.Common;
+using ECoupoun.Common.Helper;
+using ECoupoun.Data;
 using ECoupoun.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Script.Serialization;
+using System.Xml;
 
 namespace BestBuyRESTFulService
 {
@@ -63,7 +66,7 @@ namespace BestBuyRESTFulService
 
             int count = 0;
             int failCount = 0;
-            
+
             try
             {
                 db.DeleteProducts();
@@ -89,12 +92,12 @@ namespace BestBuyRESTFulService
                                 }
                             }
                             break;
-                        case "Walmart":
 
+                        case "Walmart":
                             foreach (var item in jsonObject.Items)
                             {
                                 Products product = new Products();
-                                product.Sku = item.ItemId;
+                                product.Sku = item.ItemId.ToString();
                                 product.Name = item.Name;
                                 product.ModelNumber = item.ModelNumber;
                                 product.Image = item.MediumImage;
@@ -105,6 +108,80 @@ namespace BestBuyRESTFulService
                                 success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
                                 if (success)
                                     count++;
+                            }
+                            break;
+
+                        case "Amazon":
+                            SignedRequestHelper helper = new SignedRequestHelper(ECoupounConstants.AccessKeyId, ECoupounConstants.SecretKey, ECoupounConstants.DESTINATION);
+                            for (int p = 1; p <= 10; p++)
+                            {
+                                string requestUrl = helper.Sign(string.Format(apiDetail.ServiceUrl, p));
+
+                                List<Products> amazonProductList = new List<Products>();
+                                HttpWebRequest request = WebRequest.Create(requestUrl) as HttpWebRequest;
+
+                                // Get response  
+                                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                                {
+                                    // Get the response stream  
+                                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                                    XmlDocument xmlDoc = new XmlDocument();
+                                    xmlDoc.Load(response.GetResponseStream());
+                                    XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Item");
+                                    XmlNodeList xmlnodelstTrack1 = xmlDoc.GetElementsByTagName("TotalPages");
+
+                                    Products product = new Products();
+                                    foreach (XmlNode NodeObj in xmlnodelstTrack)
+                                    {
+                                        product = new Products();
+                                        for (int i = 0; i < NodeObj.ChildNodes.Count; i++)
+                                        {
+                                            if (NodeObj.ChildNodes[i].HasChildNodes)
+                                            {
+                                                for (int j = 0; j < NodeObj.ChildNodes[i].ChildNodes.Count; j++)
+                                                {
+                                                    string key = NodeObj.ChildNodes[i].ChildNodes[j].Name == "#text" ? NodeObj.ChildNodes[i].ChildNodes[j].ParentNode.Name : NodeObj.ChildNodes[i].ChildNodes[j].Name;
+                                                    switch (key)
+                                                    {
+                                                        case "ASIN":
+                                                            product.Sku = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                                            break;
+                                                        case "DetailPageURL":
+                                                            product.Url = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                                            break;
+                                                        case "Manufacturer":
+                                                            product.Manufacturer = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                                            break;
+                                                        case "Model":
+                                                            product.ModelNumber = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                                            break;
+                                                        case "Color":
+                                                            product.Color = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                                            break;
+                                                        case "Title":
+                                                            product.Name = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                                            break;
+                                                        case "Size":
+                                                            product.ScreenSizeIn = NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('-')[0];
+                                                            break;
+                                                        case "ListPrice":
+                                                            product.SalePrice = Convert.ToDecimal(NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('$')[1]);
+                                                            product.RegularPrice = Convert.ToDecimal(NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('$')[1]);
+                                                            break;
+                                                        case "URL":
+                                                            product.Image = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                                            break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        success = dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, product);
+                                        if (success)
+                                            count++;
+                                        amazonProductList.Add(product);
+                                    }
+                                }
                             }
                             break;
                     }
@@ -149,7 +226,7 @@ namespace BestBuyRESTFulService
             }
             catch (Exception ex)
             {
-                throw ex;
+                return null;
             }
         }
     }

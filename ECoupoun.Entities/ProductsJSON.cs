@@ -22,7 +22,7 @@ namespace ECoupoun.Entities
 
     public class Products
     {
-        public long Sku { get; set; }
+        public string Sku { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string ModelNumber { get; set; }

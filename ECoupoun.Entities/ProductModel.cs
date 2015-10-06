@@ -13,7 +13,7 @@ namespace ECoupoun.Entities
         public int TotalVisitors { get; set; }
         public int SubCategoryId { get; set; }
         public int ManufacturerId { get; set; }
-        public long Sku { get; set; }
+        public string Sku { get; set; }
         public string ProductName { get; set; }
         public string ProviderName { get; set; }
         public string ProductUrl { get; set; }
