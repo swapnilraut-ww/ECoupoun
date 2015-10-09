@@ -22,11 +22,18 @@ namespace ECoupoun.ConsoleApp
 
     public class Products
     {
+        public string Sku { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string ModelNumber { get; set; }
-        public double RegularPrice { get; set; }
-        public double SalePrice { get; set; }
+        public string Manufacturer { get; set; }
+        public string Url { get; set; }
+        public string MobileUrl { get; set; }
+        public string ShortDescription { get; set; }
+        public string Color { get; set; }
+        public decimal RegularPrice { get; set; }
+        public decimal SalePrice { get; set; }
+        public string ScreenSizeIn { get; set; }
     }
 
     public class Items
