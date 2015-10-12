@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Json;
 using System.Web;
 using System.Web.Mvc;
 using ECoupoun.Data;
+using System.Text;
 
 namespace ECoupoun.Web.Controllers
 {
@@ -109,6 +110,25 @@ namespace ECoupoun.Web.Controllers
             var firstLevelCategories = db.Categories.Where(x => x.IsActive == true).ToList().Where(x => parentCategories.Contains(x.CategoryParentId.ToString())).OrderBy(x => rnd.Next()).Take(4).ToList();
 
             return PartialView("_HomeCategoryPartial", firstLevelCategories);
+        }
+
+        public ContentResult RobotsText()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine("user-agent: *");
+            stringBuilder.AppendLine("disallow: /error/");
+            stringBuilder.AppendLine("allow: /error/foo");
+            stringBuilder.Append("sitemap: ");
+            stringBuilder.AppendLine(this.Url.RouteUrl("GetSitemapXml", null, this.Request.Url.Scheme).TrimEnd('/'));
+
+            return this.Content(stringBuilder.ToString(), "text/plain", Encoding.UTF8);
+        }
+
+        public ContentResult SitemapXml()
+        {
+            return null;
+            // I'll talk about this in a later blog post.
         }
     }
 }

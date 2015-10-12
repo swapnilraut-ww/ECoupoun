@@ -14,6 +14,30 @@ namespace ECoupoun.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+               name: "GetRobotsText",
+               url: "robots.txt",
+               defaults: new
+               {
+                   controller = "Home",
+                   action = "RobotsText",
+                   product = "{id}"
+               },
+               namespaces: new[] { "ECoupoun.Web.Controllers" }
+           );
+
+            routes.MapRoute(
+              name: "GetSitemapXml",
+              url: "sitemap.xml",
+              defaults: new
+              {
+                  controller = "Home",
+                  action = "SitemapXml",
+                  product = "{id}"
+              },
+              namespaces: new[] { "ECoupoun.Web.Controllers" }
+          );
+
+            routes.MapRoute(
                 name: "ParentCategory",
                 url: "{parentCategory}",
                 defaults: new
