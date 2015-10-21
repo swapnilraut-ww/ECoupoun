@@ -16,7 +16,7 @@ namespace ECoupoun.Data
     {
         public int ProductId { get; set; }
         public int ProviderId { get; set; }
-        public int SKU { get; set; }
+        public string SKU { get; set; }
         public decimal RegularPrice { get; set; }
         public decimal SalePrice { get; set; }
         public System.DateTime StartDate { get; set; }

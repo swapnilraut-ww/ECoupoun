@@ -24,11 +24,14 @@ namespace ECoupoun.Data
     
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
-        public int ManufacturerId { get; set; }
+        public Nullable<int> ManufacturerId { get; set; }
+        public Nullable<int> SubCategoryId { get; set; }
         public string Name { get; set; }
         public string LongDescription { get; set; }
         public string ModelNumber { get; set; }
         public string Image { get; set; }
+        public string Color { get; set; }
+        public Nullable<double> Size { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
     

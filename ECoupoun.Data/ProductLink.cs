@@ -22,9 +22,9 @@ namespace ECoupoun.Data
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual ProductMaster ProductMaster { get; set; }
         public virtual Provider Provider { get; set; }
-        public virtual ProductMaster ProductMaster1 { get; set; }
         public virtual Provider Provider1 { get; set; }
+        public virtual ProductMaster ProductMaster { get; set; }
+        public virtual ProductMaster ProductMaster1 { get; set; }
     }
 }

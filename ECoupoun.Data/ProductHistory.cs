@@ -16,7 +16,7 @@ namespace ECoupoun.Data
     {
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
-        public int ManufacturerId { get; set; }
+        public Nullable<int> ManufacturerId { get; set; }
         public string Name { get; set; }
         public string LongDescription { get; set; }
         public string ModelNumber { get; set; }

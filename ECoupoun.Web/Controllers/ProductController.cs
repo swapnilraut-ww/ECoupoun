@@ -13,13 +13,24 @@ namespace ECoupoun.Web.Controllers
     {
         public ActionResult Index(string parentCategory, string categoryName, string q)
         {
+            StaticPage staticPage = null;
+
             switch (parentCategory) 
             {
                 case "About":
+                    staticPage = db.StaticPages.Where(x => x.PageName == "About").SingleOrDefault();
+                    if (staticPage != null)
+                        ViewBag.PageContent = staticPage.PageHtml;
                     return View("~/Views/Home/About.cshtml");
                 case "Contact":
+                    staticPage = db.StaticPages.Where(x => x.PageName == "ContactUs").SingleOrDefault();
+                    if (staticPage != null)
+                        ViewBag.PageContent = staticPage.PageHtml;
                     return View("~/Views/Home/Contact.cshtml");
                 case "Help":
+                    staticPage = db.StaticPages.Where(x => x.PageName == "Help").SingleOrDefault();
+                    if (staticPage != null)
+                        ViewBag.PageContent = staticPage.PageHtml;
                     return View("~/Views/Home/Help.cshtml");
             }
             int startIndex = 0;

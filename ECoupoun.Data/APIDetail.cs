@@ -24,7 +24,7 @@ namespace ECoupoun.Data
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual Category Category { get; set; }
         public virtual Provider Provider { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

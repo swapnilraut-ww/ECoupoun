@@ -17,6 +17,8 @@ namespace ECoupoun.Data
         public Category()
         {
             this.APIDetails = new HashSet<APIDetail>();
+            this.Categories1 = new HashSet<Category>();
+            this.CategoryProviderMappings = new HashSet<CategoryProviderMapping>();
             this.ProductMasters = new HashSet<ProductMaster>();
         }
     
@@ -27,8 +29,13 @@ namespace ECoupoun.Data
         public System.DateTime CreatedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public bool IsActive { get; set; }
+        public string MappingName { get; set; }
+        public string Image { get; set; }
     
         public virtual ICollection<APIDetail> APIDetails { get; set; }
+        public virtual ICollection<Category> Categories1 { get; set; }
+        public virtual Category Category1 { get; set; }
+        public virtual ICollection<CategoryProviderMapping> CategoryProviderMappings { get; set; }
         public virtual ICollection<ProductMaster> ProductMasters { get; set; }
     }
 }

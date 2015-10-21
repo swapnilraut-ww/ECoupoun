@@ -12,12 +12,24 @@ namespace ECoupoun.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Core.Objects.DataClasses;
+    using System.Linq;
     
     public partial class ECoupounEntities : DbContext
     {
         public ECoupounEntities()
             : base("name=ECoupounEntities")
         {
+        }
+
+        public ECoupounEntities(string connectionString)
+
+            : base(connectionString)
+        {
+            var adapter = (IObjectContextAdapter)this;
+            var objectContext = adapter.ObjectContext;
+            objectContext.CommandTimeout = 180; // value in seconds
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,17 +38,30 @@ namespace ECoupoun.Data
         }
     
         public DbSet<APIDetail> APIDetails { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
-        public DbSet<ProductMaster> ProductMasters { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<ProviderPriority> ProviderPriorities { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<ProductHistory> ProductHistories { get; set; }
         public DbSet<ProductLinksHistory> ProductLinksHistories { get; set; }
         public DbSet<ProductLink> ProductLinks { get; set; }
+        public DbSet<ProductViewDetail> ProductViewDetails { get; set; }
+        public DbSet<CategoryProviderMapping> CategoryProviderMappings { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductMaster> ProductMasters { get; set; }
         public DbSet<ProductPricing> ProductPricings { get; set; }
         public DbSet<ProductPricingHistory> ProductPricingHistories { get; set; }
-        public DbSet<ProductViewDetail> ProductViewDetails { get; set; }
+        public DbSet<ProductHistory> ProductHistories { get; set; }
+        public DbSet<StaticPage> StaticPages { get; set; }
+        public DbSet<PageContent> PageContents { get; set; }
+    
+        public virtual int DeleteProducts()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteProducts");
+        }
+    
+        public virtual ObjectResult<GetCategoriesForAPI_Result> GetCategoriesForAPI()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCategoriesForAPI_Result>("GetCategoriesForAPI");
+        }
     }
 }

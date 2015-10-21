@@ -2,7 +2,4 @@
     ViewBag.Title = "About";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-<p>Use this area to provide additional information.</p>
+@Html.Raw(ViewBag.PageContent)

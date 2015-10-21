@@ -11,13 +11,13 @@
                 @foreach (var category in Model.Where(x => x.CategoryParentId == parentCategory.CategoryId))
                 {
                     <li>
-                        <a href="/@parentCategory.MappingName/@category.MappingName/">@category.Name</a>
+                        <a href="~/@parentCategory.MappingName/@category.MappingName/">@category.Name</a>
                         <ul>
                             @foreach (var subCategory in Model.Where(x => x.CategoryParentId == category.CategoryId))
                             {
                           
                                 <li>
-                                    <a href="/buy_@subCategory.MappingName">@subCategory.Name</a>
+                                    <a href="~/buy_@subCategory.MappingName">@subCategory.Name</a>
                                 </li>
                             }
                         </ul>

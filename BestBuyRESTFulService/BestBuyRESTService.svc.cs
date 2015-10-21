@@ -15,11 +15,11 @@ namespace BestBuyRESTFulService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class BestBuyRESTService : DBData, IBestBuyRESTService
+    public class BestBuyRESTService : IBestBuyRESTService
     {
         DBProducts dbProducts = new DBProducts();
         string responseText = string.Empty;
-
+        int walmartCount = 0;
         /// <summary>
         /// Testing API for GET method 
         /// </summary>
@@ -65,14 +65,13 @@ namespace BestBuyRESTFulService
             responseText = string.Empty;
             foreach (ConnectionStringSettings ConnectionStrings in ConfigurationManager.ConnectionStrings)
             {
+                walmartCount = 0;
                 int bestbuyCount = 0;
-                int walmartCount = 0;
                 int amazonCount = 0;
                 using (var db = new ECoupounEntities(ConnectionStrings.ConnectionString))
                 {
-                    List<APIDetail> apiDetailsList = db.APIDetails.Where(x => x.IsActive == true).ToList();
-                   
-                    
+                    List<APIDetail> apiDetailsList = db.APIDetails.Where(x => x.IsActive == true && x.Provider.Name == "Walmart").ToList();
+
                     ProductsJSON jsonObject = null;
                     List<Products> productsList = null;
                     try
@@ -104,28 +103,8 @@ namespace BestBuyRESTFulService
                                     }
 
                                     break;
-                                case "Walmart":
-                                    jsonObject = MakeAPICall(apiDetail.ServiceUrl);
-                                    productsList = new List<Products>();
-                                    if (jsonObject != null)
-                                    {
-                                        foreach (var item in jsonObject.Items)
-                                        {
-                                            Products product = new Products();
-                                            product.Sku = item.ItemId.ToString();
-                                            product.Name = item.Name;
-                                            product.ModelNumber = item.ModelNumber;
-                                            product.Image = item.MediumImage;
-                                            product.RegularPrice = item.msrp;
-                                            product.SalePrice = item.SalePrice;
-                                            product.Manufacturer = item.BrandName;
-                                            product.Url = item.ProductUrl;
-
-                                            productsList.Add(product);
-                                        }
-
-                                        walmartCount += dbProducts.InsertProduct(apiDetail.CategoryId, apiDetail.ProviderId, productsList, db);
-                                    }
+                                case "Walmart":                                  
+                                    MakeWalmartCallAndProcess(apiDetail.ServiceUrl, apiDetail.CategoryId, apiDetail.ProviderId, db);
 
                                     break;
 
@@ -231,6 +210,52 @@ namespace BestBuyRESTFulService
         {
             List<Products> productList = dbProducts.GetAllProducts();
             return productList;
+        }
+
+        public void MakeWalmartCallAndProcess(string url, int categoryId, int providerId, ECoupounEntities db)
+        {
+            try
+            {
+                responseText += "\n" + url;
+
+                ProductsJSON productsJSON = null;
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                List<Products> productsList = null;
+                // Get response  
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    var serializer = new JavaScriptSerializer();
+                    productsJSON = serializer.Deserialize<ProductsJSON>(reader.ReadToEnd());
+                    productsList = new List<Products>();
+                    if (productsJSON != null && productsJSON.Items != null)
+                    {
+                        foreach (var item in productsJSON.Items)
+                        {
+                            Products product = new Products();
+                            product.Sku = item.ItemId.ToString();
+                            product.Name = item.Name;
+                            product.ModelNumber = item.ModelNumber;
+                            product.Image = item.MediumImage;
+                            product.RegularPrice = item.msrp;
+                            product.SalePrice = item.SalePrice;
+                            product.Manufacturer = item.BrandName;
+                            product.Url = item.ProductUrl;
+
+                            productsList.Add(product);
+                        }
+
+                        walmartCount += dbProducts.InsertProduct(categoryId, providerId, productsList, db);
+                        productsList = new List<Products>();
+                        MakeWalmartCallAndProcess("http://api.walmartlabs.com" + productsJSON.NextPage, categoryId, providerId, db);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         public ProductsJSON MakeAPICall(string url)

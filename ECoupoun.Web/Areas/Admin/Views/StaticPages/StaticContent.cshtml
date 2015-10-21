@@ -1,0 +1,62 @@
+﻿@model ECoupoun.Data.PageContent
+    @{
+        ViewBag.Title = "PageContent";
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    }
+    <h2>Page Content</h2>
+
+    @using (Html.BeginForm("SaveData", "StaticPages", FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.Label("Upload Logo", new { @class = "control-label  col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="file" id="file" style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Contact 1", new { @class = "control-label  col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Contact1)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Contact 2", new { @class = "control-label  col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Contact2)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Facebook Link", new { @class = "control-label  col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Facebook)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Twitter Link", new { @class = "control-label  col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Twitter)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Google Plus Link", new { @class = "control-label  col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.GooglePlus)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Email Link", new { @class = "control-label  col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Email)
+                </div>
+            </div>
+
+            <input type="submit" value="Save" class="submit" />
+        </div>
+    }

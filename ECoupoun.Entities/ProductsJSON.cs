@@ -7,6 +7,7 @@ namespace ECoupoun.Entities
 {
     public class ProductsJSON
     {
+        //BestBuy
         public int from { get; set; }
         public int to { get; set; }
         public int total { get; set; }
@@ -15,6 +16,13 @@ namespace ECoupoun.Entities
         public double queryTime { get; set; }
         public double totalTime { get; set; }
         public bool partial { get; set; }
+
+        //Walmart
+        public int TotalResults { get; set; }
+        public int Start { get; set; }
+        public int numItems { get; set; }
+        public string NextPage { get; set; }
+
         public List<Products> Products { get; set; }
         public List<WalmartItems> Items { get; set; }
         public List<EbaySearchResult> SearchResult { get; set; }

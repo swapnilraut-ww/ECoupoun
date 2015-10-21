@@ -20,7 +20,7 @@ namespace ECoupoun.ConsoleApp
     class Program
     {
         private const string bestBuyURL = "http://api.remix.bestbuy.com/v1/products%28longDescription=iPhone*%29?show=sku,name,image,modelNumber,regularPrice,salePrice&apiKey=93j5ggwxgfraye8unmhvgzgv&format=json";
-        private const string walmartURL = "http://api.walmartlabs.com/v1/paginated/items?category=3944&apiKey=22rgbvm2cpzk22n4t8phrem9&format=json";
+        private const string walmartURL = "http://api.walmartlabs.com/v1/paginated/items?category=3944_3951_1230331&apiKey=22rgbvm2cpzk22n4t8phrem9&format=json";
         private const string etsyURL = "https://openapi.etsy.com/v2/taxonomy/seller/get?api_key=5mabizpl6kyplz83tpbxuzi3";
 
         // Developer AWS access key
@@ -78,7 +78,7 @@ namespace ECoupoun.ConsoleApp
             request.SearchIndex = "Electronics";
             request.Title = "Monitor";
             request.ResponseGroup = new string[] { "Small" };
-            
+
             ItemSearch itemSearch = new ItemSearch();
             itemSearch.Request = new ItemSearchRequest[] { request };
             itemSearch.AWSAccessKeyId = accessKeyId;
@@ -93,39 +93,12 @@ namespace ECoupoun.ConsoleApp
             }
         }
 
-        static void Main(string[] args)
+        public static BestBuyProducts MakeWalmartAPICall(string url)
         {
-            AmazonWCF();
-            //HttpWebRequest request = WebRequest.Create(etsyURL) as HttpWebRequest;
-
-            //// Get response  
-            //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-            //{
-            //    // Get the response stream  
-            //    StreamReader reader = new StreamReader(response.GetResponseStream());
-
-            //    var serializer = new JavaScriptSerializer();
-            //    var jsonObject = serializer.Deserialize<BestBuyProducts>(reader.ReadToEnd());
-
-            //    // Console application output  
-            //    Console.WriteLine(reader.ReadToEnd());
-            //}
-            List<Products> amazonProductList = new List<Products>();
-            SignedRequestHelper helper = new SignedRequestHelper(accessKeyId, secretKey, DESTINATION);
-            //for (int p = 1; p <= 10; p++)
-            //{
-                String requestString = "Service=AWSECommerceService"
-                    + "&Version=2009-03-31"
-                    + "&Operation=ItemSearch"
-                    + "&SearchIndex=Electronics"
-                    + "&ResponseGroup=Images,ItemAttributes,Small,VariationSummary"
-                    + "&BrowseNode=1292115011"
-                    + "&Keywords=4k"
-                   // + "&ItemPage=" + p                    
-                    + "&AssociateTag=fasforles07-20";
-
-                string requestUrl = helper.Sign(requestString);
-                HttpWebRequest request = WebRequest.Create(requestUrl) as HttpWebRequest;
+            try
+            {
+                BestBuyProducts productsJSON = null;
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
 
                 // Get response  
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
@@ -133,73 +106,188 @@ namespace ECoupoun.ConsoleApp
                     // Get the response stream  
                     StreamReader reader = new StreamReader(response.GetResponseStream());
 
-                    XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.Load(response.GetResponseStream());
-                    XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Item");
-                    XmlNodeList xmlnodelstTrack1 = xmlDoc.GetElementsByTagName("TotalPages");
-
-                    Products product = new Products();
-                    foreach (XmlNode NodeObj in xmlnodelstTrack)
+                    var serializer = new JavaScriptSerializer();
+                    productsJSON = serializer.Deserialize<BestBuyProducts>(reader.ReadToEnd());
+                    if (productsJSON != null && productsJSON.Items != null)
                     {
-                        product = new Products();
-                        for (int i = 0; i < NodeObj.ChildNodes.Count; i++)
+                        foreach (var item in productsJSON.Items)
                         {
-                            if (NodeObj.ChildNodes[i].HasChildNodes)
+                            Products product = new Products();
+                            product.Sku = item.ItemId.ToString();
+                            product.Name = item.Name;
+                            product.ModelNumber = item.ModelNumber;
+                            product.Image = item.MediumImage;
+                            product.RegularPrice = item.msrp;
+                            product.SalePrice = item.SalePrice;
+                            //product.Manufacturer = item.Manufacturer;
+                            product.Url = item.ProductUrl;
+
+                            //productsList.Add(product);
+                        }
+
+                        MakeWalmartAPICall(productsJSON.NextPage);
+                    }
+                }
+
+                return productsJSON;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            try
+            {
+                BestBuyProducts jsonObject = MakeWalmartAPICall(walmartURL);
+                if (jsonObject != null)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            int total = 1479;
+            int numItems = 25;
+            int start = 1;
+            int span = total / numItems;
+            int span1 = total % numItems;
+            if (span1 > 0)
+            {
+                span++;
+            }
+            //for (int i = 1; i <= span; i++)
+            //{
+            //    if (i > 1)
+            //        start += numItems;
+            //    Console.WriteLine("Start = " + start);
+            //}
+
+            HttpWebRequest request = WebRequest.Create(walmartURL) as HttpWebRequest;
+
+            // Get response  
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                // Get the response stream  
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                var serializer = new JavaScriptSerializer();
+                var jsonObject = serializer.Deserialize<BestBuyProducts>(reader.ReadToEnd());
+                span = jsonObject.TotalResults / jsonObject.numItems;
+                span1 = jsonObject.TotalResults % jsonObject.numItems;
+                for (int i = 1; i <= span; i++)
+                {
+                    if (i > 1)
+                        start += jsonObject.numItems;
+                    HttpWebRequest request2 = WebRequest.Create(walmartURL + "&start=" + start) as HttpWebRequest;
+                    using (HttpWebResponse response1 = request2.GetResponse() as HttpWebResponse)
+                    {
+                        // Get the response stream  
+                        StreamReader reader1 = new StreamReader(response1.GetResponseStream());
+
+                        var serializer1 = new JavaScriptSerializer();
+                        var jsonObject1 = serializer.Deserialize<BestBuyProducts>(reader1.ReadToEnd());
+                    }
+                }
+                // Console application output  
+                Console.WriteLine(reader.ReadToEnd());
+            }
+            AmazonWCF();
+            List<Products> amazonProductList = new List<Products>();
+            SignedRequestHelper helper = new SignedRequestHelper(accessKeyId, secretKey, DESTINATION);
+            //for (int p = 1; p <= 10; p++)
+            //{
+            String requestString = "Service=AWSECommerceService"
+                + "&Version=2009-03-31"
+                + "&Operation=ItemSearch"
+                + "&SearchIndex=Electronics"
+                + "&ResponseGroup=Images,ItemAttributes,Small,VariationSummary"
+                + "&BrowseNode=1292115011"
+                + "&Keywords=4k"
+                // + "&ItemPage=" + p                    
+                + "&AssociateTag=fasforles07-20";
+
+            string requestUrl = helper.Sign(requestString);
+            HttpWebRequest request1 = WebRequest.Create(requestUrl) as HttpWebRequest;
+
+            // Get response  
+            using (HttpWebResponse response = request1.GetResponse() as HttpWebResponse)
+            {
+                // Get the response stream  
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(response.GetResponseStream());
+                XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Item");
+                XmlNodeList xmlnodelstTrack1 = xmlDoc.GetElementsByTagName("TotalPages");
+
+                Products product = new Products();
+                foreach (XmlNode NodeObj in xmlnodelstTrack)
+                {
+                    product = new Products();
+                    for (int i = 0; i < NodeObj.ChildNodes.Count; i++)
+                    {
+                        if (NodeObj.ChildNodes[i].HasChildNodes)
+                        {
+                            for (int j = 0; j < NodeObj.ChildNodes[i].ChildNodes.Count; j++)
                             {
-                                for (int j = 0; j < NodeObj.ChildNodes[i].ChildNodes.Count; j++)
+                                string key = NodeObj.ChildNodes[i].ChildNodes[j].Name == "#text" ? NodeObj.ChildNodes[i].ChildNodes[j].ParentNode.Name : NodeObj.ChildNodes[i].ChildNodes[j].Name;
+                                switch (key)
                                 {
-                                    string key = NodeObj.ChildNodes[i].ChildNodes[j].Name == "#text" ? NodeObj.ChildNodes[i].ChildNodes[j].ParentNode.Name : NodeObj.ChildNodes[i].ChildNodes[j].Name;
-                                    switch (key)
-                                    {
-                                        case "ASIN":
-                                            product.Sku = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
-                                            break;
-                                        case "DetailPageURL":
-                                            product.Url = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
-                                            break;
-                                        case "Manufacturer":
-                                            product.Manufacturer = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
-                                            break;
-                                        case "Model":
-                                            product.ModelNumber = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
-                                            break;
-                                        case "Color":
-                                            product.Color = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
-                                            break;
-                                        case "Title":
-                                            product.Name = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
-                                            break;
-                                        case "Size":
-                                            product.ScreenSizeIn = NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('-')[0];
-                                            break;
-                                        case "ListPrice":
-                                            product.SalePrice = Convert.ToDecimal(NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('$')[1]);
-                                            product.RegularPrice = Convert.ToDecimal(NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('$')[1]);
-                                            break;
-                                        case "URL":
-                                            product.Image = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
-                                            break;
-                                    }
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine(key);
-                                    Console.WriteLine(NodeObj.ChildNodes[i].ChildNodes[j].InnerText);
-                                    Console.WriteLine("--------------------------------------------");
+                                    case "ASIN":
+                                        product.Sku = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                        break;
+                                    case "DetailPageURL":
+                                        product.Url = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                        break;
+                                    case "Manufacturer":
+                                        product.Manufacturer = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                        break;
+                                    case "Model":
+                                        product.ModelNumber = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                        break;
+                                    case "Color":
+                                        product.Color = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                        break;
+                                    case "Title":
+                                        product.Name = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                        break;
+                                    case "Size":
+                                        product.ScreenSizeIn = NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('-')[0];
+                                        break;
+                                    case "ListPrice":
+                                        product.SalePrice = Convert.ToDecimal(NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('$')[1]);
+                                        product.RegularPrice = Convert.ToDecimal(NodeObj.ChildNodes[i].ChildNodes[j].InnerText.Split('$')[1]);
+                                        break;
+                                    case "URL":
+                                        product.Image = NodeObj.ChildNodes[i].ChildNodes[j].InnerText;
+                                        break;
                                 }
-                            }
-                            else
-                            {
                                 Console.WriteLine("--------------------------------------------");
-                                Console.WriteLine(NodeObj.ChildNodes[i].Name);
-                                Console.WriteLine(NodeObj.ChildNodes[i].InnerText);
+                                Console.WriteLine(key);
+                                Console.WriteLine(NodeObj.ChildNodes[i].ChildNodes[j].InnerText);
                                 Console.WriteLine("--------------------------------------------");
                             }
                         }
-                        amazonProductList.Add(product);
+                        else
+                        {
+                            Console.WriteLine("--------------------------------------------");
+                            Console.WriteLine(NodeObj.ChildNodes[i].Name);
+                            Console.WriteLine(NodeObj.ChildNodes[i].InnerText);
+                            Console.WriteLine("--------------------------------------------");
+                        }
                     }
+                    amazonProductList.Add(product);
                 }
+            }
             //}
 
-            var a = amazonProductList;
+
             Console.ReadLine();
 
             // Create a configuration object

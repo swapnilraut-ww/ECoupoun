@@ -16,11 +16,10 @@ namespace ECoupoun.Data
     {
         public int SKU { get; set; }
         public int ProviderId { get; set; }
-        public string SoruceUrl { get; set; }
-        public string MobileUrl { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public bool IsActive { get; set; }
+        public int TotalVisitors { get; set; }
     
         public virtual Provider Provider { get; set; }
         public virtual Provider Provider1 { get; set; }
